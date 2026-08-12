@@ -18,7 +18,7 @@
   header.nav{position:sticky;top:0;z-index:30;background:rgba(250,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
-  .logo .mark{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-size:1.1rem}
+  .logo .mark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d9a441,#b9792b);color:#fff;font-weight:700;font-size:20px}
   .logo small{font-weight:600;color:var(--muted);font-size:.8rem}
   .spacer{flex:1}
   .btn{border:none;cursor:pointer;background:var(--brand);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
@@ -97,7 +97,7 @@
   <div class="nav-in">
     <a class="logo" href="#">
       <span class="mark">و</span>
-      <span data-i18n="brand">وَنَس<br><small data-i18n="brand_en">WANAS</small></span>
+      <span data-i18n="brand">وَنَس <small data-i18n="brand_en">WANAS</small></span>
     </a>
     <div class="spacer"></div>
     <button class="lang" id="langBtn" title="Language">EN</button>
@@ -198,7 +198,8 @@
 </div>
 
 <footer class="foot">
-  <span data-i18n="brand">وَنَس</span> — © <span id="year"></span>
+  <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
+  <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -288,8 +289,11 @@ function defaultData(){
     ],
     products:[
       {id:"p1", cat:"c1", ar:"عطر وَنَس 50مل", en:"Wanas Perfume 50ml", descAr:"عطر هادي بلمسة خشبية دافية.", descEn:"Calm woody fragrance.", price:250, img:"🌸"},
-      {id:"p2", cat:"c2", ar:"شمعة العنبر", en:"Amber Candle", descAr:"شمعة صويا برائحة العنبر الفاخر.", descEn:"Soy candle, premium amber.", price:120, img:"🕯️"},
-      {id:"p3", cat:"c3", ar:"شاي الوَنس", en:"Wanas Tea", descAr:"شاي أعشاب طبيعي للاسترخاء.", descEn:"Natural herbal relaxing tea.", price:90, img:"🍵"}
+      {id:"p2", cat:"c1", ar:"عطر العود الملكي", en:"Royal Oud", descAr:"عطر عود فاخر يدوم طويلاً.", descEn:"Long-lasting premium oud.", price:480, img:"🪵"},
+      {id:"p3", cat:"c2", ar:"شمعة العنبر", en:"Amber Candle", descAr:"شمعة صويا برائحة العنبر الفاخر.", descEn:"Soy candle, premium amber.", price:120, img:"🕯️"},
+      {id:"p4", cat:"c2", ar:"شمعة اللافندر", en:"Lavender Candle", descAr:"شمعة هادية برائحة اللافندر المريح.", descEn:"Calming lavender soy candle.", price:130, img:"💜"},
+      {id:"p5", cat:"c3", ar:"شاي الوَنس", en:"Wanas Tea", descAr:"شاي أعشاب طبيعي للاسترخاء.", descEn:"Natural herbal relaxing tea.", price:90, img:"🍵"},
+      {id:"p6", cat:"c3", ar:"قهوة الوَنس المطحونة", en:"Wanas Ground Coffee", descAr:"قهوة عربية مطحونة طازة بنكهة دافية.", descEn:"Fresh ground Arabic coffee.", price:110, img:"☕"}
     ]
   };
 }
