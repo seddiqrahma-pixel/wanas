@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>وَنَس | Wanas</title>
+<style>
+  :root{
+    --bg:#faf6f0; --card:#ffffff; --ink:#2b2620; --muted:#7a7268;
+    --brand:#a98452; --brand2:#7d5a2e; --accent:#e7d8bf; --line:#ece3d6;
+    --ok:#2e7d52; --danger:#b23a3a; --radius:16px; --shadow:0 6px 24px rgba(80,60,30,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI","Tahoma",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  [dir="ltr"] body{font-family:"Segoe UI",system-ui,sans-serif}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+  header.nav{position:sticky;top:0;z-index:30;background:rgba(250,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
+  .logo .mark{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-size:1.1rem}
+  .logo small{font-weight:600;color:var(--muted);font-size:.8rem}
+  .spacer{flex:1}
+  .btn{border:none;cursor:pointer;background:var(--brand);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
+  .btn:hover{background:var(--brand2)}
+  .btn.ghost{background:transparent;color:var(--brand2);border:1px solid var(--brand)}
+  .btn.sm{padding:6px 12px;font-size:.85rem}
+  .btn.danger{background:var(--danger)}
+  .lang{cursor:pointer;background:var(--accent);border:none;border-radius:10px;padding:7px 12px;font-weight:700;color:var(--brand2)}
+  .cart-btn{position:relative}
+  .cart-count{position:absolute;top:-7px;left:-7px;background:var(--danger);color:#fff;border-radius:50%;min-width:20px;height:20px;font-size:.72rem;display:grid;place-items:center;padding:0 4px}
+  .hero{padding:48px 0 28px;text-align:center}
+  .hero h1{font-size:2.4rem;margin:0 0 8px;color:var(--brand2)}
+  .hero p{color:var(--muted);font-size:1.1rem;margin:0}
+  .section-title{font-size:1.4rem;margin:30px 0 14px;color:var(--brand2)}
+  .cat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+  .cat-tab{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:8px 16px;cursor:pointer;font-weight:600;color:var(--muted)}
+  .cat-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .card .ph{height:150px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fff);display:grid;place-items:center;font-size:2.4rem;margin-bottom:12px;overflow:hidden}
+  .card .ph img{width:100%;height:100%;object-fit:cover}
+  .card h3{margin:0 0 4px;font-size:1.05rem}
+  .card .desc{color:var(--muted);font-size:.88rem;flex:1}
+  .card .price{font-weight:800;color:var(--brand2);font-size:1.15rem;margin:10px 0}
+  .empty{color:var(--muted);padding:30px;text-align:center;grid-column:1/-1}
+  /* Cart drawer */
+  .drawer{position:fixed;top:0;right:0;height:100%;width:380px;max-width:92vw;background:var(--card);box-shadow:-8px 0 30px rgba(0,0,0,.15);transform:translateX(100%);transition:.25s;z-index:50;display:flex;flex-direction:column}
+  [dir="ltr"] .drawer{right:auto;left:0;transform:translateX(-100%)}
+  .drawer.open{transform:translateX(0)}
+  .drawer header{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+  .drawer .items{flex:1;overflow:auto;padding:12px 16px}
+  .ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  .ci .ci-ph{width:46px;height:46px;border-radius:8px;background:var(--accent);display:grid;place-items:center;overflow:hidden;font-size:1.3rem}
+  .ci .ci-ph img{width:100%;height:100%;object-fit:cover}
+  .ci .ci-info{flex:1;font-size:.9rem}
+  .ci .ci-info b{display:block}
+  .ci .qty{display:flex;align-items:center;gap:6px}
+  .ci .qty button{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .ci .rm{color:var(--danger);background:none;border:none;cursor:pointer;font-size:.8rem}
+  .drawer footer{padding:16px;border-top:1px solid var(--line)}
+  .total{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem;margin-bottom:12px}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.2s;z-index:40}
+  .overlay.show{opacity:1;pointer-events:auto}
+  /* Checkout / Payment */
+  .pay-list{display:grid;gap:10px;margin:14px 0}
+  .pay{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
+  .pay.sel{border-color:var(--brand);background:var(--accent)}
+  .pay .ic{font-size:1.4rem}
+  .pay .det{flex:1;font-size:.9rem}
+  .pay .det b{display:block}
+  .pay .det span{color:var(--muted);font-size:.82rem;word-break:break-all}
+  .field{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0;font-family:inherit;font-size:.95rem}
+  textarea.field{resize:vertical;min-height:64px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
+  .modal.show{display:flex}
+  .modal .box{background:var(--card);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:22px;box-shadow:var(--shadow)}
+  .modal h2{margin-top:0;color:var(--brand2)}
+  .close{float:left;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;opacity:0;transition:.25s;z-index:80}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  /* Admin */
+  .admin-hint{font-size:.8rem;color:var(--muted)}
+  .admin .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+  .admin .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px}
+  .admin .list-item{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+  .admin .list-item .nm{flex:1}
+  .pill{display:inline-block;background:var(--accent);color:var(--brand2);border-radius:20px;padding:3px 10px;font-size:.78rem;margin:2px}
+  .hidden{display:none !important}
+  footer.foot{padding:30px 0;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:40px}
+  @media(max-width:560px){.hero h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="logo" href="#">
+      <span class="mark">و</span>
+      <span data-i18n="brand">وَنَس<br><small data-i18n="brand_en">WANAS</small></span>
+    </a>
+    <div class="spacer"></div>
+    <button class="lang" id="langBtn" title="Language">EN</button>
+    <button class="btn ghost sm" id="adminBtn" data-i18n="admin">لوحة التحكم</button>
+    <button class="btn cart-btn" id="cartBtn">
+      🛒 <span data-i18n="cart">السلة</span>
+      <span class="cart-count hidden" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero wrap">
+  <h1 data-i18n="hero_title">راحة بالك تبدأ من هنا</h1>
+  <p data-i18n="hero_sub">منتجات وَنَس — جودة تهدي بالك</p>
+</section>
+
+<!-- STORE -->
+<main class="wrap" id="store">
+  <div class="cat-tabs" id="catTabs"></div>
+  <h2 class="section-title" data-i18n="products">المنتجات</h2>
+  <div class="grid" id="productGrid"></div>
+
+  <!-- Admin panel -->
+  <section class="admin hidden" id="adminPanel">
+    <h2 class="section-title" data-i18n="admin_panel">إدارة الأصناف والمنتجات</h2>
+    <p class="admin-hint" data-i18n="admin_hint">التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123</p>
+
+    <div class="panel">
+      <h3 data-i18n="cats">الأصناف (Categories)</h3>
+      <div id="catList"></div>
+      <div class="row">
+        <input class="field" id="newCatAr" placeholder="اسم الصنف بالعربي" data-i18n-ph="cat_ar_ph">
+        <input class="field" id="newCatEn" placeholder="Category (EN)" data-i18n-ph="cat_en_ph">
+        <button class="btn sm" id="addCatBtn" data-i18n="add_cat">+ إضافة صنف</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3 data-i18n="prods">المنتجات (Products)</h3>
+      <div class="row">
+        <select class="field" id="prodCat"></select>
+        <input class="field" id="prodAr" placeholder="اسم المنتج عربي" data-i18n-ph="prod_ar_ph">
+        <input class="field" id="prodEn" placeholder="Product (EN)" data-i18n-ph="prod_en_ph">
+      </div>
+      <div class="row">
+        <input class="field" id="prodDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
+        <input class="field" id="prodDescEn" placeholder="Description (EN)" data-i18n-ph="prod_desc_en_ph">
+        <input class="field" id="prodPrice" type="number" placeholder="السعر (EGP)" data-i18n-ph="price_ph">
+        <input class="field" id="prodEmoji" placeholder="إيموجي/صورة" data-i18n-ph="emoji_ph">
+      </div>
+      <button class="btn sm" id="addProdBtn" data-i18n="add_prod">+ إضافة منتج</button>
+      <div id="prodList" style="margin-top:12px"></div>
+    </div>
+
+    <div class="panel">
+      <button class="btn danger sm" id="resetBtn" data-i18n="reset">استعادة البيانات الافتراضية</button>
+    </div>
+  </section>
+</main>
+
+<!-- CART DRAWER -->
+<aside class="drawer" id="cartDrawer">
+  <header>
+    <strong data-i18n="cart">السلة</strong>
+    <button class="close" id="closeCart">✕</button>
+  </header>
+  <div class="items" id="cartItems"></div>
+  <footer>
+    <div class="total"><span data-i18n="total">الإجمالي</span><span id="cartTotal">0 EGP</span></div>
+    <button class="btn" id="checkoutBtn" style="width:100%" data-i18n="checkout">إتمام الطلب</button>
+  </footer>
+</aside>
+<div class="overlay" id="overlay"></div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal" id="checkoutModal">
+  <div class="box">
+    <button class="close" id="closeCheckout">✕</button>
+    <h2 data-i18n="order_title">تأكيد الطلب</h2>
+    <div id="orderSummary"></div>
+
+    <label data-i18n="pay_method">طريقة الدفع</label>
+    <div class="pay-list" id="payList"></div>
+
+    <label data-i18n="cust_name">الاسم</label>
+    <input class="field" id="custName" data-i18n-ph="name_ph">
+    <label data-i18n="cust_phone">رقم الهاتف</label>
+    <input class="field" id="custPhone" data-i18n-ph="phone_ph">
+    <label data-i18n="cust_addr">العنوان (للشحن)</label>
+    <textarea class="field" id="custAddr" data-i18n-ph="addr_ph"></textarea>
+    <label data-i18n="cust_note">ملاحظات</label>
+    <textarea class="field" id="custNote" data-i18n-ph="note_ph"></textarea>
+
+    <button class="btn" id="sendOrderBtn" style="width:100%;margin-top:8px" data-i18n="send_order">إرسال الطلب (واتساب)</button>
+    <button class="btn ghost" id="sendMailBtn" style="width:100%;margin-top:8px" data-i18n="send_mail">إرسال عبر الإيميل</button>
+  </div>
+</div>
+
+<footer class="foot">
+  <span data-i18n="brand">وَنَس</span> — © <span id="year"></span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ====================== i18n ====================== */
+const I18N = {
+  ar:{
+    brand:"وَنَس", brand_en:"WANAS", admin:"لوحة التحكم", cart:"السلة",
+    hero_title:"راحة بالك تبدأ من هنا", hero_sub:"منتجات وَنَس — جودة تهدي بالك",
+    products:"المنتجات", admin_panel:"إدارة الأصناف والمنتجات",
+    admin_hint:"التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123",
+    cats:"الأصناف (Categories)", add_cat:"+ إضافة صنف",
+    prods:"المنتجات (Products)", add_prod:"+ إضافة منتج",
+    reset:"استعادة البيانات الافتراضية",
+    total:"الإجمالي", checkout:"إتمام الطلب",
+    order_title:"تأكيد الطلب", pay_method:"طريقة الدفع",
+    cust_name:"الاسم", cust_phone:"رقم الهاتف", cust_addr:"العنوان (للشحن)", cust_note:"ملاحظات",
+    send_order:"إرسال الطلب (واتساب)", send_mail:"إرسال عبر الإيميل",
+    cat_ar_ph:"اسم الصنف بالعربي", cat_en_ph:"Category (EN)",
+    prod_ar_ph:"اسم المنتج عربي", prod_en_ph:"Product (EN)",
+    prod_desc_ar_ph:"وصف عربي", prod_desc_en_ph:"Description (EN)",
+    price_ph:"السعر (EGP)", emoji_ph:"إيموجي/رابط صورة",
+    name_ph:"اكتب اسمك", phone_ph:"01xxxxxxxxx", addr_ph:"المحافظة / العنوان التفصيلي",
+    note_ph:"أي ملاحظة على الطلب",
+    empty_cart:"السلة فاضية", empty_store:"لا توجد منتجات بعد",
+    add:"أضف للسلة", remove:"حذف", edit:"تعديل", delete:"مسح",
+    all:"الكل", save:"حفظ", cancel:"إلغاء",
+    pay_vod:"فودافون كاش", pay_vod_det:"حول المبلغ على الرقم",
+    pay_inst:"إنستا باي", pay_inst_det:"التحويل لاسم المستخدم",
+    pay_bank:"تحويل بنكي", pay_bank_det:"بيانات الحساب البنكي",
+    pay_wa:"طلب عبر واتساب", pay_wa_det:"بدون دفع أونلاين — نراجع طلبك ونأكد",
+    order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املى البيانات المطلوبة أولاً",
+    login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
+    confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
+    no_pay:"اختار طريقة دفع"
+  },
+  en:{
+    brand:"WANAS", brand_en:"وَنَس", admin:"Dashboard", cart:"Cart",
+    hero_title:"Your peace of mind starts here", hero_sub:"Wanas products — quality that calms you",
+    products:"Products", admin_panel:"Manage Categories & Products",
+    admin_hint:"Changes are saved on your device only (LocalStorage). Password: wanas123",
+    cats:"Categories", add_cat:"+ Add category",
+    prods:"Products", add_prod:"+ Add product",
+    reset:"Restore default data",
+    total:"Total", checkout:"Checkout",
+    order_title:"Confirm Order", pay_method:"Payment method",
+    cust_name:"Name", cust_phone:"Phone", cust_addr:"Address (shipping)", cust_note:"Notes",
+    send_order:"Send Order (WhatsApp)", send_mail:"Send via Email",
+    cat_ar_ph:"Category name (AR)", cat_en_ph:"Category (EN)",
+    prod_ar_ph:"Product name (AR)", prod_en_ph:"Product (EN)",
+    prod_desc_ar_ph:"Description (AR)", prod_desc_en_ph:"Description (EN)",
+    price_ph:"Price (EGP)", emoji_ph:"Emoji / image URL",
+    name_ph:"Your name", phone_ph:"01xxxxxxxxx", addr_ph:"Governorate / detailed address",
+    note_ph:"Any order note",
+    empty_cart:"Cart is empty", empty_store:"No products yet",
+    add:"Add to cart", remove:"Remove", edit:"Edit", delete:"Delete",
+    all:"All", save:"Save", cancel:"Cancel",
+    pay_vod:"Vodafone Cash", pay_vod_det:"Transfer to number",
+    pay_inst:"InstaPay", pay_inst_det:"Transfer to username",
+    pay_bank:"Bank Transfer", pay_bank_det:"Bank account details",
+    pay_wa:"WhatsApp Order", pay_wa_det:"No online payment — we review & confirm",
+    order_sent:"Order message ready ✅", fill_fields:"Please fill required fields first",
+    login_ok:"Dashboard unlocked", login_fail:"Wrong password",
+    confirm_reset:"Restore default data? This clears your edits.",
+    no_pay:"Pick a payment method"
+  }
+};
+let LANG = localStorage.getItem("wanas_lang") || "ar";
+
+/* ====================== Payment config ====================== */
+const PAYMENT = {
+  vodafone:"01020306395",      // فودافون كاش
+  instapay:"01020306395",      // إنستا باي
+  bank:"Bank: NBE\nIBAN: EG900003041450006160803000150", // بيانات الحساب البنكي
+  whatsapp:"01020306395",      // واتساب استقبال الطلبات
+  email:"ahmed.alghoraib@gmail.com" // الإيميل بتاعك
+};
+
+/* ====================== Default data ====================== */
+function defaultData(){
+  return {
+    categories:[
+      {id:"c1", ar:"عطور", en:"Perfumes"},
+      {id:"c2", ar:"شموع", en:"Candles"},
+      {id:"c3", ar:"مشروبات", en:"Beverages"}
+    ],
+    products:[
+      {id:"p1", cat:"c1", ar:"عطر وَنَس 50مل", en:"Wanas Perfume 50ml", descAr:"عطر هادي بلمسة خشبية دافية.", descEn:"Calm woody fragrance.", price:250, img:"🌸"},
+      {id:"p2", cat:"c2", ar:"شمعة العنبر", en:"Amber Candle", descAr:"شمعة صويا برائحة العنبر الفاخر.", descEn:"Soy candle, premium amber.", price:120, img:"🕯️"},
+      {id:"p3", cat:"c3", ar:"شاي الوَنس", en:"Wanas Tea", descAr:"شاي أعشاب طبيعي للاسترخاء.", descEn:"Natural herbal relaxing tea.", price:90, img:"🍵"}
+    ]
+  };
+}
+let DATA = loadData();
+let CART = loadCart();
+let activeCat = "all";
+let selectedPay = null;
+
+/* ====================== Storage ====================== */
+function loadData(){
+  try{ const d = JSON.parse(localStorage.getItem("wanas_data")); if(d&&d.categories) return d; }catch(e){}
+  return defaultData();
+}
+function saveData(){ localStorage.setItem("wanas_data", JSON.stringify(DATA)); }
+function loadCart(){
+  try{ const c = JSON.parse(localStorage.getItem("wanas_cart")); if(Array.isArray(c)) return c; }catch(e){}
+  return [];
+}
+function saveCart(){ localStorage.setItem("wanas_cart", JSON.stringify(CART)); }
+
+/* ====================== Helpers ====================== */
+const $ = s=>document.querySelector(s);
+const $$ = s=>document.querySelectorAll(s);
+function t(key){ return (I18N[LANG]&&I18N[LANG][key]) || key; }
+function money(n){ return n + " EGP"; }
+function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
+function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
+
+/* ====================== Render i18n ====================== */
+function applyLang(){
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = (LANG==="ar")?"rtl":"ltr";
+  $("#langBtn").textContent = (LANG==="ar")?"EN":"ع";
+  $$("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(I18N[LANG][k]!=null) el.textContent=I18N[LANG][k]; });
+  $$("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(I18N[LANG][k]!=null) el.placeholder=I18N[LANG][k]; });
+}
+
+/* ====================== Store render ====================== */
+function renderCats(){
+  const tabs = $("#catTabs"); tabs.innerHTML="";
+  const all = document.createElement("div");
+  all.className="cat-tab"+(activeCat==="all"?" active":"");
+  all.textContent = t("all");
+  all.onclick=()=>{activeCat="all";renderCats();renderProducts();};
+  tabs.appendChild(all);
+  DATA.categories.forEach(c=>{
+    const el=document.createElement("div");
+    el.className="cat-tab"+(activeCat===c.id?" active":"");
+    el.textContent = LANG==="ar"?c.ar:c.en;
+    el.onclick=()=>{activeCat=c.id;renderCats();renderProducts();};
+    tabs.appendChild(el);
+  });
+}
+function renderProducts(){
+  const grid=$("#productGrid"); grid.innerHTML="";
+  const list = DATA.products.filter(p=> activeCat==="all" || p.cat===activeCat);
+  if(!list.length){ grid.innerHTML=`<div class="empty">${t("empty_store")}</div>`; return; }
+  list.forEach(p=>{
+    const card=document.createElement("div"); card.className="card";
+    const cat = DATA.categories.find(c=>c.id===p.cat);
+    const imgHtml = (p.img&&p.img.startsWith("http"))?`<img src="${p.img}" alt="">`:(p.img||"📦");
+    card.innerHTML=`
+      <div class="ph">${imgHtml}</div>
+      <h3>${LANG==="ar"?p.ar:p.en}</h3>
+      <div class="desc">${LANG==="ar"?p.descAr:p.descEn}</div>
+      <div class="price">${money(p.price)}</div>
+      <button class="btn sm add-btn">${t("add")}</button>`;
+    card.querySelector(".add-btn").onclick=()=>addToCart(p.id);
+    grid.appendChild(card);
+  });
+}
+
+/* ====================== Cart ====================== */
+function addToCart(id){
+  const ex=CART.find(i=>i.id===id);
+  if(ex) ex.qty++; else CART.push({id,qty:1});
+  saveCart(); renderCart(); updateCartCount(); toast(t("add"));
+}
+function changeQty(id,d){
+  const it=CART.find(i=>i.id===id); if(!it) return;
+  it.qty+=d; if(it.qty<=0) CART=CART.filter(i=>i.id!==id);
+  saveCart(); renderCart(); updateCartCount();
+}
+function removeFromCart(id){ CART=CART.filter(i=>i.id!==id); saveCart(); renderCart(); updateCartCount(); }
+function cartTotal(){ return CART.reduce((s,i)=>{ const p=DATA.products.find(x=>x.id===i.id); return s+(p?p.price*i.qty:0); },0); }
+function updateCartCount(){
+  const n=CART.reduce((s,i)=>s+i.qty,0);
+  const el=$("#cartCount"); el.textContent=n; el.classList.toggle("hidden", n===0);
+}
+function renderCart(){
+  const box=$("#cartItems"); box.innerHTML="";
+  if(!CART.length){ box.innerHTML=`<div class="empty">${t("empty_cart")}</div>`; $("#cartTotal").textContent=money(0); return; }
+  CART.forEach(i=>{
+    const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
+    const row=document.createElement("div"); row.className="ci";
+    const imgHtml=(p.img&&p.img.startsWith("http"))?`<img src="${p.img}" alt="">`:(p.img||"📦");
+    row.innerHTML=`
+      <div class="ci-ph">${imgHtml}</div>
+      <div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>${money(p.price)}</div>
+      <div class="qty"><button class="dec">−</button><span>${i.qty}</span><button class="inc">+</button></div>
+      <button class="rm">${t("remove")}</button>`;
+    row.querySelector(".dec").onclick=()=>changeQty(i.id,-1);
+    row.querySelector(".inc").onclick=()=>changeQty(i.id,1);
+    row.querySelector(".rm").onclick=()=>removeFromCart(i.id);
+    box.appendChild(row);
+  });
+  $("#cartTotal").textContent=money(cartTotal());
+}
+
+/* ====================== Checkout ====================== */
+function renderPay(){
+  const list=$("#payList"); list.innerHTML="";
+  const opts=[
+    {k:"vodafone", ic:"📱", name:t("pay_vod"), det:PAYMENT.vodafone},
+    {k:"instapay", ic:"💳", name:t("pay_inst"), det:PAYMENT.instapay},
+    {k:"bank", ic:"🏦", name:t("pay_bank"), det:PAYMENT.bank.replace(/\n/g," · ")},
+    {k:"whatsapp", ic:"💬", name:t("pay_wa"), det:t("pay_wa_det")}
+  ];
+  opts.forEach(o=>{
+    const el=document.createElement("div"); el.className="pay"; el.dataset.k=o.k;
+    el.innerHTML=`<div class="ic">${o.ic}</div><div class="det"><b>${o.name}</b><span>${o.det}</span></div>`;
+    el.onclick=()=>{ selectedPay=o.k; $$("#payList .pay").forEach(x=>x.classList.remove("sel")); el.classList.add("sel"); };
+    list.appendChild(el);
+  });
+}
+function buildOrderText(){
+  const lines=[];
+  lines.push(LANG==="ar"?"*طلب جديد — وَنَس*":"*New Order — WANAS*");
+  lines.push("");
+  CART.forEach(i=>{ const p=DATA.products.find(x=>x.id===i.id);
+    lines.push(`• ${LANG==="ar"?p.ar:p.en} × ${i.qty} = ${money(p.price*i.qty)}`); });
+  lines.push("");
+  lines.push((LANG==="ar"?"الإجمالي: ":"Total: ")+money(cartTotal()));
+  lines.push("");
+  const payName = {vodafone:t("pay_vod"),instapay:t("pay_inst"),bank:t("pay_bank"),whatsapp:t("pay_wa")}[selectedPay]||"";
+  lines.push((LANG==="ar"?"طريقة الدفع: ":"Payment: ")+payName);
+  if(selectedPay==="vodafone") lines.push("Vodafone Cash: "+PAYMENT.vodafone);
+  if(selectedPay==="instapay") lines.push("InstaPay: "+PAYMENT.instapay);
+  if(selectedPay==="bank") lines.push(PAYMENT.bank);
+  lines.push("");
+  lines.push((LANG==="ar"?"الاسم: ":"Name: ")+($("#custName").value||"-"));
+  lines.push((LANG==="ar"?"التليفون: ":"Phone: ")+($("#custPhone").value||"-"));
+  lines.push((LANG==="ar"?"العنوان: ":"Address: ")+($("#custAddr").value||"-"));
+  lines.push((LANG==="ar"?"ملاحظات: ":"Notes: ")+($("#custNote").value||"-"));
+  return lines.join("\n");
+}
+function validateOrder(){
+  if(!selectedPay){ toast(t("no_pay")); return false; }
+  if(!$("#custName").value || !$("#custPhone").value){ toast(t("fill_fields")); return false; }
+  return true;
+}
+function sendWhatsApp(){
+  if(!validateOrder()) return;
+  const txt=encodeURIComponent(buildOrderText());
+  const url=`https://wa.me/${PAYMENT.whatsapp.replace(/[^0-9]/g,"")}?text=${txt}`;
+  window.open(url,"_blank");
+  toast(t("order_sent"));
+}
+function sendEmail(){
+  if(!validateOrder()) return;
+  const subject=encodeURIComponent(LANG==="ar"?"طلب جديد — وَنَس":"New Order — WANAS");
+  const body=encodeURIComponent(buildOrderText());
+  window.location.href=`mailto:${PAYMENT.email}?subject=${subject}&body=${body}`;
+  toast(t("order_sent"));
+}
+
+/* ====================== Admin ====================== */
+let adminUnlocked=false;
+function toggleAdmin(){
+  if(adminUnlocked){ $("#adminPanel").classList.add("hidden"); }
+  else{
+    const pw=prompt(LANG==="ar"?"كلمة دخول لوحة التحكم:":"Dashboard password:");
+    if(pw==="wanas123"){ adminUnlocked=true; $("#adminPanel").classList.remove("hidden"); toast(t("login_ok")); }
+    else if(pw!==null){ toast(t("login_fail")); return; }
+    else return;
+  }
+  renderAdmin();
+}
+function renderAdmin(){
+  // categories
+  const cl=$("#catList"); cl.innerHTML="";
+  DATA.categories.forEach(c=>{
+    const row=document.createElement("div"); row.className="list-item";
+    row.innerHTML=`<span class="nm">${c.ar} / ${c.en}</span>
+      <button class="btn ghost sm ed-cat">${t("edit")}</button>
+      <button class="btn danger sm del-cat">${t("delete")}</button>`;
+    row.querySelector(".del-cat").onclick=()=>{ DATA.categories=DATA.categories.filter(x=>x.id!==c.id); DATA.products=DATA.products.filter(p=>p.cat!==c.id); saveData(); renderAdmin(); renderCats(); renderProducts(); };
+    row.querySelector(".ed-cat").onclick=()=>{ const a=prompt(t("cat_ar_ph"),c.ar); const e=prompt(t("cat_en_ph"),c.en); if(a!=null&&e!=null){c.ar=a;c.en=e;saveData();renderAdmin();renderCats();renderProducts();} };
+    cl.appendChild(row);
+  });
+  // product cat select
+  const pc=$("#prodCat"); pc.innerHTML="";
+  DATA.categories.forEach(c=>{ const o=document.createElement("option"); o.value=c.id; o.textContent=c.ar+" / "+c.en; pc.appendChild(o); });
+  // products
+  const pl=$("#prodList"); pl.innerHTML="";
+  DATA.products.forEach(p=>{
+    const cat=DATA.categories.find(c=>c.id===p.cat);
+    const row=document.createElement("div"); row.className="list-item";
+    row.innerHTML=`<span class="nm">${p.ar} / ${p.en} — ${money(p.price)} ${cat?("("+(LANG==="ar"?cat.ar:cat.en)+")"):""}</span>
+      <button class="btn ghost sm ed-prod">${t("edit")}</button>
+      <button class="btn danger sm del-prod">${t("delete")}</button>`;
+    row.querySelector(".del-prod").onclick=()=>{ DATA.products=DATA.products.filter(x=>x.id!==p.id); saveData(); renderAdmin(); renderProducts(); };
+    row.querySelector(".ed-prod").onclick=()=>{
+      const ar=prompt(t("prod_ar_ph"),p.ar); if(ar==null)return;
+      const en=prompt(t("prod_en_ph"),p.en); if(en==null)return;
+      const da=prompt(t("prod_desc_ar_ph"),p.descAr); if(da==null)return;
+      const de=prompt(t("prod_desc_en_ph"),p.descEn); if(de==null)return;
+      const pr=prompt(t("price_ph"),p.price); if(pr==null)return;
+      const im=prompt(t("emoji_ph"),p.img); if(im==null)return;
+      Object.assign(p,{ar,en,descAr:da,descEn:de,price:Number(pr)||0,img:im}); saveData(); renderAdmin(); renderProducts();
+    };
+    pl.appendChild(row);
+  });
+}
+function addCategory(){
+  const ar=$("#newCatAr").value.trim(), en=$("#newCatEn").value.trim();
+  if(!ar||!en){ toast(t("fill_fields")); return; }
+  DATA.categories.push({id:uid(),ar,en}); saveData();
+  $("#newCatAr").value=""; $("#newCatEn").value=""; renderAdmin(); renderCats();
+}
+function addProduct(){
+  const cat=$("#prodCat").value; if(!cat){ toast(t("fill_fields")); return; }
+  const ar=$("#prodAr").value.trim(), en=$("#prodEn").value.trim();
+  const descAr=$("#prodDescAr").value.trim(), descEn=$("#prodDescEn").value.trim();
+  const price=Number($("#prodPrice").value)||0, img=$("#prodEmoji").value.trim()||"📦";
+  if(!ar||!en){ toast(t("fill_fields")); return; }
+  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,img}); saveData();
+  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodEmoji"].forEach(id=>$("#"+id).value="");
+  renderAdmin(); renderProducts();
+}
+
+/* ====================== Events ====================== */
+function bind(){
+  $("#langBtn").onclick=()=>{ LANG = LANG==="ar"?"en":"ar"; localStorage.setItem("wanas_lang",LANG); applyLang(); renderCats(); renderProducts(); renderCart(); if(adminUnlocked) renderAdmin(); };
+  $("#cartBtn").onclick=()=>openDrawer(true);
+  $("#closeCart").onclick=()=>openDrawer(false);
+  $("#overlay").onclick=()=>{ openDrawer(false); closeModal(); };
+  $("#checkoutBtn").onclick=()=>{ if(!CART.length){toast(t("empty_cart"));return;} renderPay(); renderOrderSummary(); openModal(); };
+  $("#closeCheckout").onclick=()=>closeModal();
+  $("#sendOrderBtn").onclick=sendWhatsApp;
+  $("#sendMailBtn").onclick=sendEmail;
+  $("#adminBtn").onclick=toggleAdmin;
+  $("#addCatBtn").onclick=addCategory;
+  $("#addProdBtn").onclick=addProduct;
+  $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
+}
+function openDrawer(o){ $("#cartDrawer").classList.toggle("open",o); $("#overlay").classList.toggle("show",o); }
+function openModal(){ $("#checkoutModal").classList.add("show"); }
+function closeModal(){ $("#checkoutModal").classList.remove("show"); }
+function renderOrderSummary(){
+  const box=$("#orderSummary"); box.innerHTML="";
+  CART.forEach(i=>{ const p=DATA.products.find(x=>x.id===i.id);
+    const d=document.createElement("div"); d.className="ci"; d.style.border="none";
+    const imgHtml=(p.img&&p.img.startsWith("http"))?`<img src="${p.img}" alt="">`:(p.img||"📦");
+    d.innerHTML=`<div class="ci-ph">${imgHtml}</div><div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>×${i.qty} = ${money(p.price*i.qty)}</div>`;
+    box.appendChild(d);
+  });
+}
+
+/* ====================== Init ====================== */
+function init(){
+  $("#year").textContent=new Date().getFullYear();
+  applyLang(); renderCats(); renderProducts(); renderCart(); updateCartCount(); bind();
+}
+init();
+</script>
+</body>
+</html>
