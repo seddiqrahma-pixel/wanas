@@ -19,6 +19,7 @@
   .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
   .logo .mark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d9a441,#b9792b);color:#fff;font-weight:700;font-size:20px}
+  .logo .logo-img{height:42px;width:auto}
   .logo small{font-weight:600;color:var(--muted);font-size:.8rem}
   .spacer{flex:1}
   .btn{border:none;cursor:pointer;background:var(--brand);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
@@ -30,6 +31,7 @@
   .cart-btn{position:relative}
   .cart-count{position:absolute;top:-7px;left:-7px;background:var(--danger);color:#fff;border-radius:50%;min-width:20px;height:20px;font-size:.72rem;display:grid;place-items:center;padding:0 4px}
   .hero{padding:48px 0 28px;text-align:center}
+  .hero-logo{height:150px;width:auto;margin-bottom:14px;filter:drop-shadow(0 8px 20px rgba(125,90,46,.18))}
   .hero h1{font-size:2.4rem;margin:0 0 8px;color:var(--brand2)}
   .hero p{color:var(--muted);font-size:1.1rem;margin:0}
   .section-title{font-size:1.4rem;margin:30px 0 14px;color:var(--brand2)}
@@ -96,6 +98,7 @@
 <header class="nav">
   <div class="nav-in">
     <a class="logo" href="#">
+      <img class="logo-img" src="logo.png" alt="وَنَس" />
       <span class="mark">و</span>
       <span data-i18n="brand">وَنَس <small data-i18n="brand_en">WANAS</small></span>
     </a>
@@ -111,6 +114,7 @@
 
 <!-- HERO -->
 <section class="hero wrap">
+  <img class="hero-logo" src="logo.png" alt="وَنَس" />
   <h1 data-i18n="hero_title">راحة بالك تبدأ من هنا</h1>
   <p data-i18n="hero_sub">منتجات وَنَس — جودة تهدي بالك</p>
 </section>
@@ -197,9 +201,44 @@
   </div>
 </div>
 
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal" id="editProdModal">
+  <div class="box">
+    <button class="close" id="editProdClose">✕</button>
+    <h2 data-i18n="edit_product">تعديل المنتج</h2>
+    <input type="hidden" id="editProdId">
+    <div class="row">
+      <input class="field" id="editProdAr" placeholder="اسم المنتج عربي" data-i18n-ph="prod_ar_ph">
+      <input class="field" id="editProdEn" placeholder="Product (EN)" data-i18n-ph="prod_en_ph">
+    </div>
+    <div class="row">
+      <input class="field" id="editProdDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
+      <input class="field" id="editProdDescEn" placeholder="Description (EN)" data-i18n-ph="prod_desc_en_ph">
+    </div>
+    <div class="row">
+      <input class="field" id="editProdPrice" type="number" placeholder="السعر (EGP)" data-i18n-ph="price_ph">
+      <input class="field" id="editProdImg" placeholder="إيموجي/رابط صورة" data-i18n-ph="emoji_ph">
+    </div>
+    <button class="btn" id="editProdSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
+  </div>
+</div>
+
+<!-- EDIT CATEGORY MODAL -->
+<div class="modal" id="editCatModal">
+  <div class="box" style="max-width:360px">
+    <button class="close" id="editCatClose">✕</button>
+    <h2 data-i18n="edit_category">تعديل الصنف</h2>
+    <input type="hidden" id="editCatId">
+    <div class="row">
+      <input class="field" id="editCatAr" placeholder="اسم الصنف بالعربي" data-i18n-ph="cat_ar_ph">
+      <input class="field" id="editCatEn" placeholder="Category (EN)" data-i18n-ph="cat_en_ph">
+    </div>
+    <button class="btn" id="editCatSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
+  </div>
+</div>
+
 <!-- ADMIN LOGIN MODAL -->
 <div class="modal" id="adminLoginModal">
-  <div class="box" style="max-width:360px">
     <button class="close" id="adminLoginClose">✕</button>
     <h2 data-i18n="admin_login_title">دخول لوحة التحكم</h2>
     <input class="field" id="adminPass" type="password" placeholder="كلمة الدخول" data-i18n-ph="admin_pass_ph" autocomplete="off">
@@ -209,6 +248,7 @@
 </div>
 
 <footer class="foot">
+  <img src="logo-icon.png" alt="وَنَس" style="height:46px;margin-bottom:8px" />
   <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
   <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
 </footer>
@@ -238,7 +278,8 @@ const I18N = {
     note_ph:"أي ملاحظة على الطلب",
     empty_cart:"السلة فاضية", empty_store:"لا توجد منتجات بعد",
     add:"أضف للسلة", remove:"حذف", edit:"تعديل", delete:"مسح",
-    all:"الكل", save:"حفظ", cancel:"إلغاء",
+ all:"الكل", save:"حفظ", cancel:"إلغاء",
+ edit_product:"تعديل المنتج", edit_category:"تعديل الصنف",
     pay_vod:"فودافون كاش", pay_vod_det:"حول المبلغ على الرقم",
     pay_inst:"إنستا باي", pay_inst_det:"التحويل لاسم المستخدم",
     pay_bank:"تحويل بنكي", pay_bank_det:"بيانات الحساب البنكي",
@@ -269,7 +310,8 @@ const I18N = {
     note_ph:"Any order note",
     empty_cart:"Cart is empty", empty_store:"No products yet",
     add:"Add to cart", remove:"Remove", edit:"Edit", delete:"Delete",
-    all:"All", save:"Save", cancel:"Cancel",
+ all:"All", save:"Save", cancel:"Cancel",
+ edit_product:"Edit product", edit_category:"Edit category",
     pay_vod:"Vodafone Cash", pay_vod_det:"Transfer to number",
     pay_inst:"InstaPay", pay_inst_det:"Transfer to username",
     pay_bank:"Bank Transfer", pay_bank_det:"Bank account details",
@@ -494,7 +536,7 @@ function renderAdmin(){
       <button class="btn ghost sm ed-cat">${t("edit")}</button>
       <button class="btn danger sm del-cat">${t("delete")}</button>`;
     row.querySelector(".del-cat").onclick=()=>{ DATA.categories=DATA.categories.filter(x=>x.id!==c.id); DATA.products=DATA.products.filter(p=>p.cat!==c.id); saveData(); renderAdmin(); renderCats(); renderProducts(); };
-    row.querySelector(".ed-cat").onclick=()=>{ const a=prompt(t("cat_ar_ph"),c.ar); const e=prompt(t("cat_en_ph"),c.en); if(a!=null&&e!=null){c.ar=a;c.en=e;saveData();renderAdmin();renderCats();renderProducts();} };
+    row.querySelector(".ed-cat").onclick=()=>openEditCat(c.id);
     cl.appendChild(row);
   });
   // product cat select
@@ -509,17 +551,36 @@ function renderAdmin(){
       <button class="btn ghost sm ed-prod">${t("edit")}</button>
       <button class="btn danger sm del-prod">${t("delete")}</button>`;
     row.querySelector(".del-prod").onclick=()=>{ DATA.products=DATA.products.filter(x=>x.id!==p.id); saveData(); renderAdmin(); renderProducts(); };
-    row.querySelector(".ed-prod").onclick=()=>{
-      const ar=prompt(t("prod_ar_ph"),p.ar); if(ar==null)return;
-      const en=prompt(t("prod_en_ph"),p.en); if(en==null)return;
-      const da=prompt(t("prod_desc_ar_ph"),p.descAr); if(da==null)return;
-      const de=prompt(t("prod_desc_en_ph"),p.descEn); if(de==null)return;
-      const pr=prompt(t("price_ph"),p.price); if(pr==null)return;
-      const im=prompt(t("emoji_ph"),p.img); if(im==null)return;
-      Object.assign(p,{ar,en,descAr:da,descEn:de,price:Number(pr)||0,img:im}); saveData(); renderAdmin(); renderProducts();
-    };
+    row.querySelector(".ed-prod").onclick=()=>openEditProd(p.id);
     pl.appendChild(row);
   });
+}
+function openEditCat(id){
+  const c=DATA.categories.find(x=>x.id===id); if(!c) return;
+  $("#editCatId").value=c.id; $("#editCatAr").value=c.ar; $("#editCatEn").value=c.en;
+  $("#editCatModal").classList.add("show");
+}
+function saveEditCat(){
+  const id=$("#editCatId").value, ar=$("#editCatAr").value.trim(), en=$("#editCatEn").value.trim();
+  if(!ar||!en){ toast(t("fill_fields")); return; }
+  const c=DATA.categories.find(x=>x.id===id); if(c){ c.ar=ar; c.en=en; }
+  saveData(); $("#editCatModal").classList.remove("show"); renderAdmin(); renderCats(); renderProducts();
+}
+function openEditProd(id){
+  const p=DATA.products.find(x=>x.id===id); if(!p) return;
+  $("#editProdId").value=p.id; $("#editProdAr").value=p.ar; $("#editProdEn").value=p.en;
+  $("#editProdDescAr").value=p.descAr||""; $("#editProdDescEn").value=p.descEn||"";
+  $("#editProdPrice").value=p.price; $("#editProdImg").value=p.img||"";
+  $("#editProdModal").classList.add("show");
+}
+function saveEditProd(){
+  const id=$("#editProdId").value;
+  const ar=$("#editProdAr").value.trim(), en=$("#editProdEn").value.trim();
+  const descAr=$("#editProdDescAr").value.trim(), descEn=$("#editProdDescEn").value.trim();
+  const price=Number($("#editProdPrice").value)||0, img=$("#editProdImg").value.trim()||"📦";
+  if(!ar||!en){ toast(t("fill_fields")); return; }
+  const p=DATA.products.find(x=>x.id===id); if(p){ Object.assign(p,{ar,en,descAr,descEn,price,img}); }
+  saveData(); $("#editProdModal").classList.remove("show"); renderAdmin(); renderProducts();
 }
 function addCategory(){
   const ar=$("#newCatAr").value.trim(), en=$("#newCatEn").value.trim();
@@ -554,6 +615,10 @@ function bind(){
   $("#adminLoginBtn").onclick=tryAdminLogin;
   $("#adminLoginClose").onclick=()=>{ $("#adminLoginModal").classList.remove("show"); };
   $("#adminPass").addEventListener("keydown",e=>{ if(e.key==="Enter") tryAdminLogin(); });
+  $("#editCatSave").onclick=saveEditCat;
+  $("#editCatClose").onclick=()=>{ $("#editCatModal").classList.remove("show"); };
+  $("#editProdSave").onclick=saveEditProd;
+  $("#editProdClose").onclick=()=>{ $("#editProdModal").classList.remove("show"); };
   $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
 }
 function openDrawer(o){ $("#cartDrawer").classList.toggle("open",o); $("#overlay").classList.toggle("show",o); }
