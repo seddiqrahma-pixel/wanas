@@ -268,6 +268,10 @@
 <footer class="foot">
   <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
   <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
+  <div style="margin-top:8px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="https://instagram.com/wanas.candles" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2)">📷 إنستجرام: @wanas.candles</a>
+    <a href="https://www.facebook.com/profile.php?id=100089019817213" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2)">📘 فيسبوك: وَنَس</a>
+  </div>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -356,24 +360,27 @@ function defaultData(){
   return {
     categories:[
       {id:"c1", ar:"شموع", en:"Candles"},
-      {id:"c2", ar:"ورود وصابون", en:"Flowers & Soap"},
-      {id:"c3", ar:"هدايا تخصصية", en:"Specialty Gifts"}
+      {id:"c2", ar:"برطمانات", en:"Jars"},
+      {id:"c3", ar:"هدايا", en:"Gifts"}
     ],
     products:[
-      // شموع
-      {id:"p1", cat:"c1", ar:"شمعة العنبر بشرائح البرتقال", en:"Amber & Orange Candle", descAr:"شمعة صويا في جرة زجاجية مع شرائح برتقال مجفف ورائحة العنبر الدافئ.", descEn:"Soy candle in a glass jar with dried orange slices and warm amber scent.", price:180, img:"fb_photos/p01_amber_jar.jpg"},
-      {id:"p2", cat:"c1", ar:"شمعة وردة حمراء", en:"Red Rose Candle", descAr:"شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور وعطر.", descEn:"Hand-carved red rose-shaped candle — decor and scent.", price:150, img:"fb_photos/p02_rose_candle.jpg"},
-      {id:"p3", cat:"c1", ar:"شمعة السحابة", en:"Cloud Candle", descAr:"شمعة جيل على شكل سحابة برائحة هادئة تناسب أجواء الهدوء.", descEn:"Gel cloud-shaped candle with a calm, cozy scent.", price:200, img:"fb_photos/p03_cloud_candle.jpg"},
-      {id:"p4", cat:"c1", ar:"شمعة زهرية", en:"Floral Candle", descAr:"شمعة على شكل زهرة بلون أرجواني برائحة زهرية فاخرة.", descEn:"Purple floral-shaped candle with a premium floral scent.", price:160, img:"fb_photos/p06_floral_candle.jpg"},
-      {id:"p5", cat:"c1", ar:"شمعة التمر", en:"Date Candle", descAr:"شمعة بلمسة رمضانية بتمر مجفف فوق شمع الصويا.", descEn:"Ramadan-style candle with dried dates on soy wax.", price:170, img:"fb_photos/p09_date_candle.jpg"},
-      {id:"p6", cat:"c1", ar:"شمعة المسجد", en:"Mosque Candle", descAr:"شمعة مزخرفة على شكل عمارة إسلامية — قطعة ديكور فريدة.", descEn:"Decorative candle shaped like an Islamic arch — a unique decor piece.", price:190, img:"fb_photos/p10_mosque_candle.jpg"},
-      {id:"p7", cat:"c1", ar:"شمعة فنجان القهوة", en:"Coffee Cup Candle", descAr:"شمعة على شكل فنجان قهوة بحبوب بن ومظهر دافئ.", descEn:"Coffee-cup shaped candle with beans — a warm look.", price:160, img:"fb_photos/p11_coffee_cup_candle.jpg"},
-      // ورود وصابون
-      {id:"p8", cat:"c2", ar:"باقة الورد", en:"Flower Bouquet", descAr:"باقة ورد (صابون/شمع) مغلفة بورق وردي فخم مع ريبان — هدية لكل مناسبة.", descEn:"Flower bouquet (soap/wax) in elegant pink wrap with ribbon.", price:280, img:"fb_photos/p04_flower_bouquet.jpg"},
-      {id:"p9", cat:"c2", ar:"صابون الورود", en:"Soap Roses", descAr:"صابون طبيعي على شكل ورود حمراء بلمسة أعشاب — هدية عملية وجميلة.", descEn:"Natural soap shaped like red roses with herbal touch.", price:140, img:"fb_photos/p05_soap_rose.jpg"},
-      {id:"p10", cat:"c2", ar:"بوكيه الشموع", en:"Candle Bouquet", descAr:"بوكيه من شموع على شكل ورد متعدد الألوان — هدية تضيء المكان.", descEn:"Bouquet of multi-color flower-shaped candles — a gift that lights up.", price:300, img:"fb_photos/p07_candle_bouquet.jpg"},
-      // هدايا تخصصية
-      {id:"p11", cat:"c3", ar:"قرص الشمع المعطر", en:"Scented Wax Tablet", descAr:"قرص شمع معطر معلق برائحة تملأ الدولاب والسيارة.", descEn:"Hanging scented wax tablet for closets and cars.", price:90, img:"fb_photos/p08_wax_tablet.jpg"}
+      // شموع (Candles)
+      {id:"p1", cat:"c1", ar:"فواحة دولاب", en:"Wardrobe Diffuser", descAr:"فواحة معطرة تعلق في الدولاب أو السيارة وتفوح رائحة هادئة تدوم.", descEn:"Hanging scented tablet for closet or car with a long-lasting calm fragrance.", price:45, img:"products/p_wardrobe_diffuser.jpg"},
+      {id:"p2", cat:"c1", ar:"سحابة وسط", en:"Cloud Candle (Medium)", descAr:"شمعة جيل على شكل سحابة بمشهد بحري — أجواء هدوء وراحة.", descEn:"Gel cloud candle with an ocean scene — calm, cozy vibes.", price:69, img:"products/p_cloud_mid.jpg"},
+      {id:"p3", cat:"c1", ar:"وردة بلدي", en:"Baladi Rose Candle", descAr:"شمعة منحوتة على شكل وردة بلدي بألوان هادية ورائحة زهرية.", descEn:"Hand-carved baladi rose candle in soft tones with a floral scent.", price:60, img:"products/p_baladi_rose.jpg"},
+      {id:"p4", cat:"c1", ar:"عدد 2 كلاسيك طويل", en:"Classic Long Candles (x2)", descAr:"شمعتان طويلتان كلاسيك مزينتان بقلوب حمراء — لكل المناسبات.", descEn:"Two long classic taper candles decorated with red hearts.", price:120, img:"products/p_classic_long_2.jpg"},
+      {id:"p5", cat:"c1", ar:"كرة صوف", en:"Wool Ball Candle", descAr:"شمعة على شكل كرة صوف برائحة دافئة تناسب الديكور المنزلي.", descEn:"Wool-ball shaped candle with a warm, cozy scent.", price:75, img:"products/p_wool_ball.jpg"},
+      {id:"p6", cat:"c1", ar:"سحابة كبيرة", en:"Cloud Candle (Large)", descAr:"شمعة جيل كبيرة على شكل سحابة بمشهد شاطئي — قطعة ديكور فريدة.", descEn:"Large gel cloud candle with a beach scene — a unique decor piece.", price:110, img:"products/p_cloud_big.jpg"},
+      {id:"p7", cat:"c1", ar:"موجة", en:"Wave Candle", descAr:"شمعة على شكل موجة بألوان هادية تضيف لمسة فنية لأي ركن.", descEn:"Wave-shaped candle in calm colors for an artistic touch.", price:120, img:"products/p_wave.jpg"},
+      {id:"p8", cat:"c1", ar:"وردة جوري كبير", en:"Large Jori Rose Candle", descAr:"شمعة وردة جوري كبيرة حمراء — قطعة ديكور جريئة تلفت النظر.", descEn:"Large red jori rose candle — a bold decor statement.", price:115, img:"products/p_big_rose.jpg"},
+      {id:"p9", cat:"c1", ar:"بابل كبيرة", en:"Large Bubble Candle", descAr:"شمعة بابل كبيرة بشكل عصري — اختيار عصري لهدية مميزة.", descEn:"Large modern bubble candle — a stylish gift choice.", price:165, img:"products/p_bubble_big.jpg"},
+      {id:"p10", cat:"c1", ar:"فانوس", en:"Lantern Candle", descAr:"شمعة على شكل فانوس مع هلال — لمسة رمضانية دافئة.", descEn:"Lantern-shaped candle with crescent — a warm Ramadan touch.", price:165, img:"products/p_lantern.jpg"},
+      // برطمانات (Jars)
+      {id:"p11", cat:"c2", ar:"برطمان 100", en:"Jar 100", descAr:"شمعة صويا في برطمان زجاجي 100 — رائحة طبيعية دافئة تحترق ببطء.", descEn:"Soy candle in a 100 jar with a warm natural scent that burns slowly.", price:169, img:"products/p_jar_100.jpg"},
+      {id:"p12", cat:"c2", ar:"برطمان 150", en:"Jar 150", descAr:"شمعة صويا في برطمان زجاجي 150 بديكور زرعي طبيعي.", descEn:"Soy candle in a 150 jar with natural botanical decor.", price:229, img:"products/p_jar_150.jpg"},
+      {id:"p13", cat:"c3", ar:"بونبونيره 75", en:"Bonbonniere 75", descAr:"بونبونيره وردية بحامل خشبي — هدية زفاف أو مناسبة مميزة.", descEn:"Pink rose bonbonniere on a wooden stick — a wedding or occasion favor.", price:181, img:"products/p_bonboniere_75.jpg"},
+      {id:"p14", cat:"c2", ar:"برطمان 250", en:"Jar 250", descAr:"شمعة صويا فاخرة في برطمان خشبي 250 بلمسة ذهبية.", descEn:"Premium soy candle in a wooden-lid 250 jar with a gold touch.", price:400, img:"products/p_jar_250.jpg"},
+      {id:"p15", cat:"c2", ar:"برطمان 380", en:"Jar 380", descAr:"شمعة متعددة الفتائل في برطمان كبير 380 — إضاءة دافئة للغرف.", descEn:"Multi-wick soy candle in a large 380 jar — warm room lighting.", price:600, img:"products/p_jar_380.jpg"}
     ]
   };
 }
