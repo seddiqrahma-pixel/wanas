@@ -312,36 +312,36 @@ const I18N = {
     admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
   },
   en:{
-    brand:"وَنَس", brand_en:"وَنَس", admin:"لوحة التحكم", cart:"السلة",
-    hero_title:"راحة بالك تبدأ من هنا", hero_sub:"منتجات وَنَس — جودة تهدي بالك",
-    products:"المنتجات", admin_panel:"إدارة الأصناف والمنتجات",
-    admin_hint:"التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123",
-    cats:"الأصناف", add_cat:"+ إضافة صنف",
-    prods:"المنتجات", add_prod:"+ إضافة منتج",
-    reset:"استعادة البيانات الافتراضية",
-    total:"الإجمالي", checkout:"إتمام الطلب",
-    order_title:"تأكيد الطلب", pay_method:"طريقة الدفع",
-    cust_name:"الاسم", cust_phone:"رقم الهاتف", cust_addr:"العنوان (للشحن)", cust_note:"ملاحظات",
-    send_order:"إرسال الطلب (واتساب)", send_mail:"إرسال عبر الإيميل",
-    cat_ar_ph:"اسم الصنف بالعربي", cat_en_ph:"اسم الصنف (إنجليزي)",
-    prod_ar_ph:"اسم المنتج عربي", prod_en_ph:"اسم المنتج (إنجليزي)",
-    prod_desc_ar_ph:"وصف عربي", prod_desc_en_ph:"وصف (إنجليزي)",
-    price_ph:"السعر", emoji_ph:"إيموجي/رابط صورة",
-    name_ph:"اكتب اسمك", phone_ph:"01xxxxxxxxx", addr_ph:"المحافظة / العنوان التفصيلي",
-    note_ph:"أي ملاحظة على الطلب",
-    empty_cart:"السلة فاضية", empty_store:"لا توجد منتجات بعد",
-    add:"أضف للسلة", remove:"حذف", edit:"تعديل", delete:"مسح",
-    all:"الكل", save:"حفظ", cancel:"إلغاء",
-    edit_product:"تعديل المنتج", edit_category:"تعديل الصنف",
-    pay_vod:"فودافون كاش", pay_vod_det:"حول المبلغ على الرقم",
-    pay_inst:"إنستا باي", pay_inst_det:"التحويل لاسم المستخدم",
-    pay_bank:"تحويل بنكي", pay_bank_det:"بيانات الحساب البنكي",
-    pay_wa:"طلب عبر واتساب", pay_wa_det:"بدون دفع أونلاين — نراجع طلبك ونأكد",
-    order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املى البيانات المطلوبة أولاً",
-    login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
-    confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
-    no_pay:"اختار طريقة دفع",
-    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
+    brand:"وَنَس", brand_en:"وَنَس", admin:"Admin Panel", cart:"Cart",
+    hero_title:"Peace of mind starts here", hero_sub:"Wanas products — quality that soothes your soul",
+    products:"Products", admin_panel:"Manage Categories & Products",
+    admin_hint:"Changes are saved on your device only (LocalStorage). Password: wanas123",
+    cats:"Categories", add_cat:"+ Add Category",
+    prods:"Products", add_prod:"+ Add Product",
+    reset:"Restore default data",
+    total:"Total", checkout:"Checkout",
+    order_title:"Confirm Order", pay_method:"Payment Method",
+    cust_name:"Name", cust_phone:"Phone", cust_addr:"Address (shipping)", cust_note:"Notes",
+    send_order:"Send Order (WhatsApp)", send_mail:"Send via Email",
+    cat_ar_ph:"Category name (Arabic)", cat_en_ph:"Category name (English)",
+    prod_ar_ph:"Product name (Arabic)", prod_en_ph:"Product name (English)",
+    prod_desc_ar_ph:"Description (Arabic)", prod_desc_en_ph:"Description (English)",
+    price_ph:"Price", emoji_ph:"Emoji/Image URL",
+    name_ph:"Enter your name", phone_ph:"01xxxxxxxxx", addr_ph:"Governorate / detailed address",
+    note_ph:"Any note about the order",
+    empty_cart:"Cart is empty", empty_store:"No products yet",
+    add:"Add to cart", remove:"Remove", edit:"Edit", delete:"Delete",
+    all:"All", save:"Save", cancel:"Cancel",
+    edit_product:"Edit Product", edit_category:"Edit Category",
+    pay_vod:"Vodafone Cash", pay_vod_det:"Transfer the amount to the number",
+    pay_inst:"InstaPay", pay_inst_det:"Transfer to the username",
+    pay_bank:"Bank Transfer", pay_bank_det:"Bank account details",
+    pay_wa:"Order via WhatsApp", pay_wa_det:"No online payment — we review and confirm your order",
+    order_sent:"Order message ready ✅", fill_fields:"Fill the required fields first",
+    login_ok:"Logged into admin panel", login_fail:"Wrong password",
+    confirm_reset:"Sure you want to restore default data?",
+    no_pay:"Choose a payment method",
+    admin_login_title:"Admin Login", admin_pass_ph:"Password", admin_login_btn:"Login"
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
@@ -408,12 +408,13 @@ function t(key){ return (I18N[LANG]&&I18N[LANG][key]) || key; }
 function money(n){ return n + " جنيه"; }
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
 function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
+function isImg(v){ return typeof v==="string" && (v.startsWith("http")||/\.(jpe?g|png|gif|webp|svg)$/i.test(v)); }
 
 /* ====================== Render i18n ====================== */
 function applyLang(){
-  document.documentElement.lang = "ar";
-  document.documentElement.dir = "rtl";
-  $("#langBtn").textContent = "ع";
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = (LANG==="ar")?"rtl":"ltr";
+  $("#langBtn").textContent = (LANG==="ar")?"EN":"ع";
   $$("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.textContent=I18N[LANG][k]; });
   $$("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.placeholder=I18N[LANG][k]; });
 }
@@ -443,7 +444,7 @@ function renderProducts(){
     const cat = DATA.categories.find(c=>c.id===p.cat);
     const imgs = (p.imgs&&p.imgs.length)?p.imgs:[].filter(Boolean);
     const main = imgs[0]||"";
-    const imgHtml = main?`<img src="${main}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:"📦";
+    const imgHtml = (main && isImg(main))?`<img src="${main}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(main||"📦");
     const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb" data-pid="${p.id}" data-idx="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
     card.innerHTML=`
       <div class="ph" data-pid="${p.id}" data-idx="0">${imgHtml}${imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""}</div>
@@ -483,7 +484,7 @@ function renderCart(){
     const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
     const imgs=(p.imgs&&p.imgs.length)?p.imgs:[].filter(Boolean);
     const row=document.createElement("div"); row.className="ci";
-    const imgHtml=imgs[0]?`<img src="${imgs[0]}" alt="">`:"📦";
+    const imgHtml=(imgs[0]&&isImg(imgs[0]))?`<img src="${imgs[0]}" alt="">`:(imgs[0]||"📦");
     row.innerHTML=`
       <div class="ci-ph" data-pid="${p.id}" data-idx="0">${imgHtml}</div>
       <div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>${money(p.price)}</div>
@@ -558,9 +559,9 @@ function buildOrderText(){
   lines.push("");
   // 1) بيانات العميل
   lines.push(L?"*بيانات العميل:*":"*بيانات العميل:*");
-  lines.push(`• ${L?"الاسم":"الاسم"}: ${(("#custName").value||"-")}`);
-  lines.push(`• ${L?"التليفون":"التليفون"}: ${(("#custPhone").value||"-")}`);
-  lines.push(`• ${L?"العنوان":"العنوان"}: ${(("#custAddr").value||"-")}`);
+  lines.push(`• ${L?"الاسم":"الاسم"}: ${($("#custName").value||"-")}`);
+  lines.push(`• ${L?"التليفون":"التليفون"}: ${($("#custPhone").value||"-")}`);
+  lines.push(`• ${L?"العنوان":"العنوان"}: ${($("#custAddr").value||"-")}`);
   if($("#custNote").value) lines.push(`• ${L?"ملاحظات":"ملاحظات"}: ${$("#custNote").value}`);
   lines.push("");
   // 2) المنتجات
@@ -659,7 +660,7 @@ function openEditProd(id){
   const p=DATA.products.find(x=>x.id===id); if(!p) return;
   $("#editProdId").value=p.id; $("#editProdAr").value=p.ar; $("#editProdEn").value=p.en;
   $("#editProdDescAr").value=p.descAr||""; $("#editProdDescEn").value=p.descEn||"";
-  $("#editProdPrice").value=p.price; $("#editProdImg").value=p.img||"";
+  $("#editProdPrice").value=p.price; $("#editProdImg").value=(p.imgs&&p.imgs[0])?p.imgs[0]:(p.img||"");
   $("#editProdModal").classList.add("show");
 }
 function saveEditProd(){
@@ -668,7 +669,7 @@ function saveEditProd(){
   const descAr=$("#editProdDescAr").value.trim(), descEn=$("#editProdDescEn").value.trim();
   const price=Number($("#editProdPrice").value)||0, img=$("#editProdImg").value.trim()||"📦";
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  const p=DATA.products.find(x=>x.id===id); if(p){ Object.assign(p,{ar,en,descAr,descEn,price,img}); }
+  const p=DATA.products.find(x=>x.id===id); if(p){ delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:[img]}); }
   saveData(); $("#editProdModal").classList.remove("show"); renderAdmin(); renderProducts();
 }
 function addCategory(){
@@ -683,7 +684,7 @@ function addProduct(){
   const descAr=$("#prodDescAr").value.trim(), descEn=$("#prodDescEn").value.trim();
   const price=Number($("#prodPrice").value)||0, img=$("#prodEmoji").value.trim()||"📦";
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,img}); saveData();
+  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,imgs:[img]}); saveData();
   ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodEmoji"].forEach(id=>$("#"+id).value="");
   renderAdmin(); renderProducts();
 }
@@ -717,7 +718,7 @@ function renderOrderSummary(){
   const box=$("#orderSummary"); box.innerHTML="";
   CART.forEach(i=>{ const p=DATA.products.find(x=>x.id===i.id);
     const d=document.createElement("div"); d.className="ci"; d.style.border="none";
-    const imgHtml=(p.img&&p.img.startsWith("http"))?`<img src="${p.img}" alt="">`:(p.img||"📦");
+    const cur=(p.imgs&&p.imgs[0])?p.imgs[0]:(p.img||""); const imgHtml=(cur&&isImg(cur))?`<img src="${cur}" alt="">`:(cur||"📦");
     d.innerHTML=`<div class="ci-ph">${imgHtml}</div><div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>×${i.qty} = ${money(p.price*i.qty)}</div>`;
     box.appendChild(d);
   });
