@@ -1,10 +1,10 @@
-# Build/source assets (not for the live site)
+# Raw source assets (not needed for the live site — too many duplicates/large)
 fb_all/
 fb_live/
 fb_photos/
 review/
 fb_clean/
 fb_clean_all.zip
-fb_clean_ANALYSIS.txt
-review/
 NOTES.md
+.DS_Store
+dl_all.sh
