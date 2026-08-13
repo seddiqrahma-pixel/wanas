@@ -356,22 +356,24 @@ function defaultData(){
   return {
     categories:[
       {id:"c1", ar:"شموع", en:"Candles"},
-      {id:"c2", ar:"هدايا وورود", en:"Gifts & Flowers"},
-      {id:"c3", ar:"عطور المنزل", en:"Home Fragrance"}
+      {id:"c2", ar:"ورود وصابون", en:"Flowers & Soap"},
+      {id:"c3", ar:"هدايا تخصصية", en:"Specialty Gifts"}
     ],
     products:[
       // شموع
-      {id:"p1", cat:"c1", ar:"ونس العنبر", en:"Wanas Amber", descAr:"شمعة صويا في جرة زجاجية مع شرائح برتقال مجفف ورائحة العنبر الدافئ.", descEn:"Soy candle in a glass jar with dried orange slices and warm amber scent.", price:180, imgs:["fb_photos/img_12.jpg","fb_photos/img_2.jpg"]},
-      {id:"p2", cat:"c1", ar:"وردة ونس", en:"Wanas Rose", descAr:"شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور وعطر في آنٍ واحد.", descEn:"Hand-carved candle shaped like a red rose — decor and scent in one.", price:220, imgs:["fb_photos/img_10.jpg","fb_photos/img_7.jpg","fb_photos/img_8.jpg"]},
-      {id:"p3", cat:"c1", ar:"سحابة ونس", en:"Wanas Cloud", descAr:"شمعة على شكل سحابة ناعمة برائحة هادئة تناسب أجواء الهدوء.", descEn:"Soft cloud-shaped candle with a calm, cozy scent.", price:200, imgs:["fb_photos/cloud_candle.jpg","fb_photos/img_2.jpg"]},
-      {id:"p4", cat:"c1", ar:"ونس عطور (٤ فتائل)", en:"Wanas 4-Wick", descAr:"شمعة جرة زجاجية بأربع فتائل من خط ونس عطور لرائحة تملأ المكان.", descEn:"4-wick glass jar candle from the Wanas scent line — fills the room.", price:320, imgs:["fb_photos/img_11.jpg"]},
-      // هدايا وورود
-      {id:"p5", cat:"c2", ar:"باقة الونس الوردية", en:"Wanas Rose Bouquet", descAr:"بوكيه ورد (صابون/شمع) مغلف بورق وردي فخم مع ريبان — هدية لكل مناسبة.", descEn:"Flower bouquet (soap/wax) in elegant pink wrap with ribbon — a gift for every occasion.", price:280, imgs:["fb_photos/img_5.jpg","fb_photos/img_3.jpg","fb_photos/img_4.jpg"]},
-      {id:"p6", cat:"c2", ar:"صندوق الونس", en:"Wanas Gift Box", descAr:"صندوق هدايا متكامل مغلف بروبان شامبين لحظة خاصة لا تُنسى.", descEn:"Complete gift box wrapped in champagne ribbon for an unforgettable moment.", price:450, imgs:["fb_photos/img_6.jpg"]},
-      {id:"p7", cat:"c2", ar:"وردة الصابون", en:"Soap Rose", descAr:"صابون طبيعي على شكل ورود حمراء بلمسة أعشاب — هدية عملية وجميلة.", descEn:"Natural soap shaped like red roses with herbal touch — practical and pretty.", price:160, imgs:["fb_photos/img_9.jpg","fb_photos/img_8.jpg"]},
-      // عطور المنزل
-      {id:"p8", cat:"c3", ar:"عطر الونس", en:"Wanas Perfume", descAr:"عطر منزلي صغير (٣٠–٥٠ مل) من خط ونس عطور لمنزل يعبق بالدفء.", descEn:"Small home perfume (30-50ml) from the Wanas scent line for a warm home.", price:150, imgs:["fb_photos/img_11.jpg"]},
-      {id:"p9", cat:"c3", ar:"بخور الونس", en:"Wanas Bakhoor", descAr:"خليط بخور وروائح للمنزل يمنح أجواءً روحانية وهادئة.", descEn:"Bakhoor and home scent blend for a spiritual, calm atmosphere.", price:130, imgs:["fb_photos/bakhoor.jpg","fb_photos/img_2.jpg"]}
+      {id:"p1", cat:"c1", ar:"شمعة العنبر بشرائح البرتقال", en:"Amber & Orange Candle", descAr:"شمعة صويا في جرة زجاجية مع شرائح برتقال مجفف ورائحة العنبر الدافئ.", descEn:"Soy candle in a glass jar with dried orange slices and warm amber scent.", price:180, img:"fb_photos/p01_amber_jar.jpg"},
+      {id:"p2", cat:"c1", ar:"شمعة وردة حمراء", en:"Red Rose Candle", descAr:"شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور وعطر.", descEn:"Hand-carved red rose-shaped candle — decor and scent.", price:150, img:"fb_photos/p02_rose_candle.jpg"},
+      {id:"p3", cat:"c1", ar:"شمعة السحابة", en:"Cloud Candle", descAr:"شمعة جيل على شكل سحابة برائحة هادئة تناسب أجواء الهدوء.", descEn:"Gel cloud-shaped candle with a calm, cozy scent.", price:200, img:"fb_photos/p03_cloud_candle.jpg"},
+      {id:"p4", cat:"c1", ar:"شمعة زهرية", en:"Floral Candle", descAr:"شمعة على شكل زهرة بلون أرجواني برائحة زهرية فاخرة.", descEn:"Purple floral-shaped candle with a premium floral scent.", price:160, img:"fb_photos/p06_floral_candle.jpg"},
+      {id:"p5", cat:"c1", ar:"شمعة التمر", en:"Date Candle", descAr:"شمعة بلمسة رمضانية بتمر مجفف فوق شمع الصويا.", descEn:"Ramadan-style candle with dried dates on soy wax.", price:170, img:"fb_photos/p09_date_candle.jpg"},
+      {id:"p6", cat:"c1", ar:"شمعة المسجد", en:"Mosque Candle", descAr:"شمعة مزخرفة على شكل عمارة إسلامية — قطعة ديكور فريدة.", descEn:"Decorative candle shaped like an Islamic arch — a unique decor piece.", price:190, img:"fb_photos/p10_mosque_candle.jpg"},
+      {id:"p7", cat:"c1", ar:"شمعة فنجان القهوة", en:"Coffee Cup Candle", descAr:"شمعة على شكل فنجان قهوة بحبوب بن ومظهر دافئ.", descEn:"Coffee-cup shaped candle with beans — a warm look.", price:160, img:"fb_photos/p11_coffee_cup_candle.jpg"},
+      // ورود وصابون
+      {id:"p8", cat:"c2", ar:"باقة الورد", en:"Flower Bouquet", descAr:"باقة ورد (صابون/شمع) مغلفة بورق وردي فخم مع ريبان — هدية لكل مناسبة.", descEn:"Flower bouquet (soap/wax) in elegant pink wrap with ribbon.", price:280, img:"fb_photos/p04_flower_bouquet.jpg"},
+      {id:"p9", cat:"c2", ar:"صابون الورود", en:"Soap Roses", descAr:"صابون طبيعي على شكل ورود حمراء بلمسة أعشاب — هدية عملية وجميلة.", descEn:"Natural soap shaped like red roses with herbal touch.", price:140, img:"fb_photos/p05_soap_rose.jpg"},
+      {id:"p10", cat:"c2", ar:"بوكيه الشموع", en:"Candle Bouquet", descAr:"بوكيه من شموع على شكل ورد متعدد الألوان — هدية تضيء المكان.", descEn:"Bouquet of multi-color flower-shaped candles — a gift that lights up.", price:300, img:"fb_photos/p07_candle_bouquet.jpg"},
+      // هدايا تخصصية
+      {id:"p11", cat:"c3", ar:"قرص الشمع المعطر", en:"Scented Wax Tablet", descAr:"قرص شمع معطر معلق برائحة تملأ الدولاب والسيارة.", descEn:"Hanging scented wax tablet for closets and cars.", price:90, img:"fb_photos/p08_wax_tablet.jpg"}
     ]
   };
 }
@@ -545,35 +547,32 @@ function copyToClipboard(text){
 function buildOrderText(){
   const L = LANG==="ar";
   const lines=[];
-  lines.push(L?"*🔸 طلب جديد — وَنَس*":"*🔸 New Order — WANAS*");
+  lines.push(L?"*طلب جديد — وَنَس*":"*طلب جديد — وَنَس*");
   lines.push("");
-
-  // ===== 1) بيانات العميل =====
-  lines.push(L?"*📋 بيانات العميل:*":"*📋 Customer details:*");
-  lines.push(`• ${L?"الاسم":"Name"}: ${($("#custName").value||"-")}`);
-  lines.push(`• ${L?"التليفون":"Phone"}: ${($("#custPhone").value||"-")}`);
-  lines.push(`• ${L?"العنوان":"Address"}: ${($("#custAddr").value||"-")}`);
-  if($("#custNote").value) lines.push(`• ${L?"ملاحظات":"Notes"}: ${$("#custNote").value}`);
+  // 1) بيانات العميل
+  lines.push(L?"*بيانات العميل:*":"*بيانات العميل:*");
+  lines.push(`• ${L?"الاسم":"الاسم"}: ${(("#custName").value||"-")}`);
+  lines.push(`• ${L?"التليفون":"التليفون"}: ${(("#custPhone").value||"-")}`);
+  lines.push(`• ${L?"العنوان":"العنوان"}: ${(("#custAddr").value||"-")}`);
+  if($("#custNote").value) lines.push(`• ${L?"ملاحظات":"ملاحظات"}: ${$("#custNote").value}`);
   lines.push("");
-
-  // ===== 2) المنتجات (بالنقاط • عشان متلخبطش مع الكميات) =====
-  lines.push(L?"*🛒 المنتجات:*":"*🛒 Products:*");
+  // 2) المنتجات
+  lines.push(L?"*المنتجات:*":"*المنتجات:*");
   CART.forEach((i)=>{ const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
     lines.push(`• ${L?p.ar:p.en}`);
-    lines.push(`     ${L?"الكمية":"Qty"}: ${i.qty}  ${L?"↔ الإجمالي":"↔ Subtotal"}: ${money(p.price*i.qty)}`);
+    lines.push(`     الكمية: ${i.qty}   الإجمالي: ${money(p.price*i.qty)}`);
   });
   lines.push("");
-  lines.push(`${L?"*💰 الإجمالي الكلي:*":"*💰 Grand total:*"} ${money(cartTotal())}`);
+  lines.push(`${L?"*الإجمالي الكلي:*":"*الإجمالي الكلي:*"} ${money(cartTotal())}`);
   lines.push("");
-
-  // ===== 3) بيانات الدفع =====
+  // 3) بيانات الدفع
   const payName = {vodafone:t("pay_vod"),instapay:t("pay_inst"),bank:t("pay_bank"),whatsapp:t("pay_wa")}[selectedPay]||"";
-  lines.push(L?"*💳 بيانات الدفع:*":"*💳 Payment details:*");
-  lines.push(`• ${L?"طريقة الدفع":"Method"}: ${payName||"-"}`);
-  if(selectedPay==="vodafone") lines.push(`• ${L?"رقم فودافون كاش":"Vodafone Cash"}: ${PAYMENT.vodafone}`);
-  if(selectedPay==="instapay") lines.push(`• ${L?"إنستا باي":"InstaPay"}: ${PAYMENT.instapay}`);
+  lines.push(L?"*بيانات الدفع:*":"*بيانات الدفع:*");
+  lines.push(`• ${L?"طريقة الدفع":"طريقة الدفع"}: ${payName||"-"}`);
+  if(selectedPay==="vodafone") lines.push(`• ${L?"رقم فودافون كاش":"رقم فودافون كاش"}: ${PAYMENT.vodafone}`);
+  if(selectedPay==="instapay") lines.push(`• ${L?"إنستا باي":"إنستا باي"}: ${PAYMENT.instapay}`);
   if(selectedPay==="bank") lines.push(`• ${L?"IBAN":"IBAN"}: EG900003041450006160803000150`);
-  if(selectedPay==="whatsapp") lines.push(`• ${L?"سيتم تأكيد الطلب عبر واتساب":"Order will be confirmed via WhatsApp"}`);
+  if(selectedPay==="whatsapp") lines.push(`• ${L?"سيتم تأكيد الطلب عبر واتساب":"سيتم تأكيد الطلب عبر واتساب"}`);
   return lines.join("\n");
 }
 function validateOrder(){
