@@ -545,25 +545,25 @@ function copyToClipboard(text){
 function buildOrderText(){
   const L = LANG==="ar";
   const lines=[];
-  lines.push(L?"🌿 *طلب جديد — وَنَس*":"🌿 *طلب جديد — وَنَس*");
+  lines.push(L?"*طلب جديد — وَنَس*":"*طلب جديد — وَنَس*");
   lines.push("");
-  lines.push(L?"🛒 *المنتجات:*":"🛒 *المنتجات:*");
+  lines.push(L?"*المنتجات:*":"*المنتجات:*");
   CART.forEach((i,idx)=>{ const p=DATA.products.find(x=>x.id===i.id);
     lines.push(`${idx+1}. ${L?p.ar:p.en}`);
     lines.push(`   × ${i.qty}  =  ${money(p.price*i.qty)}`);
   });
   lines.push("");
-  lines.push(`${L?"💰 *الإجمالي:*":"💰 *الإجمالي:*"} ${money(cartTotal())}`);
+  lines.push(`${L?"*الإجمالي:*":"*الإجمالي:*"} ${money(cartTotal())}`);
   lines.push("");
   const payName = {vodafone:t("pay_vod"),instapay:t("pay_inst"),bank:t("pay_bank"),whatsapp:t("pay_wa")}[selectedPay]||"";
-  lines.push(`${L?"💳 *طريقة الدفع:*":"💳 *طريقة الدفع:*"} ${payName}`);
+  lines.push(`${L?"*طريقة الدفع:*":"*طريقة الدفع:*"} ${payName}`);
   if(selectedPay==="vodafone") lines.push(`${L?"رقم فودافون كاش:":"رقم فودافون كاش:"} ${PAYMENT.vodafone}`);
   if(selectedPay==="instapay") lines.push(`${L?"إنستا باي:":"إنستا باي:"} ${PAYMENT.instapay}`);
   if(selectedPay==="bank") lines.push(`${L?"IBAN:":"IBAN:"} EG900003041450006160803000150`);
   lines.push("");
-  lines.push(`${L?"👤 *الاسم:*":"👤 *الاسم:*"} ${($("#custName").value||"-")}`);
-  lines.push(`${L?"📞 *التليفون:*":"📞 *التليفون:*"} ${($("#custPhone").value||"-")}`);
-  lines.push(`${L?"📍 *العنوان:*":"📍 *العنوان:*"} ${($("#custAddr").value||"-")}`);
+  lines.push(`${L?"*الاسم:*":"*الاسم:*"} ${($("#custName").value||"-")}`);
+  lines.push(`${L?"*التليفون:*":"*التليفون:*"} ${($("#custPhone").value||"-")}`);
+  lines.push(`${L?"*العنوان:*":"*العنوان:*"} ${($("#custAddr").value||"-")}`);
   if($("#custNote").value) lines.push(`${L?"📝 *ملاحظات:*":"📝 *ملاحظات:*"} ${$("#custNote").value}`);
   return lines.join("\n");
 }
@@ -575,7 +575,9 @@ function validateOrder(){
 function sendWhatsApp(){
   if(!validateOrder()) return;
   const txt=encodeURIComponent(buildOrderText());
-  const url=`https://wa.me/${PAYMENT.whatsapp.replace(/[^0-9]/g,"")}?text=${txt}`;
+  const digits=PAYMENT.whatsapp.replace(/[^0-9]/g,"");
+  const intl=digits.startsWith("0")?"20"+digits.slice(1):(digits.startsWith("20")?digits:"20"+digits);
+  const url=`https://wa.me/${intl}?text=${txt}`;
   window.open(url,"_blank");
   toast(t("order_sent"));
 }
