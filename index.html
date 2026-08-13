@@ -40,8 +40,12 @@
   .cat-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column}
-  .card .ph{height:150px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fff);display:grid;place-items:center;font-size:2.4rem;margin-bottom:12px;overflow:hidden}
-  .card .ph img{width:100%;height:100%;object-fit:cover}
+  .card .ph{height:200px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fff);display:grid;place-items:center;font-size:2.4rem;margin-bottom:10px;overflow:hidden;cursor:pointer;position:relative}
+  .card .ph img{width:100%;height:100%;object-fit:contain}
+  .card .ph .more-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;border-radius:20px;padding:2px 9px;font-size:.72rem}
+  .card .thumbs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+  .card .thumbs .thumb{width:46px;height:46px;border:1px solid var(--line);border-radius:8px;overflow:hidden;padding:0;cursor:pointer;background:#fff}
+  .card .thumbs .thumb img{width:100%;height:100%;object-fit:cover}
   .card h3{margin:0 0 4px;font-size:1.05rem}
   .card .desc{color:var(--muted);font-size:.88rem;flex:1}
   .card .price{font-weight:800;color:var(--brand2);font-size:1.15rem;margin:10px 0}
@@ -53,8 +57,8 @@
   .drawer header{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
   .drawer .items{flex:1;overflow:auto;padding:12px 16px}
   .ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
-  .ci .ci-ph{width:46px;height:46px;border-radius:8px;background:var(--accent);display:grid;place-items:center;overflow:hidden;font-size:1.3rem}
-  .ci .ci-ph img{width:100%;height:100%;object-fit:cover}
+  .ci .ci-ph{width:56px;height:56px;border-radius:8px;background:var(--accent);display:grid;place-items:center;overflow:hidden;font-size:1.3rem;cursor:pointer}
+  .ci .ci-ph img{width:100%;height:100%;object-fit:contain}
   .ci .ci-info{flex:1;font-size:.9rem}
   .ci .ci-info b{display:block}
   .ci .qty{display:flex;align-items:center;gap:6px}
@@ -91,6 +95,18 @@
   .hidden{display:none !important}
   footer.foot{padding:30px 0;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:40px}
   @media(max-width:560px){.hero h1{font-size:1.8rem}}
+  /* Image gallery / lightbox */
+  .gallery{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:90;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px}
+  .gallery .g-img{max-width:92vw;max-height:72vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+  .gallery .g-close{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer}
+  .gallery .g-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.8rem;cursor:pointer}
+  .gallery .g-prev{right:18px}
+  .gallery .g-next{left:18px}
+  .gallery .g-count{position:absolute;bottom:90px;color:#fff;font-size:.9rem;background:rgba(0,0,0,.4);padding:4px 12px;border-radius:20px}
+  .gallery .g-thumbs{position:absolute;bottom:18px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:92vw;overflow:auto}
+  .gallery .g-thumb{width:54px;height:54px;border:2px solid transparent;border-radius:8px;overflow:hidden;padding:0;cursor:pointer;background:#fff}
+  .gallery .g-thumb.active{border-color:#d9a441}
+  .gallery .g-thumb img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -345,17 +361,17 @@ function defaultData(){
     ],
     products:[
       // شموع
-      {id:"p1", cat:"c1", ar:"ونس العنبر", en:"Wanas Amber", descAr:"شمعة صويا في جرة زجاجية مع شرائح برتقال مجفف ورائحة العنبر الدافئ.", descEn:"Soy candle in a glass jar with dried orange slices and warm amber scent.", price:180, img:"fb_photos/img_12.jpg"},
-      {id:"p2", cat:"c1", ar:"وردة ونس", en:"Wanas Rose", descAr:"شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور وعطر في آنٍ واحد.", descEn:"Hand-carved candle shaped like a red rose — decor and scent in one.", price:220, img:"fb_photos/img_10.jpg"},
-      {id:"p3", cat:"c1", ar:"سحابة ونس", en:"Wanas Cloud", descAr:"شمعة على شكل سحابة ناعمة برائحة هادئة تناسب أجواء الهدوء.", descEn:"Soft cloud-shaped candle with a calm, cozy scent.", price:200, img:"fb_photos/cloud_candle.jpg"},
-      {id:"p4", cat:"c1", ar:"ونس عطور (٤ فتائل)", en:"Wanas 4-Wick", descAr:"شمعة جرة زجاجية بأربع فتائل من خط ونس عطور لرائحة تملأ المكان.", descEn:"4-wick glass jar candle from the Wanas scent line — fills the room.", price:320, img:"fb_photos/img_11.jpg"},
+      {id:"p1", cat:"c1", ar:"ونس العنبر", en:"Wanas Amber", descAr:"شمعة صويا في جرة زجاجية مع شرائح برتقال مجفف ورائحة العنبر الدافئ.", descEn:"Soy candle in a glass jar with dried orange slices and warm amber scent.", price:180, imgs:["fb_photos/img_12.jpg","fb_photos/img_2.jpg"]},
+      {id:"p2", cat:"c1", ar:"وردة ونس", en:"Wanas Rose", descAr:"شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور وعطر في آنٍ واحد.", descEn:"Hand-carved candle shaped like a red rose — decor and scent in one.", price:220, imgs:["fb_photos/img_10.jpg","fb_photos/img_7.jpg","fb_photos/img_8.jpg"]},
+      {id:"p3", cat:"c1", ar:"سحابة ونس", en:"Wanas Cloud", descAr:"شمعة على شكل سحابة ناعمة برائحة هادئة تناسب أجواء الهدوء.", descEn:"Soft cloud-shaped candle with a calm, cozy scent.", price:200, imgs:["fb_photos/cloud_candle.jpg","fb_photos/img_2.jpg"]},
+      {id:"p4", cat:"c1", ar:"ونس عطور (٤ فتائل)", en:"Wanas 4-Wick", descAr:"شمعة جرة زجاجية بأربع فتائل من خط ونس عطور لرائحة تملأ المكان.", descEn:"4-wick glass jar candle from the Wanas scent line — fills the room.", price:320, imgs:["fb_photos/img_11.jpg"]},
       // هدايا وورود
-      {id:"p5", cat:"c2", ar:"باقة الونس الوردية", en:"Wanas Rose Bouquet", descAr:"بوكيه ورد (صابون/شمع) مغلف بورق وردي فخم مع ريبان — هدية لكل مناسبة.", descEn:"Flower bouquet (soap/wax) in elegant pink wrap with ribbon — a gift for every occasion.", price:280, img:"fb_photos/img_5.jpg"},
-      {id:"p6", cat:"c2", ar:"صندوق الونس", en:"Wanas Gift Box", descAr:"صندوق هدايا متكامل مغلف بروبان شامبين لحظة خاصة لا تُنسى.", descEn:"Complete gift box wrapped in champagne ribbon for an unforgettable moment.", price:450, img:"fb_photos/img_6.jpg"},
-      {id:"p7", cat:"c2", ar:"وردة الصابون", en:"Soap Rose", descAr:"صابون طبيعي على شكل ورود حمراء بلمسة أعشاب — هدية عملية وجميلة.", descEn:"Natural soap shaped like red roses with herbal touch — practical and pretty.", price:160, img:"fb_photos/img_9.jpg"},
+      {id:"p5", cat:"c2", ar:"باقة الونس الوردية", en:"Wanas Rose Bouquet", descAr:"بوكيه ورد (صابون/شمع) مغلف بورق وردي فخم مع ريبان — هدية لكل مناسبة.", descEn:"Flower bouquet (soap/wax) in elegant pink wrap with ribbon — a gift for every occasion.", price:280, imgs:["fb_photos/img_5.jpg","fb_photos/img_3.jpg","fb_photos/img_4.jpg"]},
+      {id:"p6", cat:"c2", ar:"صندوق الونس", en:"Wanas Gift Box", descAr:"صندوق هدايا متكامل مغلف بروبان شامبين لحظة خاصة لا تُنسى.", descEn:"Complete gift box wrapped in champagne ribbon for an unforgettable moment.", price:450, imgs:["fb_photos/img_6.jpg"]},
+      {id:"p7", cat:"c2", ar:"وردة الصابون", en:"Soap Rose", descAr:"صابون طبيعي على شكل ورود حمراء بلمسة أعشاب — هدية عملية وجميلة.", descEn:"Natural soap shaped like red roses with herbal touch — practical and pretty.", price:160, imgs:["fb_photos/img_9.jpg","fb_photos/img_8.jpg"]},
       // عطور المنزل
-      {id:"p8", cat:"c3", ar:"عطر الونس", en:"Wanas Perfume", descAr:"عطر منزلي صغير (٣٠–٥٠ مل) من خط ونس عطور لمنزل يعبق بالدفء.", descEn:"Small home perfume (30-50ml) from the Wanas scent line for a warm home.", price:150, img:"fb_photos/img_11.jpg"},
-      {id:"p9", cat:"c3", ar:"بخور الونس", en:"Wanas Bakhoor", descAr:"خليط بخور وروائح للمنزل يمنح أجواءً روحانية وهادئة.", descEn:"Bakhoor and home scent blend for a spiritual, calm atmosphere.", price:130, img:"fb_photos/bakhoor.jpg"},
+      {id:"p8", cat:"c3", ar:"عطر الونس", en:"Wanas Perfume", descAr:"عطر منزلي صغير (٣٠–٥٠ مل) من خط ونس عطور لمنزل يعبق بالدفء.", descEn:"Small home perfume (30-50ml) from the Wanas scent line for a warm home.", price:150, imgs:["fb_photos/img_11.jpg"]},
+      {id:"p9", cat:"c3", ar:"بخور الونس", en:"Wanas Bakhoor", descAr:"خليط بخور وروائح للمنزل يمنح أجواءً روحانية وهادئة.", descEn:"Bakhoor and home scent blend for a spiritual, calm atmosphere.", price:130, imgs:["fb_photos/bakhoor.jpg","fb_photos/img_2.jpg"]}
     ]
   };
 }
@@ -416,14 +432,20 @@ function renderProducts(){
   list.forEach(p=>{
     const card=document.createElement("div"); card.className="card";
     const cat = DATA.categories.find(c=>c.id===p.cat);
-    const imgHtml = (p.img&&/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(p.img))?`<img src="${p.img}" alt="${LANG==="ar"?p.ar:p.en}">`:(p.img&&p.img.startsWith("http")?`<img src="${p.img}" alt="">`:(p.img||"📦"));
+    const imgs = (p.imgs&&p.imgs.length)?p.imgs:[p.img].filter(Boolean);
+    const main = imgs[0]||"";
+    const imgHtml = main?`<img src="${main}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:"📦";
+    const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb" data-pid="${p.id}" data-idx="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
     card.innerHTML=`
-      <div class="ph">${imgHtml}</div>
+      <div class="ph" data-pid="${p.id}" data-idx="0">${imgHtml}${imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""}</div>
       <h3>${LANG==="ar"?p.ar:p.en}</h3>
       <div class="desc">${LANG==="ar"?p.descAr:p.descEn}</div>
       <div class="price">${money(p.price)}</div>
+      ${thumbs}
       <button class="btn sm add-btn">${t("add")}</button>`;
     card.querySelector(".add-btn").onclick=()=>addToCart(p.id);
+    card.querySelector(".ph").onclick=()=>openGallery(p.id,0);
+    card.querySelectorAll(".thumb").forEach(b=>{ b.onclick=(e)=>{ e.stopPropagation(); openGallery(b.dataset.pid, Number(b.dataset.idx)); }; });
     grid.appendChild(card);
   });
 }
@@ -450,19 +472,43 @@ function renderCart(){
   if(!CART.length){ box.innerHTML=`<div class="empty">${t("empty_cart")}</div>`; $("#cartTotal").textContent=money(0); return; }
   CART.forEach(i=>{
     const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
+    const imgs=(p.imgs&&p.imgs.length)?p.imgs:[p.img].filter(Boolean);
     const row=document.createElement("div"); row.className="ci";
-    const imgHtml=(p.img&&p.img.startsWith("http"))?`<img src="${p.img}" alt="">`:(p.img||"📦");
+    const imgHtml=imgs[0]?`<img src="${imgs[0]}" alt="">`:"📦";
     row.innerHTML=`
-      <div class="ci-ph">${imgHtml}</div>
+      <div class="ci-ph" data-pid="${p.id}" data-idx="0">${imgHtml}</div>
       <div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>${money(p.price)}</div>
       <div class="qty"><button class="dec">−</button><span>${i.qty}</span><button class="inc">+</button></div>
       <button class="rm">${t("remove")}</button>`;
     row.querySelector(".dec").onclick=()=>changeQty(i.id,-1);
     row.querySelector(".inc").onclick=()=>changeQty(i.id,1);
     row.querySelector(".rm").onclick=()=>removeFromCart(i.id);
+    row.querySelector(".ci-ph").onclick=()=>openGallery(p.id,0);
     box.appendChild(row);
   });
   $("#cartTotal").textContent=money(cartTotal());
+}
+function productImgs(p){ return (p&&p.imgs&&p.imgs.length)?p.imgs:[p&&p.img].filter(Boolean); }
+function openGallery(pid, idx){
+  const p=DATA.products.find(x=>x.id===pid); if(!p) return;
+  const imgs=productImgs(p); if(!imgs.length) return;
+  let cur=idx||0;
+  const overlay=document.createElement("div"); overlay.className="gallery";
+  const render=()=>{
+    overlay.innerHTML=`
+      <button class="g-close">✕</button>
+      <button class="g-nav g-prev">‹</button>
+      <img class="g-img" src="${imgs[cur]}" alt="${LANG==="ar"?p.ar:p.en}">
+      <button class="g-nav g-next">›</button>
+      <div class="g-count">${cur+1} / ${imgs.length}</div>
+      ${imgs.length>1?`<div class="g-thumbs">`+imgs.map((s,i)=>`<button class="g-thumb ${i===cur?'active':''}" data-i="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:""}`;
+    overlay.querySelector(".g-close").onclick=()=>overlay.remove();
+    overlay.querySelector(".g-prev").onclick=(e)=>{e.stopPropagation();cur=(cur-1+imgs.length)%imgs.length;render();};
+    overlay.querySelector(".g-next").onclick=(e)=>{e.stopPropagation();cur=(cur+1)%imgs.length;render();};
+    overlay.querySelectorAll(".g-thumb").forEach(b=>{ b.onclick=(e)=>{e.stopPropagation();cur=Number(b.dataset.i);render();}; });
+  };
+  overlay.onclick=(e)=>{ if(e.target===overlay) overlay.remove(); };
+  document.body.appendChild(overlay); render();
 }
 
 /* ====================== Checkout ====================== */
