@@ -545,26 +545,35 @@ function copyToClipboard(text){
 function buildOrderText(){
   const L = LANG==="ar";
   const lines=[];
-  lines.push(L?"*طلب جديد — وَنَس*":"*طلب جديد — وَنَس*");
+  lines.push(L?"*🔸 طلب جديد — وَنَس*":"*🔸 New Order — WANAS*");
   lines.push("");
-  lines.push(L?"*المنتجات:*":"*المنتجات:*");
-  CART.forEach((i,idx)=>{ const p=DATA.products.find(x=>x.id===i.id);
-    lines.push(`${idx+1}. ${L?p.ar:p.en}`);
-    lines.push(`   × ${i.qty}  =  ${money(p.price*i.qty)}`);
+
+  // ===== 1) بيانات العميل =====
+  lines.push(L?"*📋 بيانات العميل:*":"*📋 Customer details:*");
+  lines.push(`• ${L?"الاسم":"Name"}: ${($("#custName").value||"-")}`);
+  lines.push(`• ${L?"التليفون":"Phone"}: ${($("#custPhone").value||"-")}`);
+  lines.push(`• ${L?"العنوان":"Address"}: ${($("#custAddr").value||"-")}`);
+  if($("#custNote").value) lines.push(`• ${L?"ملاحظات":"Notes"}: ${$("#custNote").value}`);
+  lines.push("");
+
+  // ===== 2) المنتجات (بالنقاط • عشان متلخبطش مع الكميات) =====
+  lines.push(L?"*🛒 المنتجات:*":"*🛒 Products:*");
+  CART.forEach((i)=>{ const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
+    lines.push(`• ${L?p.ar:p.en}`);
+    lines.push(`     ${L?"الكمية":"Qty"}: ${i.qty}  ${L?"↔ الإجمالي":"↔ Subtotal"}: ${money(p.price*i.qty)}`);
   });
   lines.push("");
-  lines.push(`${L?"*الإجمالي:*":"*الإجمالي:*"} ${money(cartTotal())}`);
+  lines.push(`${L?"*💰 الإجمالي الكلي:*":"*💰 Grand total:*"} ${money(cartTotal())}`);
   lines.push("");
+
+  // ===== 3) بيانات الدفع =====
   const payName = {vodafone:t("pay_vod"),instapay:t("pay_inst"),bank:t("pay_bank"),whatsapp:t("pay_wa")}[selectedPay]||"";
-  lines.push(`${L?"*طريقة الدفع:*":"*طريقة الدفع:*"} ${payName}`);
-  if(selectedPay==="vodafone") lines.push(`${L?"رقم فودافون كاش:":"رقم فودافون كاش:"} ${PAYMENT.vodafone}`);
-  if(selectedPay==="instapay") lines.push(`${L?"إنستا باي:":"إنستا باي:"} ${PAYMENT.instapay}`);
-  if(selectedPay==="bank") lines.push(`${L?"IBAN:":"IBAN:"} EG900003041450006160803000150`);
-  lines.push("");
-  lines.push(`${L?"*الاسم:*":"*الاسم:*"} ${($("#custName").value||"-")}`);
-  lines.push(`${L?"*التليفون:*":"*التليفون:*"} ${($("#custPhone").value||"-")}`);
-  lines.push(`${L?"*العنوان:*":"*العنوان:*"} ${($("#custAddr").value||"-")}`);
-  if($("#custNote").value) lines.push(`${L?"📝 *ملاحظات:*":"📝 *ملاحظات:*"} ${$("#custNote").value}`);
+  lines.push(L?"*💳 بيانات الدفع:*":"*💳 Payment details:*");
+  lines.push(`• ${L?"طريقة الدفع":"Method"}: ${payName||"-"}`);
+  if(selectedPay==="vodafone") lines.push(`• ${L?"رقم فودافون كاش":"Vodafone Cash"}: ${PAYMENT.vodafone}`);
+  if(selectedPay==="instapay") lines.push(`• ${L?"إنستا باي":"InstaPay"}: ${PAYMENT.instapay}`);
+  if(selectedPay==="bank") lines.push(`• ${L?"IBAN":"IBAN"}: EG900003041450006160803000150`);
+  if(selectedPay==="whatsapp") lines.push(`• ${L?"سيتم تأكيد الطلب عبر واتساب":"Order will be confirmed via WhatsApp"}`);
   return lines.join("\n");
 }
 function validateOrder(){
