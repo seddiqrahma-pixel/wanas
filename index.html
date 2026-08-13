@@ -18,7 +18,7 @@
   header.nav{position:sticky;top:0;z-index:30;background:rgba(250,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
-  .logo .logo-img{height:42px;width:auto}
+  .logo .mark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d9a441,#b9792b);color:#fff;font-weight:700;font-size:20px}
   .logo small{font-weight:600;color:var(--muted);font-size:.8rem}
   .spacer{flex:1}
   .btn{border:none;cursor:pointer;background:var(--brand);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
@@ -30,7 +30,6 @@
   .cart-btn{position:relative}
   .cart-count{position:absolute;top:-7px;left:-7px;background:var(--danger);color:#fff;border-radius:50%;min-width:20px;height:20px;font-size:.72rem;display:grid;place-items:center;padding:0 4px}
   .hero{padding:48px 0 28px;text-align:center}
-  .hero-logo{height:150px;width:auto;margin-bottom:14px;filter:drop-shadow(0 8px 20px rgba(125,90,46,.18))}
   .hero h1{font-size:2.4rem;margin:0 0 8px;color:var(--brand2)}
   .hero p{color:var(--muted);font-size:1.1rem;margin:0}
   .section-title{font-size:1.4rem;margin:30px 0 14px;color:var(--brand2)}
@@ -97,7 +96,7 @@
 <header class="nav">
   <div class="nav-in">
     <a class="logo" href="#">
-      <img class="logo-img" src="logo.png" alt="وَنَس" />
+      <span class="mark">و</span>
       <span data-i18n="brand">وَنَس <small data-i18n="brand_en">WANAS</small></span>
     </a>
     <div class="spacer"></div>
@@ -112,7 +111,6 @@
 
 <!-- HERO -->
 <section class="hero wrap">
-  <img class="hero-logo" src="logo.png" alt="وَنَس" />
   <h1 data-i18n="hero_title">راحة بالك تبدأ من هنا</h1>
   <p data-i18n="hero_sub">منتجات وَنَس — جودة تهدي بالك</p>
 </section>
@@ -199,8 +197,18 @@
   </div>
 </div>
 
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal" id="adminLoginModal">
+  <div class="box" style="max-width:360px">
+    <button class="close" id="adminLoginClose">✕</button>
+    <h2 data-i18n="admin_login_title">دخول لوحة التحكم</h2>
+    <input class="field" id="adminPass" type="password" placeholder="كلمة الدخول" data-i18n-ph="admin_pass_ph" autocomplete="off">
+    <button class="btn" id="adminLoginBtn" style="width:100%;margin-top:8px" data-i18n="admin_login_btn">دخول</button>
+    <p class="admin-hint" id="adminLoginErr" style="color:var(--danger);display:none;margin-top:8px" data-i18n="login_fail">كلمة السر غلط</p>
+  </div>
+</div>
+
 <footer class="foot">
-  <img src="logo-icon.png" alt="وَنَس" style="height:46px;margin-bottom:8px" />
   <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
   <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
 </footer>
@@ -238,7 +246,8 @@ const I18N = {
     order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املى البيانات المطلوبة أولاً",
     login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
     confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
-    no_pay:"اختار طريقة دفع"
+    no_pay:"اختار طريقة دفع",
+    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
   },
   en:{
     brand:"WANAS", brand_en:"وَنَس", admin:"Dashboard", cart:"Cart",
@@ -268,7 +277,8 @@ const I18N = {
     order_sent:"Order message ready ✅", fill_fields:"Please fill required fields first",
     login_ok:"Dashboard unlocked", login_fail:"Wrong password",
     confirm_reset:"Restore default data? This clears your edits.",
-    no_pay:"Pick a payment method"
+    no_pay:"Pick a payment method",
+    admin_login_title:"Dashboard login", admin_pass_ph:"Password", admin_login_btn:"Login"
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
@@ -466,14 +476,14 @@ function sendEmail(){
 /* ====================== Admin ====================== */
 let adminUnlocked=false;
 function toggleAdmin(){
-  if(adminUnlocked){ $("#adminPanel").classList.add("hidden"); }
-  else{
-    const pw=prompt(LANG==="ar"?"كلمة دخول لوحة التحكم:":"Dashboard password:");
-    if(pw==="wanas123"){ adminUnlocked=true; $("#adminPanel").classList.remove("hidden"); toast(t("login_ok")); }
-    else if(pw!==null){ toast(t("login_fail")); return; }
-    else return;
-  }
-  renderAdmin();
+  if(adminUnlocked){ $("#adminPanel").classList.add("hidden"); adminUnlocked=false; return; }
+  $("#adminPass").value=""; $("#adminLoginErr").style.display="none";
+  $("#adminLoginModal").classList.add("show"); $("#adminPass").focus();
+}
+function tryAdminLogin(){
+  const pw=$("#adminPass").value;
+  if(pw==="wanas123"){ adminUnlocked=true; $("#adminLoginModal").classList.remove("show"); $("#adminPanel").classList.remove("hidden"); toast(t("login_ok")); renderAdmin(); }
+  else { $("#adminLoginErr").style.display="block"; }
 }
 function renderAdmin(){
   // categories
@@ -541,6 +551,9 @@ function bind(){
   $("#adminBtn").onclick=toggleAdmin;
   $("#addCatBtn").onclick=addCategory;
   $("#addProdBtn").onclick=addProduct;
+  $("#adminLoginBtn").onclick=tryAdminLogin;
+  $("#adminLoginClose").onclick=()=>{ $("#adminLoginModal").classList.remove("show"); };
+  $("#adminPass").addEventListener("keydown",e=>{ if(e.key==="Enter") tryAdminLogin(); });
   $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
 }
 function openDrawer(o){ $("#cartDrawer").classList.toggle("open",o); $("#overlay").classList.toggle("show",o); }
