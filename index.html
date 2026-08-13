@@ -99,7 +99,7 @@
   <div class="nav-in">
     <a class="logo" href="#">
       <img class="logo-img" src="logo.png" alt="وَنَس" />
-      <span data-i18n="brand">وَنَس <small data-i18n="brand_en">WANAS</small></span>
+      <span data-i18n="brand">وَنَس</span>
     </a>
     <div class="spacer"></div>
     <button class="lang" id="langBtn" title="Language">EN</button>
@@ -134,7 +134,7 @@
       <div id="catList"></div>
       <div class="row">
         <input class="field" id="newCatAr" placeholder="اسم الصنف بالعربي" data-i18n-ph="cat_ar_ph">
-        <input class="field" id="newCatEn" placeholder="Category (EN)" data-i18n-ph="cat_en_ph">
+        <input class="field" id="newCatEn" placeholder="اسم الصنف (إنجليزي)" data-i18n-ph="cat_en_ph">
         <button class="btn sm" id="addCatBtn" data-i18n="add_cat">+ إضافة صنف</button>
       </div>
     </div>
@@ -144,12 +144,12 @@
       <div class="row">
         <select class="field" id="prodCat"></select>
         <input class="field" id="prodAr" placeholder="اسم المنتج عربي" data-i18n-ph="prod_ar_ph">
-        <input class="field" id="prodEn" placeholder="Product (EN)" data-i18n-ph="prod_en_ph">
+        <input class="field" id="prodEn" placeholder="اسم المنتج (إنجليزي)" data-i18n-ph="prod_en_ph">
       </div>
       <div class="row">
         <input class="field" id="prodDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
-        <input class="field" id="prodDescEn" placeholder="Description (EN)" data-i18n-ph="prod_desc_en_ph">
-        <input class="field" id="prodPrice" type="number" placeholder="السعر (EGP)" data-i18n-ph="price_ph">
+        <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
+        <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
         <input class="field" id="prodEmoji" placeholder="إيموجي/صورة" data-i18n-ph="emoji_ph">
       </div>
       <button class="btn sm" id="addProdBtn" data-i18n="add_prod">+ إضافة منتج</button>
@@ -170,7 +170,7 @@
   </header>
   <div class="items" id="cartItems"></div>
   <footer>
-    <div class="total"><span data-i18n="total">الإجمالي</span><span id="cartTotal">0 EGP</span></div>
+    <div class="total"><span data-i18n="total">الإجمالي</span><span id="cartTotal">0 جنيه</span></div>
     <button class="btn" id="checkoutBtn" style="width:100%" data-i18n="checkout">إتمام الطلب</button>
   </footer>
 </aside>
@@ -208,14 +208,14 @@
     <input type="hidden" id="editProdId">
     <div class="row">
       <input class="field" id="editProdAr" placeholder="اسم المنتج عربي" data-i18n-ph="prod_ar_ph">
-      <input class="field" id="editProdEn" placeholder="Product (EN)" data-i18n-ph="prod_en_ph">
+      <input class="field" id="editProdEn" placeholder="اسم المنتج (إنجليزي)" data-i18n-ph="prod_en_ph">
     </div>
     <div class="row">
       <input class="field" id="editProdDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
-      <input class="field" id="editProdDescEn" placeholder="Description (EN)" data-i18n-ph="prod_desc_en_ph">
+      <input class="field" id="editProdDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
     </div>
     <div class="row">
-      <input class="field" id="editProdPrice" type="number" placeholder="السعر (EGP)" data-i18n-ph="price_ph">
+      <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
       <input class="field" id="editProdImg" placeholder="إيموجي/رابط صورة" data-i18n-ph="emoji_ph">
     </div>
     <button class="btn" id="editProdSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
@@ -230,7 +230,7 @@
     <input type="hidden" id="editCatId">
     <div class="row">
       <input class="field" id="editCatAr" placeholder="اسم الصنف بالعربي" data-i18n-ph="cat_ar_ph">
-      <input class="field" id="editCatEn" placeholder="Category (EN)" data-i18n-ph="cat_en_ph">
+      <input class="field" id="editCatEn" placeholder="اسم الصنف (إنجليزي)" data-i18n-ph="cat_en_ph">
     </div>
     <button class="btn" id="editCatSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
   </div>
@@ -250,7 +250,6 @@
 </div>
 
 <footer class="foot">
-  <img src="logo-icon.png" alt="وَنَس" style="height:46px;margin-bottom:8px" />
   <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
   <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
 </footer>
@@ -261,7 +260,7 @@
 /* ====================== i18n ====================== */
 const I18N = {
   ar:{
-    brand:"وَنَس", brand_en:"WANAS", admin:"لوحة التحكم", cart:"السلة",
+    brand:"وَنَس", brand_en:"وَنَس", admin:"لوحة التحكم", cart:"السلة",
     hero_title:"راحة بالك تبدأ من هنا", hero_sub:"منتجات وَنَس — جودة تهدي بالك",
     products:"المنتجات", admin_panel:"إدارة الأصناف والمنتجات",
     admin_hint:"التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123",
@@ -272,10 +271,10 @@ const I18N = {
     order_title:"تأكيد الطلب", pay_method:"طريقة الدفع",
     cust_name:"الاسم", cust_phone:"رقم الهاتف", cust_addr:"العنوان (للشحن)", cust_note:"ملاحظات",
     send_order:"إرسال الطلب (واتساب)", send_mail:"إرسال عبر الإيميل",
-    cat_ar_ph:"اسم الصنف بالعربي", cat_en_ph:"Category (EN)",
-    prod_ar_ph:"اسم المنتج عربي", prod_en_ph:"Product (EN)",
-    prod_desc_ar_ph:"وصف عربي", prod_desc_en_ph:"Description (EN)",
-    price_ph:"السعر (EGP)", emoji_ph:"إيموجي/رابط صورة",
+    cat_ar_ph:"اسم الصنف بالعربي", cat_en_ph:"اسم الصنف (إنجليزي)",
+    prod_ar_ph:"اسم المنتج عربي", prod_en_ph:"اسم المنتج (إنجليزي)",
+    prod_desc_ar_ph:"وصف عربي", prod_desc_en_ph:"وصف (إنجليزي)",
+    price_ph:"السعر", emoji_ph:"إيموجي/رابط صورة",
     name_ph:"اكتب اسمك", phone_ph:"01xxxxxxxxx", addr_ph:"المحافظة / العنوان التفصيلي",
     note_ph:"أي ملاحظة على الطلب",
     empty_cart:"السلة فاضية", empty_store:"لا توجد منتجات بعد",
@@ -293,36 +292,36 @@ const I18N = {
     admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
   },
   en:{
-    brand:"WANAS", brand_en:"وَنَس", admin:"Dashboard", cart:"Cart",
-    hero_title:"Your peace of mind starts here", hero_sub:"Wanas products — quality that calms you",
-    products:"Products", admin_panel:"Manage Categories & Products",
-    admin_hint:"Changes are saved on your device only (LocalStorage). Password: wanas123",
-    cats:"Categories", add_cat:"+ Add category",
-    prods:"Products", add_prod:"+ Add product",
-    reset:"Restore default data",
-    total:"Total", checkout:"Checkout",
-    order_title:"Confirm Order", pay_method:"Payment method",
-    cust_name:"Name", cust_phone:"Phone", cust_addr:"Address (shipping)", cust_note:"Notes",
-    send_order:"Send Order (WhatsApp)", send_mail:"Send via Email",
-    cat_ar_ph:"Category name (AR)", cat_en_ph:"Category (EN)",
-    prod_ar_ph:"Product name (AR)", prod_en_ph:"Product (EN)",
-    prod_desc_ar_ph:"Description (AR)", prod_desc_en_ph:"Description (EN)",
-    price_ph:"Price (EGP)", emoji_ph:"Emoji / image URL",
-    name_ph:"Your name", phone_ph:"01xxxxxxxxx", addr_ph:"Governorate / detailed address",
-    note_ph:"Any order note",
-    empty_cart:"Cart is empty", empty_store:"No products yet",
-    add:"Add to cart", remove:"Remove", edit:"Edit", delete:"Delete",
- all:"All", save:"Save", cancel:"Cancel",
- edit_product:"Edit product", edit_category:"Edit category",
-    pay_vod:"Vodafone Cash", pay_vod_det:"Transfer to number",
-    pay_inst:"InstaPay", pay_inst_det:"Transfer to username",
-    pay_bank:"Bank Transfer", pay_bank_det:"Bank account details",
-    pay_wa:"WhatsApp Order", pay_wa_det:"No online payment — we review & confirm",
-    order_sent:"Order message ready ✅", fill_fields:"Please fill required fields first",
-    login_ok:"Dashboard unlocked", login_fail:"Wrong password",
-    confirm_reset:"Restore default data? This clears your edits.",
-    no_pay:"Pick a payment method",
-    admin_login_title:"Dashboard login", admin_pass_ph:"Password", admin_login_btn:"Login"
+    brand:"وَنَس", brand_en:"وَنَس", admin:"لوحة التحكم", cart:"السلة",
+    hero_title:"راحة بالك تبدأ من هنا", hero_sub:"منتجات وَنَس — جودة تهدي بالك",
+    products:"المنتجات", admin_panel:"إدارة الأصناف والمنتجات",
+    admin_hint:"التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123",
+    cats:"الأصناف", add_cat:"+ إضافة صنف",
+    prods:"المنتجات", add_prod:"+ إضافة منتج",
+    reset:"استعادة البيانات الافتراضية",
+    total:"الإجمالي", checkout:"إتمام الطلب",
+    order_title:"تأكيد الطلب", pay_method:"طريقة الدفع",
+    cust_name:"الاسم", cust_phone:"رقم الهاتف", cust_addr:"العنوان (للشحن)", cust_note:"ملاحظات",
+    send_order:"إرسال الطلب (واتساب)", send_mail:"إرسال عبر الإيميل",
+    cat_ar_ph:"اسم الصنف بالعربي", cat_en_ph:"اسم الصنف (إنجليزي)",
+    prod_ar_ph:"اسم المنتج عربي", prod_en_ph:"اسم المنتج (إنجليزي)",
+    prod_desc_ar_ph:"وصف عربي", prod_desc_en_ph:"وصف (إنجليزي)",
+    price_ph:"السعر", emoji_ph:"إيموجي/رابط صورة",
+    name_ph:"اكتب اسمك", phone_ph:"01xxxxxxxxx", addr_ph:"المحافظة / العنوان التفصيلي",
+    note_ph:"أي ملاحظة على الطلب",
+    empty_cart:"السلة فاضية", empty_store:"لا توجد منتجات بعد",
+    add:"أضف للسلة", remove:"حذف", edit:"تعديل", delete:"مسح",
+    all:"الكل", save:"حفظ", cancel:"إلغاء",
+    edit_product:"تعديل المنتج", edit_category:"تعديل الصنف",
+    pay_vod:"فودافون كاش", pay_vod_det:"حول المبلغ على الرقم",
+    pay_inst:"إنستا باي", pay_inst_det:"التحويل لاسم المستخدم",
+    pay_bank:"تحويل بنكي", pay_bank_det:"بيانات الحساب البنكي",
+    pay_wa:"طلب عبر واتساب", pay_wa_det:"بدون دفع أونلاين — نراجع طلبك ونأكد",
+    order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املى البيانات المطلوبة أولاً",
+    login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
+    confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
+    no_pay:"اختار طريقة دفع",
+    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
@@ -340,17 +339,23 @@ const PAYMENT = {
 function defaultData(){
   return {
     categories:[
-      {id:"c1", ar:"عطور", en:"Perfumes"},
-      {id:"c2", ar:"شموع", en:"Candles"},
-      {id:"c3", ar:"مشروبات", en:"Beverages"}
+      {id:"c1", ar:"شموع", en:"Candles"},
+      {id:"c2", ar:"هدايا وورود", en:"Gifts & Flowers"},
+      {id:"c3", ar:"عطور المنزل", en:"Home Fragrance"}
     ],
     products:[
-      {id:"p1", cat:"c1", ar:"عطر وَنَس 50مل", en:"Wanas Perfume 50ml", descAr:"عطر هادي بلمسة خشبية دافية.", descEn:"Calm woody fragrance.", price:250, img:"🌸"},
-      {id:"p2", cat:"c1", ar:"عطر العود الملكي", en:"Royal Oud", descAr:"عطر عود فاخر يدوم طويلاً.", descEn:"Long-lasting premium oud.", price:480, img:"🪵"},
-      {id:"p3", cat:"c2", ar:"شمعة العنبر", en:"Amber Candle", descAr:"شمعة صويا برائحة العنبر الفاخر.", descEn:"Soy candle, premium amber.", price:120, img:"🕯️"},
-      {id:"p4", cat:"c2", ar:"شمعة اللافندر", en:"Lavender Candle", descAr:"شمعة هادية برائحة اللافندر المريح.", descEn:"Calming lavender soy candle.", price:130, img:"💜"},
-      {id:"p5", cat:"c3", ar:"شاي الوَنس", en:"Wanas Tea", descAr:"شاي أعشاب طبيعي للاسترخاء.", descEn:"Natural herbal relaxing tea.", price:90, img:"🍵"},
-      {id:"p6", cat:"c3", ar:"قهوة الوَنس المطحونة", en:"Wanas Ground Coffee", descAr:"قهوة عربية مطحونة طازة بنكهة دافية.", descEn:"Fresh ground Arabic coffee.", price:110, img:"☕"}
+      // شموع
+      {id:"p1", cat:"c1", ar:"ونس العنبر", en:"Wanas Amber", descAr:"شمعة صويا في جرة زجاجية مع شرائح برتقال مجفف ورائحة العنبر الدافئ.", descEn:"Soy candle in a glass jar with dried orange slices and warm amber scent.", price:180, img:"fb_photos/img_12.jpg"},
+      {id:"p2", cat:"c1", ar:"وردة ونس", en:"Wanas Rose", descAr:"شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور وعطر في آنٍ واحد.", descEn:"Hand-carved candle shaped like a red rose — decor and scent in one.", price:220, img:"fb_photos/img_10.jpg"},
+      {id:"p3", cat:"c1", ar:"سحابة ونس", en:"Wanas Cloud", descAr:"شمعة على شكل سحابة ناعمة برائحة هادئة تناسب أجواء الهدوء.", descEn:"Soft cloud-shaped candle with a calm, cozy scent.", price:200, img:"fb_photos/img_2.jpg"},
+      {id:"p4", cat:"c1", ar:"ونس عطور (٤ فتائل)", en:"Wanas 4-Wick", descAr:"شمعة جرة زجاجية بأربع فتائل من خط ونس عطور لرائحة تملأ المكان.", descEn:"4-wick glass jar candle from the Wanas scent line — fills the room.", price:320, img:"fb_photos/img_11.jpg"},
+      // هدايا وورود
+      {id:"p5", cat:"c2", ar:"باقة الونس الوردية", en:"Wanas Rose Bouquet", descAr:"بوكيه ورد (صابون/شمع) مغلف بورق وردي فخم مع ريبان — هدية لكل مناسبة.", descEn:"Flower bouquet (soap/wax) in elegant pink wrap with ribbon — a gift for every occasion.", price:280, img:"fb_photos/img_5.jpg"},
+      {id:"p6", cat:"c2", ar:"صندوق الونس", en:"Wanas Gift Box", descAr:"صندوق هدايا متكامل مغلف بروبان شامبين لحظة خاصة لا تُنسى.", descEn:"Complete gift box wrapped in champagne ribbon for an unforgettable moment.", price:450, img:"fb_photos/img_6.jpg"},
+      {id:"p7", cat:"c2", ar:"وردة الصابون", en:"Soap Rose", descAr:"صابون طبيعي على شكل ورود حمراء بلمسة أعشاب — هدية عملية وجميلة.", descEn:"Natural soap shaped like red roses with herbal touch — practical and pretty.", price:160, img:"fb_photos/img_9.jpg"},
+      // عطور المنزل
+      {id:"p8", cat:"c3", ar:"عطر الونس", en:"Wanas Perfume", descAr:"عطر منزلي صغير (٣٠–٥٠ مل) من خط ونس عطور لمنزل يعبق بالدفء.", descEn:"Small home perfume (30-50ml) from the Wanas scent line for a warm home.", price:150, img:"fb_photos/img_11.jpg"},
+      {id:"p9", cat:"c3", ar:"بخور الونس", en:"Wanas Bakhoor", descAr:"خليط بخور وروائح للمنزل يمنح أجواءً روحانية وهادئة.", descEn:"Bakhoor and home scent blend for a spiritual, calm atmosphere.", price:130, img:"fb_photos/img_2.jpg"}
     ]
   };
 }
@@ -375,17 +380,17 @@ function saveCart(){ localStorage.setItem("wanas_cart", JSON.stringify(CART)); }
 const $ = s=>document.querySelector(s);
 const $$ = s=>document.querySelectorAll(s);
 function t(key){ return (I18N[LANG]&&I18N[LANG][key]) || key; }
-function money(n){ return n + " EGP"; }
+function money(n){ return n + " جنيه"; }
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
 function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
 
 /* ====================== Render i18n ====================== */
 function applyLang(){
-  document.documentElement.lang = LANG;
-  document.documentElement.dir = (LANG==="ar")?"rtl":"ltr";
-  $("#langBtn").textContent = (LANG==="ar")?"EN":"ع";
-  $$("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(I18N[LANG][k]!=null) el.textContent=I18N[LANG][k]; });
-  $$("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(I18N[LANG][k]!=null) el.placeholder=I18N[LANG][k]; });
+  document.documentElement.lang = "ar";
+  document.documentElement.dir = "rtl";
+  $("#langBtn").textContent = "ع";
+  $$("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.textContent=I18N[LANG][k]; });
+  $$("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.placeholder=I18N[LANG][k]; });
 }
 
 /* ====================== Store render ====================== */
@@ -411,7 +416,7 @@ function renderProducts(){
   list.forEach(p=>{
     const card=document.createElement("div"); card.className="card";
     const cat = DATA.categories.find(c=>c.id===p.cat);
-    const imgHtml = (p.img&&p.img.startsWith("http"))?`<img src="${p.img}" alt="">`:(p.img||"📦");
+    const imgHtml = (p.img&&/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(p.img))?`<img src="${p.img}" alt="${LANG==="ar"?p.ar:p.en}">`:(p.img&&p.img.startsWith("http")?`<img src="${p.img}" alt="">`:(p.img||"📦"));
     card.innerHTML=`
       <div class="ph">${imgHtml}</div>
       <h3>${LANG==="ar"?p.ar:p.en}</h3>
@@ -464,37 +469,56 @@ function renderCart(){
 function renderPay(){
   const list=$("#payList"); list.innerHTML="";
   const opts=[
-    {k:"vodafone", ic:"📱", name:t("pay_vod"), det:PAYMENT.vodafone},
-    {k:"instapay", ic:"💳", name:t("pay_inst"), det:PAYMENT.instapay},
-    {k:"bank", ic:"🏦", name:t("pay_bank"), det:PAYMENT.bank.replace(/\n/g," · ")},
-    {k:"whatsapp", ic:"💬", name:t("pay_wa"), det:t("pay_wa_det")}
+    {k:"vodafone", ic:"📱", name:t("pay_vod"), det:PAYMENT.vodafone, copy:PAYMENT.vodafone, copyMsg:(LANG==="ar"?"تم نسخ رقم فودافون كاش ✅":"تم نسخ رقم فودافون كاش ✅")},
+    {k:"instapay", ic:"💳", name:t("pay_inst"), det:PAYMENT.instapay, copy:PAYMENT.instapay, copyMsg:(LANG==="ar"?"تم نسخ رقم إنستا باي ✅":"تم نسخ رقم إنستا باي ✅")},
+    {k:"bank", ic:"🏦", name:t("pay_bank"), det:PAYMENT.bank.replace(/\n/g," · "), copy:"EG900003041450006160803000150", copyMsg:(LANG==="ar"?"تم نسخ رقم الـ IBAN ✅":"IBAN copied ✅")},
+    {k:"whatsapp", ic:"💬", name:t("pay_wa"), det:t("pay_wa_det"), copy:null, copyMsg:null}
   ];
   opts.forEach(o=>{
     const el=document.createElement("div"); el.className="pay"; el.dataset.k=o.k;
     el.innerHTML=`<div class="ic">${o.ic}</div><div class="det"><b>${o.name}</b><span>${o.det}</span></div>`;
-    el.onclick=()=>{ selectedPay=o.k; $$("#payList .pay").forEach(x=>x.classList.remove("sel")); el.classList.add("sel"); };
+    el.onclick=()=>{
+      selectedPay=o.k;
+      $$("#payList .pay").forEach(x=>x.classList.remove("sel"));
+      el.classList.add("sel");
+      if(o.copy){ copyToClipboard(o.copy); toast(o.copyMsg); }
+    };
     list.appendChild(el);
   });
 }
+function copyToClipboard(text){
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text);
+    } else {
+      const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
+    }
+  }catch(e){ /* ignore */ }
+}
 function buildOrderText(){
+  const L = LANG==="ar";
   const lines=[];
-  lines.push(LANG==="ar"?"*طلب جديد — وَنَس*":"*New Order — WANAS*");
+  lines.push(L?"🌿 *طلب جديد — وَنَس*":"🌿 *طلب جديد — وَنَس*");
   lines.push("");
-  CART.forEach(i=>{ const p=DATA.products.find(x=>x.id===i.id);
-    lines.push(`• ${LANG==="ar"?p.ar:p.en} × ${i.qty} = ${money(p.price*i.qty)}`); });
+  lines.push(L?"🛒 *المنتجات:*":"🛒 *المنتجات:*");
+  CART.forEach((i,idx)=>{ const p=DATA.products.find(x=>x.id===i.id);
+    lines.push(`${idx+1}. ${L?p.ar:p.en}`);
+    lines.push(`   × ${i.qty}  =  ${money(p.price*i.qty)}`);
+  });
   lines.push("");
-  lines.push((LANG==="ar"?"الإجمالي: ":"Total: ")+money(cartTotal()));
+  lines.push(`${L?"💰 *الإجمالي:*":"💰 *الإجمالي:*"} ${money(cartTotal())}`);
   lines.push("");
   const payName = {vodafone:t("pay_vod"),instapay:t("pay_inst"),bank:t("pay_bank"),whatsapp:t("pay_wa")}[selectedPay]||"";
-  lines.push((LANG==="ar"?"طريقة الدفع: ":"Payment: ")+payName);
-  if(selectedPay==="vodafone") lines.push("Vodafone Cash: "+PAYMENT.vodafone);
-  if(selectedPay==="instapay") lines.push("InstaPay: "+PAYMENT.instapay);
-  if(selectedPay==="bank") lines.push(PAYMENT.bank);
+  lines.push(`${L?"💳 *طريقة الدفع:*":"💳 *طريقة الدفع:*"} ${payName}`);
+  if(selectedPay==="vodafone") lines.push(`${L?"رقم فودافون كاش:":"رقم فودافون كاش:"} ${PAYMENT.vodafone}`);
+  if(selectedPay==="instapay") lines.push(`${L?"إنستا باي:":"إنستا باي:"} ${PAYMENT.instapay}`);
+  if(selectedPay==="bank") lines.push(`${L?"IBAN:":"IBAN:"} EG900003041450006160803000150`);
   lines.push("");
-  lines.push((LANG==="ar"?"الاسم: ":"Name: ")+($("#custName").value||"-"));
-  lines.push((LANG==="ar"?"التليفون: ":"Phone: ")+($("#custPhone").value||"-"));
-  lines.push((LANG==="ar"?"العنوان: ":"Address: ")+($("#custAddr").value||"-"));
-  lines.push((LANG==="ar"?"ملاحظات: ":"Notes: ")+($("#custNote").value||"-"));
+  lines.push(`${L?"👤 *الاسم:*":"👤 *الاسم:*"} ${($("#custName").value||"-")}`);
+  lines.push(`${L?"📞 *التليفون:*":"📞 *التليفون:*"} ${($("#custPhone").value||"-")}`);
+  lines.push(`${L?"📍 *العنوان:*":"📍 *العنوان:*"} ${($("#custAddr").value||"-")}`);
+  if($("#custNote").value) lines.push(`${L?"📝 *ملاحظات:*":"📝 *ملاحظات:*"} ${$("#custNote").value}`);
   return lines.join("\n");
 }
 function validateOrder(){
@@ -511,7 +535,7 @@ function sendWhatsApp(){
 }
 function sendEmail(){
   if(!validateOrder()) return;
-  const subject=encodeURIComponent(LANG==="ar"?"طلب جديد — وَنَس":"New Order — WANAS");
+  const subject=encodeURIComponent("طلب جديد — وَنَس");
   const body=encodeURIComponent(buildOrderText());
   window.location.href=`mailto:${PAYMENT.email}?subject=${subject}&body=${body}`;
   toast(t("order_sent"));
