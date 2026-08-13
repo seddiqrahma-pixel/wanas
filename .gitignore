@@ -1,9 +1,10 @@
-.DS_Store
+# Raw source assets (not needed for the live site — too many duplicates/large)
 fb_all/
-dl_all.sh
-preview.png
-preview2.png
-*.log
-
-# product review artifacts (duplicates of fb_photos/)
+fb_live/
+fb_photos/
 review/
+fb_clean/
+fb_clean_all.zip
+NOTES.md
+.DS_Store
+dl_all.sh

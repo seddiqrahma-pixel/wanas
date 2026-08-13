@@ -1,0 +1,100 @@
+CLEAN_ID | VISION_TYPE | SUBCATEGORY | COLORS | NOTES / EXCLUDE?
+clean_001 | candle cup | teacup coffee candle | white cup, dark wax, coffee beans | product
+clean_002 | candle jar | jar w/ pink label | cream wax, clear glass, pink label | product
+clean_003 | air-freshener | car hanging oil bottle | clear square glass, golden oil, wood cap | product (NOT candle)
+clean_004 | soap | soap flower bouquet (lime ribbon) | white wrap, lime green ribbon, pink | product (soap)
+clean_005 | candle cup | lit teacup candle | amber wax, scalloped cup | product
+clean_006 | bag | kraft shopping bag w/ logo | brown bag, QR | EXCLUDE (packaging not product)
+clean_007 | candle jar | gel beach candle | blue gel, white coral, sand | product
+clean_008 | raw-materials | wax supplies flat-lay | pumpkin+flower wax, jars, wick | EXCLUDE (raw materials)
+clean_009 | rose | soap/wax rose buds box | pastel pink, tulle | product
+clean_010 | rose | tulip wax favor | cream tulip, kraft tag | product (favor)
+clean_011 | rose | white rose favors | white tulle, kraft tags | product (favor)
+clean_012 | promo | fragrance poll graphic | pink bg, white buttons | EXCLUDE (promo post)
+clean_013 | bouquet | dried flower bouquet (black wrap) | black paper, coral ribbon | product (dried bouquet)
+clean_014 | air-freshener | car diffuser kit (oil+wood bottle+card) | pink, wood, white | product
+clean_015 | bouquet | romantic bouquet + love letter | pink roses, envelope | product (gift bouquet)
+clean_016 | candle jar | white candle jar on bathroom counter | white, red logo | product (jar)
+clean_017 | air-freshener | essential oil bottle review card | amber glass, white label | product (oil)
+clean_018 | candle jar | two mosque/minaret pillar candles + lantern | white, gold lantern | product
+clean_019 | candle jar | Ramadan date jar candle | cream wax, dates, gold "رمضان كريم" | product
+clean_020 | candle jar | white daisy flower candle in jar | white petals, yellow center | product
+clean_021 | candle jar | ribbed white jar, red rose logo "وردة" | white, red | product
+clean_022 | bouquet | pastel flower bouquet (lime ribbon) | pink/white/lime | product (artificial bouquet)
+clean_023 | rose | carnation/rose box (pink) | pastel pink, tulle | product
+clean_024 | soap | soap flower bouquet (peach ranunculus) | pink/peach/white | product (soap)
+clean_025 | candle cup | teacup coffee candle (hand sweater) | white cup, dark wax | product
+clean_026 | candle jar | two ribbed white jars "شمع/مصنوع يدوياً" | white, orange text | product
+clean_027 | candle jar | pink fluted cup candle + ribbon | pink cup, cream wax | product
+clean_028 | candle jar | white soy jar, pink label "ونس" | white wax, pink label | product
+clean_029 | non-product | WHATSAPP CHAT SCREENSHOT (private) | dark UI | EXCLUDE + DELETE (privacy!)
+clean_030 | tablet | scented wax tablet w/ red petal + ribbon | cream, red, pink | product
+clean_031 | air-freshener | car air freshener review (rearview) | multicolor label, wood cap | product
+clean_032 | air-freshener | car air freshener in Riyadh post | purple/blue, sun graphic | product
+clean_033 | rose | lavender rose candles + jar (promo) | lavender, orange flame | product (rose)
+clean_034 | candle jar | white box of round favors (Muhammad tag) | white tulle, cream | product (favor)
+clean_035 | soap | soap flower bouquet (Happy birthday Tuna) | pastel, lime ribbon | product (soap)
+clean_036 | bouquet | elegant soap bouquet (Happy birthday Tuna) | white/pink/lime | product
+clean_037 | candle jar | personalized name candle (DIMA) | cream wax, peach letters | product
+clean_038 | candle jar | shell beach candles (sand+water+seashells) | yellow/blue/white | product
+clean_039 | candle jar | lit two-wick soy jar on laptop | cream swirl, black laptop | product (lifestyle)
+clean_040 | bag | kraft bag w/ "وَنَس" + phone 0102 120 3954 + @wanas.candles | brown | EXCLUDE (packaging) — PHONE=01021203954
+clean_041 | bouquet | lit flower candle bouquet (pink roses) | pink/cream/lime | product (candle bouquet)
+clean_042 | bouquet | soap flower bouquet "إلى أميرتي" | pink/cream/green | product (soap bouquet)
+clean_043 | candle jar | crescent moon Ramadan candle + poem | cream, white text | product
+clean_044 | promo | Ramadan 15% discount ad, phone 01021203954 | beige, gold | EXCLUDE (promo) — PHONE=01021203954
+clean_045 | bouquet | soap flower bouquet (black wrap, "إلى") | pink/cream/black | product (soap)
+clean_046 | candle jar | white hearts taper candles (romantic) | cream, red hearts | product
+clean_047 | candle jar | white hearts taper candles w/ label "شموع" | cream, red hearts | product
+clean_048 | candle jar | hearts candles + bookmark "عصير الكتب" | cream, red, teal | product
+clean_049 | promo | catalog collage "عطور تملأ منزلك" | cream/orange/brown | EXCLUDE (promo)
+clean_050 | non-product | blurry low-res nothing | n/a | EXCLUDE (unusable)
+clean_051 | bouquet | flower candle bouquet (pink/cream) | pink/cream/orange | product (candle bouquet)
+clean_052 | candle cup | teacup coffee candle (grey sweater) | white cup, dark wax | product
+clean_053 | candle jar | two popcorn-texture ceramic jars | cream, green bg | product
+clean_054 | candle jar | pink flower candle in dark bowl | pink/lilac, black bowl | product
+clean_055 | soap | soap flower wedding favors (pink tulle) | pink/peach/white | product (soap)
+clean_056 | air-freshener | car diffuser gift set (oil+wood bottle) | white/amber/wood | product
+clean_057 | promo | wedding invitation card + favor (Ayla) | pink, red logo | EXCLUDE (promo/invitation)
+clean_058 | bouquet | flower candle bouquet (feathers+dried) | pink/cream/tan | product (candle bouquet)
+clean_059 | air-freshener | car freshener rearview (amber oil) | amber, wood, black clip | product
+clean_060 | non-product | WHATSAPP REVIEW SCREENSHOT (Noussa) | dark UI | EXCLUDE + DELETE (privacy!)
+clean_061 | bouquet | romantic gift (flower candles + love letter) | pink/white/peach | product (bouquet)
+clean_062 | rose | rose candle collage (teal/cream/peach) "شمعة أزهار" | pink/teal/cream | product (rose)
+clean_063 | candle jar | shell ocean candle (mermaid tail) | blue/white/pink/orange | product
+clean_064 | candle jar | shell ocean candle "AHMED" name | turquoise/white/orange | product (personalized)
+clean_065 | non-product | abstract purple fluid art (social post) | purple/white | EXCLUDE (art post)
+clean_066 | candle jar | hearts taper candle + lit jar + card | cream/pink/orange | product
+clean_067 | candle jar | 9 soy jars w/ orange slices/crystals "شموع ونس" | cream/orange | product
+clean_068 | candle jar | wooden-lid jar, gold base "شموم تمنحك دفء الشمس" | cream/wood/gold | product
+clean_069 | rose | carnation/rose box (pink/yellow, #1 logo) | pink/white/yellow | product (rose)
+clean_070 | non-product | WHATSAPP REVIEW SCREENSHOT (shm'a tahfa) | dark UI | EXCLUDE + DELETE (privacy!)
+clean_071 | non-product | WHATSAPP REVIEW SCREENSHOT (Amira hospital) | dark UI | EXCLUDE + DELETE (privacy!)
+clean_072 | promo | baby announcement card + macaron box (Noor logo) | pink/white/cream | EXCLUDE (promo/other brand Noor)
+clean_073 | rose | white rose tulip favors (Muhammad/Rehab tags) | white/brown | product (favor)
+clean_074 | promo | white cloud favors wedding (Muhammad/Rehab) | white/brown | EXCLUDE (promo/favor bulk)
+clean_075 | rose | white rose favors (Muhammad/Rehab tags) | white/brown | product (favor)
+clean_076 | bouquet | soap bouquet (black origami wrap, "إلى") | pink/white/black | product (soap)
+clean_077 | air-freshener | car freshener w/ instruction card "اقتنِ فواحة وَنس" | amber/wood/white | product
+clean_078 | air-freshener | green gel air freshener (tray) | emerald green/white | product
+clean_079 | candle jar | pink ribbed jar "شمعة بوتون" winter vanilla-spice | pink/black | product
+clean_080 | candle jar | kraft box w/ blue ribbon "عليّة ونس صغير" | brown/blue | product (packaged)
+clean_081 | candle jar | lit crescent moon candle + pink lantern (Ramadan) | cream/pink/gold | product
+clean_082 | tablet | hanging wax tablets (peach/white/grey) promo | pink/white/gold | product (tablet)
+clean_083 | candle jar | white hearts taper candles (label "ونس") | white/red | product
+clean_084 | candle jar | daisy flower candle in jar | white/yellow | product
+clean_085 | candle jar | daisy flower candle jar (silver lid, "LM" label) | white/yellow/silver | product (maybe other brand LM)
+clean_086 | air-freshener | car freshener rearview (golden oil, florals) | gold/purple/blue | product
+clean_087 | air-freshener | beach wax ornament hang (starfish, pink ribbon) | blue/white/pink/orange | product
+clean_088 | candle jar | lit creamy jar + strawberry cake scene | pink/red/cream | product (lifestyle)
+clean_089 | bouquet | soap bouquet (pink wrap, red sleeve) | pink/cream/red | product
+clean_090 | bouquet | two soap bouquets (pink wrap, cream ribbon) | pink/white/green | product (soap)
+clean_091 | bouquet | soap rose bouquet (pink/cream/green) | pink/white/green | product (soap)
+clean_092 | bouquet | soap rose bouquet in pink bag (cream bow) | pink/white/cream | product (soap)
+clean_093 | rose | two red rose candles + white tablet | red/green/white | product (rose)
+clean_094 | rose | two red rose candles in hands | red/green/white | product (rose)
+clean_095 | soap | three red soap roses (bud + splashes) | red/white/green/yellow | product (soap)
+clean_096 | rose | single red rose candle + leaves | red/green/white | product (rose)
+clean_097 | candle jar | 4-wick lit jar (dark bg) | yellow/orange/cream/black | product
+clean_098 | candle jar | multi-wick lit jar w/ orange slices (dark bg) | cream/yellow/orange/black | product
+clean_099 | candle jar | (last image, same family as 097/098 lit jar) | warm | product
