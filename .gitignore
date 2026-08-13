@@ -4,3 +4,6 @@ dl_all.sh
 preview.png
 preview2.png
 *.log
+
+# product review artifacts (duplicates of fb_photos/)
+review/
