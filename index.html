@@ -96,6 +96,21 @@
   footer.foot{padding:30px 0;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:40px}
   .foot-logo{height:46px;width:auto;display:block;margin:0 auto 8px}
   @media(max-width:560px){.hero h1{font-size:1.8rem}}
+  /* Multi-image picker (admin) */
+  .img-picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .img-picker .ip-thumb{position:relative;width:64px;height:64px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--accent)}
+  .img-picker .ip-thumb img{width:100%;height:100%;object-fit:cover}
+  .img-picker .ip-thumb .ip-x{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:.7rem;line-height:1;cursor:pointer}
+  .img-picker .ip-add{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border:1px dashed var(--brand);border-radius:10px;color:var(--brand);background:transparent;cursor:pointer;font-size:1.4rem}
+  .cost-line{font-size:.82rem;color:var(--muted);margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
+  .cost-line b{color:var(--ink)}
+  .cost-line .neg{color:var(--danger)}
+  /* Discount badge */
+  .price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+  .price.old{color:var(--muted);text-decoration:line-through;font-weight:600;font-size:.95rem}
+  .discount-badge{display:inline-block;background:var(--ok);color:#fff;font-weight:700;font-size:.78rem;padding:2px 9px;border-radius:20px}
+  .card .thumbs .thumb.active{outline:2px solid var(--brand);outline-offset:-2px}
+
   /* Image gallery / lightbox */
   .gallery{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:90;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px}
   .gallery .g-img{max-width:92vw;max-height:72vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
@@ -175,7 +190,10 @@
         <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
         <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
       </div>
-      <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — افصل بين كل صورة بفاصلة أو سطر جديد (Images — separate with comma or newline)</label>
+      <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
+      <div class="img-picker" id="prodPicker"></div>
+      <input type="file" id="prodFile" accept="image/*" multiple style="display:none">
+      <button type="button" class="btn ghost sm" id="prodUploadBtn">📁 رفع صور (Upload)</button>
       <textarea class="field" id="prodImgs" rows="2" placeholder="products/p_jar_150/main.jpg, products/p_jar_150/g1.jpg" data-i18n-ph="imgs_ph"></textarea>
       <div class="img-preview" id="prodPreview"></div>
       <button class="btn sm" id="addProdBtn" data-i18n="add_prod">+ إضافة منتج</button>
@@ -243,7 +261,10 @@
     <div class="row">
       <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
     </div>
-    <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — افصل بين كل صورة بفاصلة أو سطر جديد (Images — separate with comma or newline)</label>
+    <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
+    <div class="img-picker" id="editProdPicker"></div>
+    <input type="file" id="editProdFile" accept="image/*" multiple style="display:none">
+    <button type="button" class="btn ghost sm" id="editProdUploadBtn">📁 رفع صور (Upload)</button>
     <textarea class="field" id="editProdImgs" rows="2" placeholder="products/p_jar_150/main.jpg, products/p_jar_150/g1.jpg" data-i18n-ph="imgs_ph"></textarea>
     <div class="img-preview" id="editProdPreview"></div>
     <button class="btn" id="editProdSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
@@ -400,7 +421,7 @@ function defaultData(){
       {id:"p16", cat:"c1", ar:"فواحة استيك", en:"Steak Diffuser", descAr:"فواحة معطرة بنكهة استيك — لمسة مختلفة لجو منزلك.", descEn:"Scented diffuser with a unique steak aroma for a distinct home vibe.", price:35},
       {id:"p17", cat:"c1", ar:"بابل صغير", en:"Small Bubble Candle", descAr:"شمعة بابل صغيرة بشكل عصري — قطعة ديكور لطيفة.", descEn:"Small modern bubble candle — a cute decor piece.", price:59, imgs:["products/p_bubble_big/main.jpg", "products/p_bubble_big/g1.jpg", "products/p_bubble_big/g2.jpg"]},
       {id:"p18", cat:"c1", ar:"وردة جوري صغيرة", en:"Small Jori Rose Candle", descAr:"شمعة وردة جوري صغيرة حمراء — لمسة زهرية أنيقة.", descEn:"Small red jori rose candle — an elegant floral touch.", price:99, imgs:["products/p_big_rose/main.jpg", "products/p_big_rose/g1.jpg", "products/p_big_rose/g2.jpg", "products/p_big_rose/g3.jpg"]},
-      {id:"p19", cat:"c1", ar:"بوكية 7 وردات", en:"7-Rose Bouquet Candle", descAr:"بوكية من 7 وردات مقفولة — هدية زهرية فاخرة.", descEn:"Bouquet of 7 closed roses — a luxury floral gift.", price:299},
+      {id:"p19", cat:"c3", ar:"بوكية 7 وردات", en:"7-Rose Bouquet Candle", descAr:"بوكية من 7 وردات مقفولة — هدية زهرية فاخرة.", descEn:"Bouquet of 7 closed roses — a luxury floral gift.", price:299},
       {id:"p20", cat:"c1", ar:"وردة بلدي 2", en:"Baladi Rose 2 (60g)", descAr:"شمعة وردة بلدي جديدة زن 60 جرام — رائحة زهرية هادية.", descEn:"New baladi rose candle, 60g, with a calm floral scent.", price:95, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
       {id:"p21", cat:"c1", ar:"وردة توليب", en:"Tulip Candle (40g)", descAr:"شمعة على شكل وردة توليب زن 40 جرام — تصميم ناعم.", descEn:"Tulip-shaped candle, 40g, soft design.", price:75},
       {id:"p22", cat:"c1", ar:"صدفة 200 جرام", en:"Shell Candle 200g", descAr:"شمعة على شكل صدفة بحرية زن 200 جرام — قطعة ديكور مميزة.", descEn:"Sea-shell shaped candle, 200g — a unique decor piece.", price:350},
@@ -415,6 +436,52 @@ function defaultData(){
   };
 }
 let DATA = loadData();
+let prodPicker=null, editProdPicker=null;
+
+/* ===== Sheet-derived pricing (market & cost) =====
+   Source: sheet_data/wanas_calculator.xlsx -> 'final 1125'
+     market  = column "بيع"   (competitive / market reference price)
+     cost    = column "تشغيل"  (manufacturing / operating cost)
+   Discount is shown when the listed price < market.
+   Profit (admin) = listed price - cost  (x2 factor dropped per request). */
+const PRICING = {
+  p1:{cost:13, market:45},
+  p2:{cost:31, market:62},
+  p3:{cost:39, market:78},
+  p4:{cost:40, market:80},
+  p5:{cost:46, market:92},
+  p6:{cost:59, market:118},
+  p7:{cost:66, market:132},
+  p8:{cost:59, market:118},
+  p9:{cost:94, market:188},
+  p10:{cost:94, market:188},
+  p11:{cost:115, market:230},
+  p12:{cost:150, market:300},
+  p13:{cost:98, market:196},
+  p14:{cost:220, market:440},
+  p15:{cost:311, market:622},
+  p16:{cost:13, market:26},
+  p17:{cost:27, market:54},
+  p18:{cost:46, market:92},
+  p19:{cost:130, market:260},
+  p20:{cost:46.5, market:93},
+  p21:{cost:36, market:72},
+  p22:{cost:185, market:370},
+  p23:{cost:21, market:42},
+  p24:{cost:196, market:392},
+  p25:{cost:136, market:272},
+  p26:{cost:166, market:332},
+  p27:{cost:91, market:182},
+  p28:{cost:90, market:120},
+  p29:{cost:128.5, market:195}
+};
+function applyPricing(){
+  if(!DATA||!DATA.products) return;
+  DATA.products.forEach(p=>{ const m=PRICING[p.id]; if(!m) return;
+    if(m.cost!=null) p.cost=m.cost; if(m.market!=null) p.market=m.market; });
+}
+applyPricing();
+
 let CART = loadCart();
 let activeCat = "all";
 let selectedPay = null;
@@ -461,6 +528,32 @@ function renderImgPreview(inputEl, previewEl){
   previewEl.innerHTML=imgs.map(s=>`<div class="img-thumb">${isImg(s)?`<img src="${s}" alt="">`:`<span class="img-fallback" title="${s}">${s}</span>`}</div>`).join("");
 }
 
+/* ====================== Multi-image picker (upload + paste) ====================== */
+function buildPicker(ids){
+  const P=$("#"+ids.picker), F=$("#"+ids.file), B=$("#"+ids.btn), T=$("#"+ids.ta), PV=$("#"+ids.preview);
+  let list=parseImgList(T.value);
+  const renderPicker=()=>{
+    P.innerHTML="";
+    list.forEach((src,i)=>{
+      const cell=document.createElement("div"); cell.className="ip-thumb";
+      cell.innerHTML=(isImg(src)?`<img src="${src}" alt="">`:`<span class="img-fallback" title="${src}">${src}</span>`)+`<button type="button" class="ip-x">✕</button>`;
+      cell.querySelector(".ip-x").onclick=()=>{ list.splice(i,1); commit(); renderPicker(); };
+      P.appendChild(cell);
+    });
+    const add=document.createElement("button"); add.type="button"; add.className="ip-add"; add.textContent="+"; add.onclick=()=>F.click();
+    P.appendChild(add);
+  };
+  const commit=()=>{ T.value=list.join("\n"); renderImgPreview(T,PV); };
+  B.onclick=()=>F.click();
+  F.onchange=()=>{ const files=F.files; if(!files||!files.length) return; let n=0;
+    for(const f of files){ const r=new FileReader(); r.onload=()=>{ list.push(r.result); if(++n===files.length){ commit(); renderPicker(); } }; r.readAsDataURL(f); }
+    F.value=""; };
+  T.addEventListener("input", ()=>{ list=parseImgList(T.value); renderPicker(); renderImgPreview(T,PV); });
+  renderPicker(); renderImgPreview(T,PV);
+  return { refresh:()=>{ list=parseImgList(T.value); renderPicker(); renderImgPreview(T,PV); },
+           reset:()=>{ list=[]; T.value=""; commit(); renderPicker(); } };
+}
+
 /* ====================== Render i18n ====================== */
 function applyLang(){
   document.documentElement.lang = LANG;
@@ -494,19 +587,25 @@ function renderProducts(){
     const card=document.createElement("div"); card.className="card";
     const cat = DATA.categories.find(c=>c.id===p.cat);
     const imgs = (p.imgs&&p.imgs.length)?p.imgs:[].filter(Boolean);
-    const main = imgs[0]||"";
-    const imgHtml = (main && isImg(main))?`<img src="${main}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(main||"📦");
-    const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb" data-pid="${p.id}" data-idx="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
+    const imgHtml = (imgs[0] && isImg(imgs[0]))?`<img src="${imgs[0]}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(imgs[0]||"📦");
+    const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb ${i===0?'active':''}" data-pid="${p.id}" data-idx="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
+    const disc = (typeof p.market==="number" && p.price < p.market) ? Math.round((1 - p.price/p.market)*100) : 0;
+    const priceRow = disc>0
+      ? `<div class="price-row"><span class="price old">${money(p.market)}</span><span class="price">${money(p.price)}</span><span class="discount-badge">-${disc}%</span></div>`
+      : `<div class="price-row"><span class="price">${money(p.price)}</span></div>`;
     card.innerHTML=`
-      <div class="ph" data-pid="${p.id}" data-idx="0">${imgHtml}${imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""}</div>
+      <div class="ph" data-pid="${p.id}">${imgHtml}${imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""}</div>
       <h3>${LANG==="ar"?p.ar:p.en}</h3>
       <div class="desc">${LANG==="ar"?p.descAr:p.descEn}</div>
-      <div class="price">${money(p.price)}</div>
+      ${priceRow}
       ${thumbs}
       <button class="btn sm add-btn">${t("add")}</button>`;
+    const mainEl = card.querySelector(".ph");
+    const setMain = (i)=>{ const m=imgs[i]||""; mainEl.innerHTML = ((m && isImg(m))?`<img src="${m}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(m||"📦")) + (imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""); };
+    let activeImg = 0;
     card.querySelector(".add-btn").onclick=()=>addToCart(p.id);
-    card.querySelector(".ph").onclick=()=>openGallery(p.id,0);
-    card.querySelectorAll(".thumb").forEach(b=>{ b.onclick=(e)=>{ e.stopPropagation(); openGallery(b.dataset.pid, Number(b.dataset.idx)); }; });
+    mainEl.onclick=()=>openGallery(p.id, activeImg);
+    card.querySelectorAll(".thumb").forEach(b=>{ b.onclick=(e)=>{ e.stopPropagation(); activeImg=Number(b.dataset.idx); setMain(activeImg); card.querySelectorAll(".thumb").forEach(x=>x.classList.remove("active")); b.classList.add("active"); }; });
     grid.appendChild(card);
   });
 }
@@ -688,7 +787,11 @@ function renderAdmin(){
   DATA.products.forEach(p=>{
     const cat=DATA.categories.find(c=>c.id===p.cat);
     const row=document.createElement("div"); row.className="list-item";
-    row.innerHTML=`<span class="nm">${p.ar} / ${p.en} — ${money(p.price)} ${cat?("("+(LANG==="ar"?cat.ar:cat.en)+")"):""}</span>
+    const cost=(typeof p.cost==="number")?p.cost:null;
+    const market=(typeof p.market==="number")?p.market:null;
+    const profit=(cost!=null)?(p.price-cost):null;
+    const profTxt=(cost!=null)?` • ${LANG==="ar"?"تكلفة":"Cost"}: ${money(cost)} • ${LANG==="ar"?"سوق":"Market"}: ${(market!=null)?money(market):"—"} • ${LANG==="ar"?"ربح":"Profit"}: ${money(profit)}`:"";
+    row.innerHTML=`<span class="nm">${p.ar} / ${p.en} — ${money(p.price)} ${cat?("("+(LANG==="ar"?cat.ar:cat.en)+")"):""}${profTxt}</span>
       <button class="btn ghost sm ed-prod">${t("edit")}</button>
       <button class="btn danger sm del-prod">${t("delete")}</button>`;
     row.querySelector(".del-prod").onclick=()=>{ DATA.products=DATA.products.filter(x=>x.id!==p.id); saveData(); renderAdmin(); renderProducts(); };
@@ -715,6 +818,7 @@ function openEditProd(id){
   migrateProduct(p);
   $("#editProdImgs").value=(p.imgs&&p.imgs.length)?p.imgs.join("\n"):(p.img||"");
   renderImgPreview($("#editProdImgs"), $("#editProdPreview"));
+  if(editProdPicker) editProdPicker.refresh();
   $("#editProdModal").classList.add("show");
 }
 function saveEditProd(){
@@ -743,8 +847,8 @@ function addProduct(){
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
   DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,imgs:finalImgs}); saveData();
-  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodImgs"].forEach(id=>$("#"+id).value="");
-  renderImgPreview($("#prodImgs"), $("#prodPreview"));
+  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice"].forEach(id=>$("#"+id).value="");
+  if(prodPicker) prodPicker.reset();
   renderAdmin(); renderProducts();
 }
 
@@ -768,9 +872,9 @@ function bind(){
   $("#editCatClose").onclick=()=>{ $("#editCatModal").classList.remove("show"); };
   $("#editProdSave").onclick=saveEditProd;
   $("#editProdClose").onclick=()=>{ $("#editProdModal").classList.remove("show"); };
-  $("#prodImgs").addEventListener("input", ()=>renderImgPreview($("#prodImgs"), $("#prodPreview")));
-  $("#editProdImgs").addEventListener("input", ()=>renderImgPreview($("#editProdImgs"), $("#editProdPreview")));
-  $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
+  prodPicker=buildPicker({picker:"prodPicker",file:"prodFile",btn:"prodUploadBtn",ta:"prodImgs",preview:"prodPreview"});
+  editProdPicker=buildPicker({picker:"editProdPicker",file:"editProdFile",btn:"editProdUploadBtn",ta:"editProdImgs",preview:"editProdPreview"});
+  $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); applyPricing(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
   bindEasyClose();
 }
 /* Close modals/drawer without hunting for the X:
