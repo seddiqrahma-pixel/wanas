@@ -108,6 +108,13 @@
   .gallery .g-thumb{width:54px;height:54px;border:2px solid transparent;border-radius:8px;overflow:hidden;padding:0;cursor:pointer;background:#fff}
   .gallery .g-thumb.active{border-color:#d9a441}
   .gallery .g-thumb img{width:100%;height:100%;object-fit:cover}
+  /* multi-image admin inputs */
+  .img-help{font-size:.78rem;color:#8a7a6a;margin:2px 0 4px;line-height:1.4}
+  .img-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;min-height:0}
+  .img-preview:empty{display:none}
+  .img-thumb{width:56px;height:56px;border-radius:10px;overflow:hidden;border:1px solid rgba(122,72,42,.2);background:rgba(122,72,42,.06);display:flex;align-items:center;justify-content:center}
+  .img-thumb img{width:100%;height:100%;object-fit:cover}
+  .img-fallback{font-size:1.2rem;max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -167,8 +174,10 @@
         <input class="field" id="prodDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
         <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
         <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
-        <input class="field" id="prodEmoji" placeholder="إيموجي/صورة" data-i18n-ph="emoji_ph">
       </div>
+      <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — افصل بين كل صورة بفاصلة أو سطر جديد (Images — separate with comma or newline)</label>
+      <textarea class="field" id="prodImgs" rows="2" placeholder="products/p_jar_150/main.jpg, products/p_jar_150/g1.jpg" data-i18n-ph="imgs_ph"></textarea>
+      <div class="img-preview" id="prodPreview"></div>
       <button class="btn sm" id="addProdBtn" data-i18n="add_prod">+ إضافة منتج</button>
       <div id="prodList" style="margin-top:12px"></div>
     </div>
@@ -233,8 +242,10 @@
     </div>
     <div class="row">
       <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
-      <input class="field" id="editProdImg" placeholder="إيموجي/رابط صورة" data-i18n-ph="emoji_ph">
     </div>
+    <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — افصل بين كل صورة بفاصلة أو سطر جديد (Images — separate with comma or newline)</label>
+    <textarea class="field" id="editProdImgs" rows="2" placeholder="products/p_jar_150/main.jpg, products/p_jar_150/g1.jpg" data-i18n-ph="imgs_ph"></textarea>
+    <div class="img-preview" id="editProdPreview"></div>
     <button class="btn" id="editProdSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
   </div>
 </div>
@@ -296,7 +307,7 @@ const I18N = {
     cat_ar_ph:"اسم الصنف بالعربي", cat_en_ph:"اسم الصنف (إنجليزي)",
     prod_ar_ph:"اسم المنتج عربي", prod_en_ph:"اسم المنتج (إنجليزي)",
     prod_desc_ar_ph:"وصف عربي", prod_desc_en_ph:"وصف (إنجليزي)",
-    price_ph:"السعر", emoji_ph:"إيموجي/رابط صورة",
+    price_ph:"السعر", emoji_ph:"إيموجي/رابط صورة", imgs_ph:"صور المنتج (مسار أو رابط — افصل بفاصلة/سطر جديد)", prod_imgs_label:"صور المنتج — افصل بين كل صورة بفاصلة أو سطر جديد (Images — separate with comma or newline)",
     name_ph:"اكتب اسمك", phone_ph:"01xxxxxxxxx", addr_ph:"المحافظة / العنوان التفصيلي",
     note_ph:"أي ملاحظة على الطلب",
     empty_cart:"السلة فاضية", empty_store:"لا توجد منتجات بعد",
@@ -329,7 +340,7 @@ const I18N = {
     cat_ar_ph:"Category name (Arabic)", cat_en_ph:"Category name (English)",
     prod_ar_ph:"Product name (Arabic)", prod_en_ph:"Product name (English)",
     prod_desc_ar_ph:"Description (Arabic)", prod_desc_en_ph:"Description (English)",
-    price_ph:"Price", emoji_ph:"Emoji/Image URL",
+    price_ph:"Price", emoji_ph:"Emoji/Image URL", imgs_ph:"Product images (path or URL — separate with comma/newline)", prod_imgs_label:"Product Images — separate each image with a comma or newline (صور المنتج — افصل بفاصلة أو سطر جديد)",
     name_ph:"Enter your name", phone_ph:"01xxxxxxxxx", addr_ph:"Governorate / detailed address",
     note_ph:"Any note about the order",
     empty_cart:"Cart is empty", empty_store:"No products yet",
@@ -428,6 +439,27 @@ function money(n){ return n + " جنيه"; }
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
 function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
 function isImg(v){ return typeof v==="string" && (v.startsWith("http")||/\.(jpe?g|png|gif|webp|svg)$/i.test(v)); }
+/* Parse a multi-image textarea value (comma OR newline separated) into a clean array. */
+function parseImgList(str){
+  return String(str||"").split(/[\n,]/).map(s=>s.trim()).filter(Boolean);
+}
+/* Backward-compat: migrate legacy single `img` field onto the `imgs` array. */
+function migrateProduct(p){
+  if(!p) return p;
+  if(p.img!==undefined){
+    if(!Array.isArray(p.imgs) || !p.imgs.length) p.imgs = p.img ? [p.img] : [];
+    delete p.img;
+  }
+  if(!Array.isArray(p.imgs)) p.imgs=[];
+  return p;
+}
+/* Live thumbnail preview below a multi-image textarea. */
+function renderImgPreview(inputEl, previewEl){
+  if(!inputEl||!previewEl) return;
+  const imgs=parseImgList(inputEl.value);
+  if(!imgs.length){ previewEl.innerHTML=`<span class="img-fallback">📦</span>`; return; }
+  previewEl.innerHTML=imgs.map(s=>`<div class="img-thumb">${isImg(s)?`<img src="${s}" alt="">`:`<span class="img-fallback" title="${s}">${s}</span>`}</div>`).join("");
+}
 
 /* ====================== Render i18n ====================== */
 function applyLang(){
@@ -679,16 +711,21 @@ function openEditProd(id){
   const p=DATA.products.find(x=>x.id===id); if(!p) return;
   $("#editProdId").value=p.id; $("#editProdAr").value=p.ar; $("#editProdEn").value=p.en;
   $("#editProdDescAr").value=p.descAr||""; $("#editProdDescEn").value=p.descEn||"";
-  $("#editProdPrice").value=p.price; $("#editProdImg").value=(p.imgs&&p.imgs[0])?p.imgs[0]:(p.img||"");
+  $("#editProdPrice").value=p.price;
+  migrateProduct(p);
+  $("#editProdImgs").value=(p.imgs&&p.imgs.length)?p.imgs.join("\n"):(p.img||"");
+  renderImgPreview($("#editProdImgs"), $("#editProdPreview"));
   $("#editProdModal").classList.add("show");
 }
 function saveEditProd(){
   const id=$("#editProdId").value;
   const ar=$("#editProdAr").value.trim(), en=$("#editProdEn").value.trim();
   const descAr=$("#editProdDescAr").value.trim(), descEn=$("#editProdDescEn").value.trim();
-  const price=Number($("#editProdPrice").value)||0, img=$("#editProdImg").value.trim()||"📦";
+  const price=Number($("#editProdPrice").value)||0;
+  const imgs=parseImgList($("#editProdImgs").value);
+  const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  const p=DATA.products.find(x=>x.id===id); if(p){ delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:[img]}); }
+  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:finalImgs}); }
   saveData(); $("#editProdModal").classList.remove("show"); renderAdmin(); renderProducts();
 }
 function addCategory(){
@@ -701,10 +738,13 @@ function addProduct(){
   const cat=$("#prodCat").value; if(!cat){ toast(t("fill_fields")); return; }
   const ar=$("#prodAr").value.trim(), en=$("#prodEn").value.trim();
   const descAr=$("#prodDescAr").value.trim(), descEn=$("#prodDescEn").value.trim();
-  const price=Number($("#prodPrice").value)||0, img=$("#prodEmoji").value.trim()||"📦";
+  const price=Number($("#prodPrice").value)||0;
+  const imgs=parseImgList($("#prodImgs").value);
+  const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,imgs:[img]}); saveData();
-  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodEmoji"].forEach(id=>$("#"+id).value="");
+  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,imgs:finalImgs}); saveData();
+  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodImgs"].forEach(id=>$("#"+id).value="");
+  renderImgPreview($("#prodImgs"), $("#prodPreview"));
   renderAdmin(); renderProducts();
 }
 
@@ -728,6 +768,8 @@ function bind(){
   $("#editCatClose").onclick=()=>{ $("#editCatModal").classList.remove("show"); };
   $("#editProdSave").onclick=saveEditProd;
   $("#editProdClose").onclick=()=>{ $("#editProdModal").classList.remove("show"); };
+  $("#prodImgs").addEventListener("input", ()=>renderImgPreview($("#prodImgs"), $("#prodPreview")));
+  $("#editProdImgs").addEventListener("input", ()=>renderImgPreview($("#editProdImgs"), $("#editProdPreview")));
   $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
   bindEasyClose();
 }
@@ -784,6 +826,7 @@ function renderOrderSummary(){
 /* ====================== Init ====================== */
 function init(){
   $("#year").textContent=new Date().getFullYear();
+  if(DATA&&DATA.products) DATA.products.forEach(migrateProduct);
   applyLang(); renderCats(); renderProducts(); renderCart(); updateCartCount(); bind();
 }
 init();
