@@ -710,6 +710,44 @@ function bind(){
   $("#editProdSave").onclick=saveEditProd;
   $("#editProdClose").onclick=()=>{ $("#editProdModal").classList.remove("show"); };
   $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
+  bindEasyClose();
+}
+/* Close modals/drawer without hunting for the X:
+   - click/tap the dim area outside the white box
+   - press ESC
+   - phone: swipe in from either screen edge (back gesture) */
+function closeAllOverlays(){
+  closeModal();
+  $("#adminLoginModal").classList.remove("show");
+  $("#editProdModal").classList.remove("show");
+  $("#editCatModal").classList.remove("show");
+  openDrawer(false);
+  const g=document.querySelector(".gallery"); if(g) g.remove();
+}
+function bindEasyClose(){
+  // tap the dim backdrop (the .modal itself, not its inner .box) to close
+  $$(".modal").forEach(m=>{
+    m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("show"); });
+  });
+  // ESC closes whatever is open
+  document.addEventListener("keydown", e=>{
+    if(e.key==="Escape") closeAllOverlays();
+  });
+  // phone: start a touch within ~32px of either edge, swipe inward >60px
+  let edgeX=null, startY=0;
+  document.addEventListener("touchstart", e=>{
+    if(!e.touches.length){ edgeX=null; return; }
+    const x=e.touches[0].clientX;
+    edgeX = (x < 32 || x > window.innerWidth-32) ? x : null;
+    startY = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener("touchend", e=>{
+    if(edgeX===null || !e.changedTouches.length){ edgeX=null; return; }
+    const t=e.changedTouches[0];
+    const dx=t.clientX-edgeX, dy=Math.abs(t.clientY-startY);
+    if(Math.abs(dx)>60 && Math.abs(dx)>dy) closeAllOverlays();
+    edgeX=null;
+  }, {passive:true});
 }
 function openDrawer(o){ $("#cartDrawer").classList.toggle("open",o); $("#overlay").classList.toggle("show",o); }
 function openModal(){ $("#checkoutModal").classList.add("show"); }
