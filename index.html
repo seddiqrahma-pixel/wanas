@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>وَنَس | Wanas</title>
+<title>وَنَس | Wanas — شموع وعطور منزلية</title>
+<meta name="description" content="وَنَس — شموع معطرة، عطور منزلية، وهدايا يدوية من سوهاج. توصيل في مصر، دفع عبر فودافون كاش وإنستا باي." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="وَنَس | Wanas" />
+<meta property="og:description" content="شموع معطرة، عطور منزلية، وهدايا يدوية — راحة بالك تبدأ من هنا." />
+<meta property="og:image" content="https://seddiqrahma-pixel.github.io/wanas/logo.png" />
+<meta property="og:url" content="https://seddiqrahma-pixel.github.io/wanas/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="وَنَس | Wanas" />
+<meta name="twitter:description" content="شموع معطرة، عطور منزلية، وهدايا يدوية من سوهاج." />
+<meta name="twitter:image" content="https://seddiqrahma-pixel.github.io/wanas/logo.png" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <style>
   :root{
     --bg:#faf6f0; --card:#ffffff; --ink:#2b2620; --muted:#7a7268;
@@ -18,6 +29,13 @@
   header.nav{position:sticky;top:0;z-index:30;background:rgba(250,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
   @media (max-width:400px){ .nav-in{gap:8px;padding:9px 10px} .logo .logo-img{height:36px} .logo{font-size:1.1rem;gap:6px} .logo small{display:none} .btn.ghost.sm{padding:6px 9px;font-size:.78rem} .cart-btn{padding:7px 10px;font-size:.82rem} .lang{padding:6px 9px;font-size:.82rem} }
+  @media (max-width:560px){
+    .close{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+    .ci .qty button{min-width:40px;height:40px;font-size:1.1rem}
+    .card .btn.sm.add-btn{min-height:40px;padding:10px 12px}
+    .cart-btn,.lang{min-height:40px}
+    .img-picker .ip-x,.img-picker .ip-add{width:44px;height:44px}
+  }
   /* Admin entry hidden from buyers; owner opens it via Ctrl+Shift+A or triple-click the logo */
   #adminBtn{display:none}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
@@ -25,7 +43,7 @@
   .logo .logo-img{height:46px;width:auto;border-radius:10px}
   .logo small{font-weight:600;color:var(--muted);font-size:.8rem}
   .spacer{flex:1}
-  .btn{border:none;cursor:pointer;background:var(--brand);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
+  .btn{border:none;cursor:pointer;background:var(--brand2);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
   .btn:hover{background:var(--brand2)}
   .btn.ghost{background:transparent;color:var(--brand2);border:1px solid var(--brand)}
   .btn.sm{padding:6px 12px;font-size:.85rem}
@@ -512,10 +530,22 @@ function t(key){ return (I18N[LANG]&&I18N[LANG][key]) || key; }
 function money(n){ return n + (LANG==="ar"?" جنيه":" EGP"); }
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
 function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
-function isImg(v){ return typeof v==="string" && (v.startsWith("http")||/\.(jpe?g|png|gif|webp|svg)$/i.test(v)); }
-/* Parse a multi-image textarea value (comma OR newline separated) into a clean array. */
+function isImg(v){ return typeof v==="string" && (v.startsWith("http")||v.startsWith("data:image")||/\.(jpe?g|png|gif|webp|svg)$/i.test(v)); }
+/* Parse a multi-image textarea value into a clean array.
+   Entries are separated by newlines OR commas that are NOT part of a data: URL.
+   Each entry may itself contain commas (e.g. data:image/png;base64,xxxx) so we must
+   not split inside a data: URL. */
 function parseImgList(str){
-  return String(str||"").split(/[\n,]/).map(s=>s.trim()).filter(Boolean);
+  return String(str||"").split("\n").flatMap(line=>{
+    const parts=line.split(",");
+    const out=[]; let buf="";
+    for(const p of parts){
+      if(buf.startsWith("data:") && !buf.includes(",")){ buf+=","+p; }   // rejoin split data URL
+      else { if(buf) out.push(buf); buf=p; }
+    }
+    if(buf) out.push(buf);
+    return out;
+  }).map(s=>s.trim()).filter(Boolean);
 }
 /* Backward-compat: migrate legacy single `img` field onto the `imgs` array. */
 function migrateProduct(p){
@@ -543,11 +573,11 @@ function buildPicker(ids){
     P.innerHTML="";
     list.forEach((src,i)=>{
       const cell=document.createElement("div"); cell.className="ip-thumb";
-      cell.innerHTML=(isImg(src)?`<img src="${src}" alt="">`:`<span class="img-fallback" title="${src}">${src}</span>`)+`<button type="button" class="ip-x">✕</button>`;
+      cell.innerHTML=(isImg(src)?`<img src="${src}" alt="">`:`<span class="img-fallback" title="${src}">${src}</span>`)+`<button type="button" class="ip-x" aria-label="Remove image">✕</button>`;
       cell.querySelector(".ip-x").onclick=()=>{ list.splice(i,1); commit(); renderPicker(); };
       P.appendChild(cell);
     });
-    const add=document.createElement("button"); add.type="button"; add.className="ip-add"; add.textContent="+"; add.onclick=()=>F.click();
+    const add=document.createElement("button"); add.type="button"; add.className="ip-add"; add.textContent="+"; add.setAttribute("aria-label","Add image"); add.onclick=()=>F.click();
     P.appendChild(add);
   };
   const commit=()=>{ T.value=list.join("\n"); renderImgPreview(T,PV); };
@@ -595,7 +625,7 @@ function renderProducts(){
     const cat = DATA.categories.find(c=>c.id===p.cat);
     const imgs = (p.imgs&&p.imgs.length)?p.imgs:[].filter(Boolean);
     const imgHtml = (imgs[0] && isImg(imgs[0]))?`<img src="${imgs[0]}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(imgs[0]||"📦");
-    const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb ${i===0?'active':''}" data-pid="${p.id}" data-idx="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
+    const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb ${i===0?'active':''}" data-pid="${p.id}" data-idx="${i}" aria-label="${LANG==="ar"?p.ar:p.en} - ${i+1}" role="button"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
     const disc = (typeof p.market==="number" && p.price < p.market) ? Math.round((1 - p.price/p.market)*100) : 0;
     const priceRow = disc>0
       ? `<div class="price-row"><span class="price old">${money(p.market)}</span><span class="price">${money(p.price)}</span><span class="discount-badge">-${disc}%</span></div>`
@@ -641,7 +671,7 @@ function renderCart(){
     const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
     const imgs=(p.imgs&&p.imgs.length)?p.imgs:[].filter(Boolean);
     const row=document.createElement("div"); row.className="ci";
-    const imgHtml=(imgs[0]&&isImg(imgs[0]))?`<img src="${imgs[0]}" alt="">`:(imgs[0]||"📦");
+    const imgHtml=(imgs[0]&&isImg(imgs[0]))?`<img src="${imgs[0]}" alt="${LANG==="ar"?p.ar:p.en}">`:(imgs[0]||"📦");
     row.innerHTML=`
       <div class="ci-ph" data-pid="${p.id}" data-idx="0">${imgHtml}</div>
       <div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>${money(p.price)}</div>
@@ -663,10 +693,10 @@ function openGallery(pid, idx){
   const overlay=document.createElement("div"); overlay.className="gallery";
   const render=()=>{
     overlay.innerHTML=`
-      <button class="g-close">✕</button>
-      <button class="g-nav g-prev">‹</button>
+      <button class="g-close" aria-label="Close gallery">✕</button>
+      <button class="g-nav g-prev" aria-label="Previous image">‹</button>
       <img class="g-img" src="${imgs[cur]}" alt="${LANG==="ar"?p.ar:p.en}">
-      <button class="g-nav g-next">›</button>
+      <button class="g-nav g-next" aria-label="Next image">›</button>
       <div class="g-count">${cur+1} / ${imgs.length}</div>
       ${imgs.length>1?`<div class="g-thumbs">`+imgs.map((s,i)=>`<button class="g-thumb ${i===cur?'active':''}" data-i="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:""}`;
     overlay.querySelector(".g-close").onclick=()=>overlay.remove();
@@ -725,7 +755,7 @@ function buildOrderText(){
   lines.push(L?"*المنتجات:*":"*Products:*");
   CART.forEach((i)=>{ const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
     lines.push(`• ${L?p.ar:p.en}`);
-    lines.push(`     ${L?"الكمية":"Qty"}: ${i.qty}   ${L?"الإجمالي":"Total"}: ${money(p.price*i.qty)}`);
+    lines.push(`     ${L?"السعر":"Unit"}: ${money(p.price)}  ×  ${L?"الكمية":"Qty"}: ${i.qty}  =  ${L?"الإجمالي":"Total"}: ${money(p.price*i.qty)}`);
   });
   lines.push("");
   lines.push(`${L?"*الإجمالي الكلي:*":"*Grand Total:*"} ${money(cartTotal())}`);
