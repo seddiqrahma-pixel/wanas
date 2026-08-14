@@ -267,7 +267,7 @@
 
 <footer class="foot">
   <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
-  <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
+  <div style="margin-top:4px" data-i18n="footer_tagline">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
   <div style="margin-top:8px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
     <a href="https://instagram.com/wanas.candles" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2)">📷 إنستجرام: @wanas.candles</a>
     <a href="https://www.facebook.com/profile.php?id=100089019817213" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2)">📘 فيسبوك: وَنَس</a>
@@ -309,7 +309,8 @@ const I18N = {
     login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
     confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
     no_pay:"اختار طريقة دفع",
-    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
+    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول",
+    footer_tagline:"شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️"
   },
   en:{
     brand:"Wanas", brand_en:"Wanas", admin:"Admin Panel", cart:"Cart",
@@ -341,7 +342,8 @@ const I18N = {
     login_ok:"Logged into admin panel", login_fail:"Wrong password",
     confirm_reset:"Sure you want to restore default data?",
     no_pay:"Choose a payment method",
-    admin_login_title:"Admin Login", admin_pass_ph:"Password", admin_login_btn:"Login"
+    admin_login_title:"Admin Login", admin_pass_ph:"Password", admin_login_btn:"Login",
+    footer_tagline:"Candles that give you the warmth of the sun 🕯️"
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
