@@ -17,6 +17,9 @@
   .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
   header.nav{position:sticky;top:0;z-index:30;background:rgba(250,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
+  @media (max-width:400px){ .nav-in{gap:8px;padding:9px 10px} .logo .logo-img{height:36px} .logo{font-size:1.1rem;gap:6px} .logo small{display:none} .btn.ghost.sm{padding:6px 9px;font-size:.78rem} .cart-btn{padding:7px 10px;font-size:.82rem} .lang{padding:6px 9px;font-size:.82rem} }
+  /* Admin entry hidden from buyers; owner opens it via Ctrl+Shift+A or triple-click the logo */
+  #adminBtn{display:none}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
   .logo .mark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d9a441,#b9792b);color:#fff;font-weight:700;font-size:20px}
   .logo .logo-img{height:46px;width:auto;border-radius:10px}
@@ -166,7 +169,7 @@
   <!-- Admin panel -->
   <section class="admin hidden" id="adminPanel">
     <h2 class="section-title" data-i18n="admin_panel">إدارة الأصناف والمنتجات</h2>
-    <p class="admin-hint" data-i18n="admin_hint">التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123</p>
+    <p class="admin-hint" data-i18n="admin_hint">التغييرات محفوظة على جهازك فقط (LocalStorage)</p>
 
     <div class="panel">
       <h3 data-i18n="cats">الأصناف (Categories)</h3>
@@ -317,7 +320,7 @@ const I18N = {
     brand:"وَنَس", brand_en:"وَنَس", admin:"لوحة التحكم", cart:"السلة",
     hero_title:"راحة بالك تبدأ من هنا", hero_sub:"منتجات وَنَس — جودة تهدي بالك",
     products:"المنتجات", admin_panel:"إدارة الأصناف والمنتجات",
-    admin_hint:"التغييرات محفوظة على جهازك فقط (LocalStorage). كلمة الدخول: wanas123",
+    admin_hint:"التغييرات محفوظة على جهازك فقط (LocalStorage)",
     cats:"الأصناف (Categories)", add_cat:"+ إضافة صنف",
     prods:"المنتجات (Products)", add_prod:"+ إضافة منتج",
     reset:"استعادة البيانات الافتراضية",
@@ -350,7 +353,7 @@ const I18N = {
     brand:"Wanas", brand_en:"Wanas", admin:"Admin Panel", cart:"Cart",
     hero_title:"Peace of mind starts here", hero_sub:"Wanas products — quality that soothes your soul",
     products:"Products", admin_panel:"Manage Categories & Products",
-    admin_hint:"Changes are saved on your device only (LocalStorage). Password: wanas123",
+    admin_hint:"Changes are saved on your device only (LocalStorage)",
     cats:"Categories", add_cat:"+ Add Category",
     prods:"Products", add_prod:"+ Add Product",
     reset:"Restore default data",
@@ -493,7 +496,7 @@ function loadData(){
 }
 function saveData(){ localStorage.setItem("wanas_data", JSON.stringify(DATA)); }
 function loadCart(){
-  try{ const c = JSON.parse(localStorage.getItem("wanas_cart")); if(Array.isArray(c)) return c; }catch(e){}
+  try{ const c = JSON.parse(localStorage.getItem("wanas_cart")); if(Array.isArray(c)){ return c.filter(i=>DATA.products.some(p=>p.id===i.id)); } }catch(e){}
   return [];
 }
 function saveCart(){ localStorage.setItem("wanas_cart", JSON.stringify(CART)); }
@@ -501,8 +504,12 @@ function saveCart(){ localStorage.setItem("wanas_cart", JSON.stringify(CART)); }
 /* ====================== Helpers ====================== */
 const $ = s=>document.querySelector(s);
 const $$ = s=>document.querySelectorAll(s);
+/* Owner password stored obfuscated (char codes) so it is not a plaintext grep in the source.
+   NOTE: a static site cannot truly hide a client-side secret — this only stops casual snooping.
+   Real security requires a backend (see README/notes). */
+function _adminPW(){ const c=[119,97,110,97,115,49,50,51]; return String.fromCharCode.apply(null,c); }
 function t(key){ return (I18N[LANG]&&I18N[LANG][key]) || key; }
-function money(n){ return n + " جنيه"; }
+function money(n){ return n + (LANG==="ar"?" جنيه":" EGP"); }
 function toast(msg){ const el=$("#toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
 function uid(){ return "x"+Math.random().toString(36).slice(2,9); }
 function isImg(v){ return typeof v==="string" && (v.startsWith("http")||/\.(jpe?g|png|gif|webp|svg)$/i.test(v)); }
@@ -705,37 +712,39 @@ function copyToClipboard(text){
 function buildOrderText(){
   const L = LANG==="ar";
   const lines=[];
-  lines.push(L?"*طلب جديد — وَنَس*":"*طلب جديد — وَنَس*");
+  lines.push(L?"*طلب جديد — وَنَس*":"*New Order — Wanas*");
   lines.push("");
   // 1) بيانات العميل
-  lines.push(L?"*بيانات العميل:*":"*بيانات العميل:*");
-  lines.push(`• ${L?"الاسم":"الاسم"}: ${($("#custName").value||"-")}`);
-  lines.push(`• ${L?"التليفون":"التليفون"}: ${($("#custPhone").value||"-")}`);
-  lines.push(`• ${L?"العنوان":"العنوان"}: ${($("#custAddr").value||"-")}`);
-  if($("#custNote").value) lines.push(`• ${L?"ملاحظات":"ملاحظات"}: ${$("#custNote").value}`);
+  lines.push(L?"*بيانات العميل:*":"*Customer Details:*");
+  lines.push(`• ${L?"الاسم":"Name"}: ${($("#custName").value||"-")}`);
+  lines.push(`• ${L?"التليفون":"Phone"}: ${($("#custPhone").value||"-")}`);
+  lines.push(`• ${L?"العنوان":"Address"}: ${($("#custAddr").value||"-")}`);
+  if($("#custNote").value) lines.push(`• ${L?"ملاحظات":"Notes"}: ${$("#custNote").value}`);
   lines.push("");
   // 2) المنتجات
-  lines.push(L?"*المنتجات:*":"*المنتجات:*");
+  lines.push(L?"*المنتجات:*":"*Products:*");
   CART.forEach((i)=>{ const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
     lines.push(`• ${L?p.ar:p.en}`);
-    lines.push(`     الكمية: ${i.qty}   الإجمالي: ${money(p.price*i.qty)}`);
+    lines.push(`     ${L?"الكمية":"Qty"}: ${i.qty}   ${L?"الإجمالي":"Total"}: ${money(p.price*i.qty)}`);
   });
   lines.push("");
-  lines.push(`${L?"*الإجمالي الكلي:*":"*الإجمالي الكلي:*"} ${money(cartTotal())}`);
+  lines.push(`${L?"*الإجمالي الكلي:*":"*Grand Total:*"} ${money(cartTotal())}`);
   lines.push("");
   // 3) بيانات الدفع
   const payName = {vodafone:t("pay_vod"),instapay:t("pay_inst"),bank:t("pay_bank"),whatsapp:t("pay_wa")}[selectedPay]||"";
-  lines.push(L?"*بيانات الدفع:*":"*بيانات الدفع:*");
-  lines.push(`• ${L?"طريقة الدفع":"طريقة الدفع"}: ${payName||"-"}`);
-  if(selectedPay==="vodafone") lines.push(`• ${L?"رقم فودافون كاش":"رقم فودافون كاش"}: ${PAYMENT.vodafone}`);
-  if(selectedPay==="instapay") lines.push(`• ${L?"إنستا باي":"إنستا باي"}: ${PAYMENT.instapay}`);
+  lines.push(L?"*بيانات الدفع:*":"*Payment Details:*");
+  lines.push(`• ${L?"طريقة الدفع":"Payment Method"}: ${payName||"-"}`);
+  if(selectedPay==="vodafone") lines.push(`• ${L?"رقم فودافون كاش":"Vodafone Cash number"}: ${PAYMENT.vodafone}`);
+  if(selectedPay==="instapay") lines.push(`• ${L?"إنستا باي":"InstaPay"}: ${PAYMENT.instapay}`);
   if(selectedPay==="bank") lines.push(`• ${L?"IBAN":"IBAN"}: EG900003041450006160803000150`);
-  if(selectedPay==="whatsapp") lines.push(`• ${L?"سيتم تأكيد الطلب عبر واتساب":"سيتم تأكيد الطلب عبر واتساب"}`);
+  if(selectedPay==="whatsapp") lines.push(`• ${L?"سيتم تأكيد الطلب عبر واتساب":"Order will be confirmed via WhatsApp"}`);
   return lines.join("\n");
 }
 function validateOrder(){
   if(!selectedPay){ toast(t("no_pay")); return false; }
-  if(!$("#custName").value || !$("#custPhone").value){ toast(t("fill_fields")); return false; }
+  const name=$("#custName").value.trim(), phone=$("#custPhone").value.trim();
+  if(!name || !phone){ toast(t("fill_fields")); return false; }
+  if(!/^01\d{9}$/.test(phone)){ toast(LANG==="ar"?"رقم التليفون مش صحيح (11 رقم يبدأ بـ 01)":"Enter a valid phone (11 digits, starts with 01)"); return false; }
   return true;
 }
 function sendWhatsApp(){
@@ -764,7 +773,7 @@ function toggleAdmin(){
 }
 function tryAdminLogin(){
   const pw=$("#adminPass").value;
-  if(pw==="wanas123"){ adminUnlocked=true; $("#adminLoginModal").classList.remove("show"); $("#adminPanel").classList.remove("hidden"); toast(t("login_ok")); renderAdmin(); }
+  if(pw===_adminPW()){ adminUnlocked=true; $("#adminLoginModal").classList.remove("show"); $("#adminPanel").classList.remove("hidden"); toast(t("login_ok")); renderAdmin(); }
   else { $("#adminLoginErr").style.display="block"; }
 }
 function renderAdmin(){
@@ -866,6 +875,11 @@ function bind(){
   $("#addCatBtn").onclick=addCategory;
   $("#addProdBtn").onclick=addProduct;
   $("#adminLoginBtn").onclick=tryAdminLogin;
+  // Owner-only admin access (button is hidden from buyers)
+  document.addEventListener("keydown", e=>{ if(e.ctrlKey && e.shiftKey && (e.key==="A"||e.key==="a")){ e.preventDefault(); toggleAdmin(); } });
+  let _logoClicks=0, _logoLast=0;
+  const _logo=document.querySelector(".logo");
+  if(_logo){ _logo.addEventListener("click", e=>{ e.preventDefault(); const now=Date.now(); _logoClicks=(now-_logoLast<400)?_logoClicks+1:1; _logoLast=now; if(_logoClicks>=3){ _logoClicks=0; toggleAdmin(); } }); }
   $("#adminLoginClose").onclick=()=>{ $("#adminLoginModal").classList.remove("show"); };
   $("#adminPass").addEventListener("keydown",e=>{ if(e.key==="Enter") tryAdminLogin(); });
   $("#editCatSave").onclick=saveEditCat;
@@ -919,12 +933,16 @@ function openModal(){ $("#checkoutModal").classList.add("show"); }
 function closeModal(){ $("#checkoutModal").classList.remove("show"); }
 function renderOrderSummary(){
   const box=$("#orderSummary"); box.innerHTML="";
-  CART.forEach(i=>{ const p=DATA.products.find(x=>x.id===i.id);
+  CART.forEach(i=>{ const p=DATA.products.find(x=>x.id===i.id); if(!p) return;
     const d=document.createElement("div"); d.className="ci"; d.style.border="none";
     const cur=(p.imgs&&p.imgs[0])?p.imgs[0]:(p.img||""); const imgHtml=(cur&&isImg(cur))?`<img src="${cur}" alt="">`:(cur||"📦");
     d.innerHTML=`<div class="ci-ph">${imgHtml}</div><div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>×${i.qty} = ${money(p.price*i.qty)}</div>`;
     box.appendChild(d);
   });
+  const tot=document.createElement("div"); tot.className="ci-total";
+  tot.style.cssText="display:flex;justify-content:space-between;font-weight:800;margin-top:10px;border-top:1px solid var(--line);padding-top:8px";
+  tot.innerHTML=`<span>${LANG==="ar"?"الإجمالي الكلي":"Grand Total"}</span><span>${money(cartTotal())}</span>`;
+  box.appendChild(tot);
 }
 
 /* ====================== Init ====================== */
