@@ -222,6 +222,9 @@
     </div>
 
     <div class="panel">
+      <button class="btn sm" id="exportBtn">تصدير المنتجات (JSON)</button>
+      <button class="btn sm" id="importBtn">استيراد المنتجات (JSON)</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none" />
       <button class="btn danger sm" id="resetBtn" data-i18n="reset">استعادة البيانات الافتراضية</button>
     </div>
   </section>
@@ -919,6 +922,9 @@ function bind(){
   prodPicker=buildPicker({picker:"prodPicker",file:"prodFile",btn:"prodUploadBtn",ta:"prodImgs",preview:"prodPreview"});
   editProdPicker=buildPicker({picker:"editProdPicker",file:"editProdFile",btn:"editProdUploadBtn",ta:"editProdImgs",preview:"editProdPreview"});
   $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); applyPricing(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
+  $("#exportBtn").onclick=()=>{ const b=new Blob([JSON.stringify(DATA,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download="wanas-products.json"; a.click(); URL.revokeObjectURL(a.href); toast("OK"); };
+  $("#importBtn").onclick=()=>$("#importFile").click();
+  $("#importFile").onchange=(e)=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const d=JSON.parse(r.result); if(!d.categories||!d.products) throw new Error("bad"); DATA=d; applyPricing(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); }catch(err){ alert("ملف غير صالح"); } }; r.readAsText(f); e.target.value=""; };
   bindEasyClose();
 }
 /* Close modals/drawer without hunting for the X:
