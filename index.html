@@ -271,8 +271,8 @@
   <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
   <div style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
   <div style="margin-top:8px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-    <a href="https://instagram.com/wanas.candles" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2)">📷 إنستجرام: @wanas.candles</a>
-    <a href="https://www.facebook.com/profile.php?id=100089019817213" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2)">📘 فيسبوك: وَنَس</a>
+    <a href="https://instagram.com/wanas.candles" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="vertical-align:middle;margin-inline-end:6px;fill:none;stroke:var(--brand2);stroke-width:2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="var(--brand2)" stroke="none"/></svg><span data-i18n="social_instagram">إنستجرام</span>: @wanas.candles</a>
+    <a href="https://www.facebook.com/profile.php?id=100089019817213" target="_blank" rel="noopener" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="vertical-align:middle;margin-inline-end:6px;fill:var(--brand2)"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg><span data-i18n="social_facebook">فيسبوك</span>: وَنَس</a>
   </div>
 </footer>
 
@@ -311,7 +311,8 @@ const I18N = {
     login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
     confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
     no_pay:"اختار طريقة دفع",
-    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول"
+    admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول",
+    social_instagram:"إنستجرام", social_facebook:"فيسبوك"
   },
   en:{
     brand:"Wanas", brand_en:"Wanas", admin:"Admin Panel", cart:"Cart",
@@ -343,7 +344,8 @@ const I18N = {
     login_ok:"Logged into admin panel", login_fail:"Wrong password",
     confirm_reset:"Sure you want to restore default data?",
     no_pay:"Choose a payment method",
-    admin_login_title:"Admin Login", admin_pass_ph:"Password", admin_login_btn:"Login"
+    admin_login_title:"Admin Login", admin_pass_ph:"Password", admin_login_btn:"Login",
+    social_instagram:"Instagram", social_facebook:"Facebook"
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
