@@ -14,6 +14,13 @@ When automating the user's Brave/Chrome via AppleScript, NEVER bring it to the f
 - Payments: Vodafone/InstaPay/WhatsApp 01020306395, email ahmed.alghoraib@gmail.com, NBE IBAN EG900003041450006160803000150
 - Logo: logo.png (transparent), logo-icon.png (candle icon)
 
+## Branch cleanup rule
+See skill: `git-branch-cleanup-after-merge`.
+
+Summary: merge the feature branch into `main` first, **verify** the merge landed (`git log main --oneline -1`), **then** delete the local branch (`git branch -d <name>`). Only delete the remote branch after the merge too (`git push origin --delete <name>`). Never delete before the merge — that loses the branch ref and any unmerged commits become unreachable.
+
+Also check GitHub Settings → General → Pull Requests → "Automatically delete head branches" is ON so the remote branch goes away automatically after a PR merge. Run `git branch --merged main` occasionally to spot stale local branches (anything listed except `main` itself is a candidate for `-d`).
+
 ## Facebook findings (wanas_وَنَس, id 100089019817213)
 - Page is a brand/community page, NOT a product catalog. No written category names, no prices in posts/timeline/albums.
 - Extracted product categories from photos:
