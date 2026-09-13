@@ -303,7 +303,9 @@
             <img class="bp-logo" id="bpLogo" src="logo.png" alt="">
             <div class="bp-text">
               <span id="bpBrandText"></span>
-              <span id="bpBrandEnText" style="display:none"></span>
+              <span id="bpBrandTextAr" style="display:none"></span>
+              <span id="bpBrandTextEn" style="display:none"></span>
+              <span id="bpBrandLabel"></span>
             </div>
           </div>
           <div class="field-row single">
@@ -701,7 +703,7 @@ const I18N = {
     pay_bank:"تحويل بنكي", pay_bank_det:"بيانات الحساب البنكي",
     pay_wa:"طلب عبر واتساب", pay_wa_det:"بدون دفع أونلاين — نراجع طلبك ونأكد",
     order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املى البيانات المطلوبة أولاً",
-    login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط",
+    login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط", password_changed:"تم تغيير كلمة الدخول بنجاح",
     confirm_reset:"متأكد إنك عايز ترجع البيانات الافتراضية؟",
     no_pay:"اختار طريقة دفع",
     admin_login_title:"دخول لوحة التحكم", admin_pass_ph:"كلمة الدخول", admin_login_btn:"دخول",
@@ -762,7 +764,7 @@ const I18N = {
     pay_bank:"Bank Transfer", pay_bank_det:"Bank account details",
     pay_wa:"Order via WhatsApp", pay_wa_det:"No online payment — we review and confirm your order",
     order_sent:"Order message ready ✅", fill_fields:"Fill the required fields first",
-    login_ok:"Logged into admin panel", login_fail:"Wrong password",
+    login_ok:"Logged in to control panel", login_fail:"Wrong password", password_changed:"Password changed successfully",
     confirm_reset:"Sure you want to restore default data?",
     no_pay:"Choose a payment method",
     admin_login_title:"Admin Login", admin_pass_ph:"Password", admin_login_btn:"Login",
@@ -1125,9 +1127,9 @@ function openGallery(pid, idx){
 function renderPay(){
   const list=$("#payList"); list.innerHTML="";
   const opts=[
-    {k:"vodafone", ic:"📱", name:t("pay_vod"), det:S.vodafone, copy:S.vodafone, copyMsg:(LANG==="ar"?"تم نسخ رقم فودافون كاش ✅":"تم نسخ رقم فودافون كاش ✅")},
-    {k:"instapay", ic:"💳", name:t("pay_inst"), det:S.instapay, copy:S.instapay, copyMsg:(LANG==="ar"?"تم نسخ رقم إنستا باي ✅":"تم نسخ رقم إنستا باي ✅")},
-    {k:"bank", ic:"🏦", name:t("pay_bank"), det:S.bank.replace(/\\n/g," · "), copy:(S.bank||"").replace(/.*IBAN:\s*/,""), copyMsg:(LANG==="ar"?"تم نسخ رقم الـ IBAN ✅":"IBAN copied ✅")},
+    {k:"vodafone", ic:"📱", name:t("pay_vod"), det:S.vodafone||PAYMENT.vodafone, copy:S.vodafone||PAYMENT.vodafone, copyMsg:(LANG==="ar"?"تم نسخ رقم فودافون كاش ✅":"تم نسخ رقم فودافون كاش ✅")},
+    {k:"instapay", ic:"💳", name:t("pay_inst"), det:S.instapay||PAYMENT.instapay, copy:S.instapay||PAYMENT.instapay, copyMsg:(LANG==="ar"?"تم نسخ رقم إنستا باي ✅":"تم نسخ رقم إنستا باي ✅")},
+    {k:"bank", ic:"🏦", name:t("pay_bank"), det:(S.bank||PAYMENT.bank).replace(/\\n/g," · "), copy:(S.bank||PAYMENT.bank||"").replace(/.*IBAN:\s*/,""), copyMsg:(LANG==="ar"?"تم نسخ رقم الـ IBAN ✅":"IBAN copied ✅")},
     {k:"whatsapp", ic:"💬", name:t("pay_wa"), det:t("pay_wa_det"), copy:null, copyMsg:null}
   ];
   opts.forEach(o=>{
@@ -1389,8 +1391,8 @@ function renderBrandingForm(){
   $("#cfgCatFont").value = S.catFont;
   $("#cfgCatSize").value = S.catSize;
   $("#cfgCatColor").value = S.catColor;
-  $("#cfgCatActiveColor").value = S.catActiveColor;
-  $("#cfgCatActiveBg").value = S.catActiveBg;
+  $("#cfgCatColorActive").value = S.catActiveColor;
+  $("#cfgCatBgActive").value = S.catActiveBg;
   $("#cfgCatBorder").value = S.catBorder;
   renderBrandPreview();
   applyAllStyles();
@@ -1433,8 +1435,8 @@ function saveBranding(){
   S.catFont = $("#cfgCatFont").value || "Segoe UI,Tahoma,system-ui,sans-serif";
   S.catSize = parseFloat($("#cfgCatSize").value) || 0.95;
   S.catColor = $("#cfgCatColor").value || "#7a7268";
-  S.catActiveColor = $("#cfgCatActiveColor").value || "#ffffff";
-  S.catActiveBg = $("#cfgCatActiveBg").value || "#a98452";
+  S.catActiveColor = $("#cfgCatColorActive").value || "#ffffff";
+  S.catActiveBg = $("#cfgCatBgActive").value || "#a98452";
   S.catBorder = $("#cfgCatBorder").value || "#ece3d6";
   saveSettings();
   applyAllStyles();
@@ -1454,7 +1456,7 @@ function savePassword(){
   saveAdminPWCodes(pwCodeArray(np));
   S.password = np;
   saveSettings();
-  toast(t("login_ok"));
+  toast(t("password_changed"));
   $("#cfgCurPass").value = "";
   $("#cfgNewPass").value = "";
   $("#cfgConfirmPass").value = "";
@@ -1469,11 +1471,11 @@ function applyPaymentSettings(){
   PAYMENT.email = S.email || PAYMENT.email;
 }
 function savePayment(){
-  S.vodafone = $("#cfgVodafone").value.trim();
-  S.instapay = $("#cfgInstapay").value.trim();
-  S.bank = $("#cfgBank").value;
-  S.whatsapp = $("#cfgWhatsapp").value.trim();
-  S.email = $("#cfgEmail").value.trim();
+  S.vodafone = $("#cfgVodafone").value.trim() || PAYMENT.vodafone;
+  S.instapay = $("#cfgInstapay").value.trim() || PAYMENT.instapay;
+  S.bank = $("#cfgBank").value || PAYMENT.bank;
+  S.whatsapp = $("#cfgWhatsapp").value.trim() || PAYMENT.whatsapp;
+  S.email = $("#cfgEmail").value.trim() || PAYMENT.email;
   saveSettings();
   applyPaymentSettings();
   renderPay();
@@ -1605,12 +1607,19 @@ function renderMarketList(){
     });
   });
 }
+function catLabel(catId){
+  if(!catId) return "";
+  const c = DATA.categories.find(x=>x.id===catId);
+  return c ? (LANG==="ar" ? c.ar : c.en) : catId;
+}
+
 function renderCommList(){
   const box = $("#commList");
   if(!box) return;
   box.innerHTML = "";
-  if(!S.comms || !S.comms.length){ box.innerHTML = `<div class="empty">${t("empty_store")}</div>`; return; }
-  S.comms.forEach((c,i)=>{
+  const cm = S.comms || DEFAULT_SETTINGS.comms || [];
+  if(!cm || !cm.length){ box.innerHTML = `<div class="empty">${t("empty_store")}</div>`; return; }
+  cm.forEach((c,i)=>{
     const row = document.createElement("div");
     row.className = "contact-item";
     row.innerHTML = `
@@ -1660,7 +1669,8 @@ function renderFooterComms(){
   const container = document.getElementById("footerCommsContainer");
   if(!container) return;
   container.innerHTML = "";
-  S.comms.forEach(c=>{
+  const comms = S.comms && S.comms.length ? S.comms : (DEFAULT_SETTINGS && DEFAULT_SETTINGS.comms ? DEFAULT_SETTINGS.comms : []);
+  comms.forEach(c=>{
     const val = c.value || "";
     const isLink = (c.type==="social" || c.type==="contact") && val && val.charAt(0)==="h";
     let el;
@@ -1888,13 +1898,15 @@ function renderOrderSummary(){
 
 /* ====================== Init ====================== */
 function init(){
+  S = loadSettings();
   $("#year").textContent=new Date().getFullYear();
   if(DATA&&DATA.products) DATA.products.forEach(migrateProduct);
   applyPaymentSettings();
   // hydrate from published data.json if credentials stored
   fetchLiveData()
     .then(d=>{ if(d){ try{ DATA=d; applyPricing(); saveData(); }catch(e){} } })
-    .then(()=>{ applyLang(); renderCats(); renderProducts(); renderCart(); updateCartCount(); bind(); });
+    .then(()=>{ applyLang(); renderCats(); renderProducts(); renderCart(); updateCartCount(); bind(); })
+    .catch(()=>{ bind(); });
 }
 init();
 </script>
