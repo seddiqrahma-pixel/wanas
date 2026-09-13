@@ -272,9 +272,31 @@
         <button data-st="password" data-i18n="tab_password">كلمة الدخول</button>
         <button data-st="market" data-i18n="tab_market">سعر السوق والخصم</button>
         <button data-st="payment" data-i18n="tab_payment">الدفع وطرق التواصل</button>
+        <button data-st="github" data-i18n="gh_title">نشر على جيت هب</button>
       </div>
 
-      <!-- Branding -->
+      <!-- GitHub publish -->
+      <div class="settings-panel" data-sp="github">
+        <div class="panel">
+          <h3 data-i18n="gh_title">نشر على جيت هب</h3>
+          <p class="admin-hint" data-i18n="gh_hint">حطّ التوكين فقط — الاسم والمستودع tillableين.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+            <div>
+              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="gh_token">توكين جيت هب</span></label>
+              <input class="field" id="ghToken" type="text" placeholder="github_pat_..." data-i18n-ph="gh_token_ph">
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:8px">
+            <button class="btn sm" id="ghSaveBtn" data-i18n="gh_save">حفظ التوكين</button>
+            <button class="btn ghost sm" id="ghClearBtn" data-i18n="gh_clear">مسح</button>
+          </div>
+          <div style="margin-bottom:8px" id="ghStatus"></div>
+          <button class="btn brand" id="ghPublishBtn" data-i18n="gh_btn">نشر على جيت هب</button>
+          <p class="admin-hint" data-i18n="gh_warning">التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها.</p>
+        </div>
+      </div>
+
+      <button class="btn danger sm" id="resetBtn" ...
       <div class="settings-panel" data-sp="branding">
         <div class="panel">
           <h3 data-i18n="brand_logo">الشعار</h3>
@@ -706,8 +728,14 @@ const I18N = {
     comm_type:"النوع", comm_type_social:"ارتباط خارجي", comm_type_contact:"اتصال", comm_type_text:"نص عام",
     add:"إضافة", delete:"حذف", edit:"تعديل", save:"حفظ", cancel:"إلغاء",
     wrong_pwd:"كلمة الدخول غلط — حاول تاني", unlocks:"فتحات الراسبيد", wrong_attempts_info:"كل محاولة خاطئة بتُحسب. العداد بيعمل كماكينة حماية ضد المشاكل.",
-    publish_github:"نشر على GitHub",
-    product_market:"سعر السوق", product_cost:"التكلفة", product_profit:"الربح", product_discount:"خصم", product_no_market:"—"
+    publish_to_github:"نشر على GitHub", publish_data:"البيانات اللي هتُنشر", publish_when:"لما تشتغل الزر، بيجيب كل الأصناف والمنتجات والإعدادات اللي في الجهاز ويحطها في ملف data.json على GitHub — وفعّلها على موقع GitHub Pages.", github_token:"Token GitHub (repo)",
+    publish_msg:"تم النشر", publish_err:"مفزرش — تديك لا يوجد",
+    publish_...[truncated]
+    product_market:"سعر السوق", product_cost:"التكلفة", product_profit:"الربح", product_discount:"خصم", product_no_market:"—",
+    gh_title:"نشر على جيت هب", gh_hint:"حطّ التوكين واسم المستخدم والمستودع، ثم اضغط Publish عشان ترسل التغييرات للsite يعيش.",،
+    gh_token:"توكين جيت هب", gh_token_ph:"ghp_xxx…", gh_owner:"اسم المستخدم", gh_repo:"اسم المستودع",
+    gh_btn:"نشر على جيت هب", gh_status:"جارٍ...", gh_ok:"✓ تم النشر", gh_err:"خطأ — حاول تاني",
+    gh_save:"حفظ التوكين", gh_clear:"مسح", gh_need:"مش مدينيهم كل الحقول", gh_warning:"التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها."
   },
   en:{
     brand:"Wanas", brand_en:"Wanas", admin:"Admin Panel", cart:"Cart",
@@ -762,7 +790,13 @@ const I18N = {
     comm_type:"Type", comm_type_social:"External link", comm_type_contact:"Contact (number)", comm_type_text:"Plain text",
     add:"Add", delete:"Delete", edit:"Edit", save:"Save", cancel:"Cancel",
     wrong_pwd:"Wrong password — try again", unlocks:"Unlock count", wrong_attempts_info:"Each wrong attempt is counted. It acts like a lockout guard.",
-    product_market:"Market price", product_cost:"Cost", product_profit:"Profit", product_discount:"Discount", product_no_market:"—"
+    product_market:"Market price", product_cost:"Cost", product_profit:"Profit", product_discount:"Discount", product_no_market:"—",
+    publish_to_github:"Publish to GitHub", publish_data:"Data to push", publish_when:"When you click this, the button grabs all categories, products, and settings off your current device and writes them into a data.json file on GitHub — so the live GitHub Pages build can pick up your changes.",
+    github_token:"GitHub token (repo)", publish_msg:"Published", publish_err:"Publish failed — check the console",
+    gh_title:"Publish to GitHub", gh_hint:"Enter your token, username, and repo, then press Publish to push your changes live.",
+    gh_token:"GitHub token", gh_token_ph:"ghp_xxx...", gh_owner:"Username", gh_repo:"Repository",
+    gh_btn:"Publish", gh_status:"publishing…", gh_ok:"✓ published", gh_err:"error — try again",
+    gh_save:"save token", gh_clear:"clear", gh_need:"please fill all fields", gh_warning:"The token is saved in your browser only — anyone who opens this page can read it."
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
@@ -1175,7 +1209,7 @@ function sendEmail(){
   toast(t("order_sent"));
 }
 
-/* ====================== SETTINGS: branding / password / market / payment / comms ====================== */
+/* ====================== SETTINGS: branding / password / market / payment / comms, + GitHub Publish ====================== */
 let S = (function(){
   try{ return JSON.parse(localStorage.getItem("wanas_settings")) || {} }catch(e){ return {} }
 })();
@@ -1209,8 +1243,8 @@ const DEFAULT_SETTINGS = {
   catActiveColor: "#ffffff",
   catActiveBg: "#a98452",
   catBorder: "#ece3d6",
-  password: null,
   wrongAttempts: 0,
+  whatsa...[truncated]
   vodafone: "01020306395",
   instapay: "01020306395",
   bank: "Bank: NBE\\nIBAN: EG900003041450006160803000150",
@@ -1453,6 +1487,93 @@ function resetWrongAttempts(){
   saveSettings();
   renderWrongAttempts();
   toast("Reset ✓");
+}
+/* ====================== GitHub publish ====================== */
+const GH_KEY = "wanas_gh";
+function ghLoad(){ try{ return JSON.parse(localStorage.getItem(GH_KEY))||{} }catch(e){ return {} } }
+function ghSave(v){ localStorage.setItem(GH_KEY, JSON.stringify(v)); }
+function ghOwner(){ return "seddiqrahma-pixel"; }
+function ghRepo(){ return "wanas"; }
+function ghToken(){ const g=ghLoad(); return g.token || ""; }
+function renderGitHubForm(){
+  $("#ghToken").value = ghToken();
+  $("#ghStatus").textContent = "";
+  $("#ghPublishBtn").textContent = t("gh_btn");
+}
+function saveGitHub(){
+  const token = $("#ghToken").value.trim();
+  if(!token){ toast(t("gh_need")); return; }
+  ghSave({token});
+  toast(t("login_ok"));
+}
+function clearGitHub(){
+  ghSave({});
+  renderGitHubForm();
+  toast("Cleared");
+}
+function publishToGitHub(){
+  const owner = ghOwner(), repo = ghRepo(), token = ghToken();
+  if(!token){ toast(t("gh_need")); return; }
+  const st = $("#ghStatus");
+  st.textContent = t("gh_status");
+  $("#ghPublishBtn").disabled = true;
+  function pubCfg(){ const s=Object.assign({},S); delete s.password; delete s.wrongAttempts; return s; }
+  const payload = JSON.stringify({
+    categories: DATA.categories,
+    products: DATA.products,
+    settings: (()=>{ const s=Object.assign({},S); delete s.password; delete s.wrongAttempts; return s; })()
+  }, null, 2);
+  const encoded = btoa(unescape(encodeURIComponent(payload)));
+  const url = `https://api.github.com/repos/${owner}/${repo}/contents/data.json`;
+  fetch(url, {
+    method:"PUT",
+    headers:{
+      "Authorization":"Bearer "+token,
+      "Accept":"application/vnd.github+json",
+      "Content-Type":"application/json"
+    },
+    body: JSON.stringify({
+      message:"Wanas update (admin panel)",
+      content: encoded,
+      branch:"main"
+    })
+  })
+  .then(r=>{
+    if(!r.ok){
+      return r.json().then(j=>{ throw new Error((j&&j.message)||r.status+" "+r.statusText); });
+    }
+    return r.json();
+  })
+  .then(()=>{
+    st.textContent = t("gh_ok");
+    $("#ghPublishBtn").disabled = false;
+    toast(t("login_ok"));
+  })
+  .catch(err=>{
+    st.textContent = t("gh_err")+" — "+(err.message||"");
+    $("#ghPublishBtn").disabled = false;
+    toast(t("gh_err"));
+  });
+}
+function fetchLiveData(){
+  const owner = ghOwner(), repo = ghRepo(), token = ghToken();
+  if(!owner || !repo){ return null; }
+  return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/data.json`, {
+    headers:{"Accept":"application/vnd.github+json"}
+  })
+  .then(r=> r.ok ? r.json() : Promise.reject())
+  .then(j=>{ if(!j || !j.content) return null; return decodeURIComponent(escape(atob(j.content))); })
+  .then(json=>{ try{ const d=JSON.parse(json); if(d&&d.categories&&d.products) return d; }catch(e){} return null; })
+  .catch(()=>null);
+}
+function applyLangText(){
+  applyBrandStyles();
+  applyHeroStyles();
+  applyFooterStyles();
+  applyCatStyles();
+  applyAllStyles();
+  renderBrandPreview();
+  renderFooterComms();
 }
 function renderMarketList(){
   const box = $("#marketList");
@@ -1768,7 +1889,10 @@ function init(){
   $("#year").textContent=new Date().getFullYear();
   if(DATA&&DATA.products) DATA.products.forEach(migrateProduct);
   applyPaymentSettings();
-  applyLang(); renderCats(); renderProducts(); renderCart(); updateCartCount(); bind();
+  // hydrate from published data.json if credentials stored
+  fetchLiveData()
+    .then(d=>{ if(d){ try{ DATA=d; applyPricing(); saveData(); }catch(e){} } })
+    .then(()=>{ applyLang(); renderCats(); renderProducts(); renderCart(); updateCartCount(); bind(); });
 }
 init();
 </script>
