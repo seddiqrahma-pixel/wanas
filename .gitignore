@@ -13,3 +13,8 @@ preview2.png
 *.log
 
 # product review artifacts (duplicates of fb_photos/)
+
+# scratch test/verification scripts (recreated on disk by test runs)
+settings.js
+test-features.js
+verify-10features.js
