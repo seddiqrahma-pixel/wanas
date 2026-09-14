@@ -245,7 +245,11 @@
       <div class="row">
         <input class="field" id="prodDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
         <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
-        <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
+        <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
+      </div>
+      <div class="field-row single">
+        <label data-i18n="market_price">سعر السوق (للخصم)</label>
+        <input class="field" id="prodMarket" type="number" placeholder="سعر السوق" data-i18n-ph="market_ph" min="0" step="0.1">
       </div>
       <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
       <div class="img-picker" id="prodPicker"></div>
@@ -625,7 +629,11 @@ IBAN: EG900003041450006160803000150</textarea>
       <input class="field" id="editProdDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
     </div>
     <div class="row">
-      <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph">
+      <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
+    </div>
+    <div class="field-row single">
+      <label data-i18n="market_price">سعر السوق (للخصم)</label>
+      <input class="field" id="editProdMarket" type="number" placeholder="سعر السوق" data-i18n-ph="market_ph" min="0" step="0.1">
     </div>
     <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
     <div class="img-picker" id="editProdPicker"></div>
@@ -722,7 +730,7 @@ const I18N = {
     change_password:"تغيير كلمة الدخول", current_pass:"كلمة الدخول الحالية", new_pass:"كلمة دخول جديدة", confirm_pass:"تأكيد كلمة الدخول",
     wrong_attempts_title:"محاولات دخول فاشلة", reset_wrong_attempts:"إعادة ضبط العداد",
     market_title:"سعر السوق والخصم لكل منتج", market_hint:"أدخل سعر السوق — لو كان سعرك أقل بيظهر خصم تلقائي على المنتج.",
-    market_price:"سعر السوق", market_cost:"التكلفة", market_profit:"الربح",
+    market_price:"سعر السوق", market_cost:"التكلفة", market_profit:"الربح", market_ph:"سعر السوق (اختاري عشان يظهر الخصم)",
     payment_info_title:"معلومات الدفع", vodafone_cash:"فودافون كاش", instapay:"إنستا باي", bank_transfer:"تحويل بنكي", whatsapp_number:"واتساب", email:"بريدك الإلكتروني",
     comm_methods_title:"طرق التواصل اللي بتظهر في الأسفل", comm_methods_hint:"أضف/عدّل/حذف طرق التواصل.",
     comm_icon:"أيقونة (إيموجي)", comm_name_ar:"الاسم عربي", comm_name_en:"الاسم إنجليزي", comm_value:"الرابط أو الرقم",
@@ -731,7 +739,9 @@ const I18N = {
     wrong_pwd:"كلمة الدخول غلط — حاول تاني", unlocks:"فتحات الراسبيد", wrong_attempts_info:"كل محاولة خاطئة بتُحسب. العداد بيعمل كماكينة حماية ضد المشاكل.",
     publish_to_github:"نشر على GitHub", publish_data:"البيانات اللي هتُنشر", publish_when:"لما تشتغل الزر، بيجيب كل الأصناف والمنتجات والإعدادات اللي في الجهاز ويحطها في ملف data.json على GitHub — وفعّلها على موقع GitHub Pages.", github_token:"Token GitHub (repo)",
     publish_msg:"تم النشر", publish_err:"مفزرش — تديك لا يوجد",
-    product_market:"سعر السوق", product_cost:"التكلفة", product_profit:"الربح", product_discount:"خصم", product_no_market:"—",
+    product_market:"سعر السوق", product_cost:"التكلفة", product_profit:"الربح", product_discount:"خصم",
+    product_no_market:"—",
+    market_ph:"Market price (set to show discount)",
     gh_title:"نشر على جيت هب", gh_hint:"حطّ التوكين واسم المستخدم والمستودع، ثم اضغط Publish عشان ترسل التغييرات للsite يعيش.",
     gh_token:"توكين جيت هب", gh_token_ph:"ghp_xxx…", gh_owner:"اسم المستخدم", gh_repo:"اسم المستودع",
     gh_btn:"نشر على جيت هب", gh_status:"جارٍ...", gh_ok:"✓ تم النشر", gh_err:"خطأ — حاول تاني",
@@ -1037,6 +1047,7 @@ function renderProducts(){
     const imgHtml = (imgs[0] && isImg(imgs[0]))?`<img src="${imgs[0]}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(imgs[0]||"📦");
     const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb ${i===0?'active':''}" data-pid="${p.id}" data-idx="${i}" aria-label="${LANG==="ar"?p.ar:p.en} - ${i+1}" role="button"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
     const market = (() => {
+      if(p.market!=null && p.market>0) return p.market;
       if(S.marketPrices && S.marketPrices[p.id] != null) return S.marketPrices[p.id];
       if(PRICING[p.id] && PRICING[p.id].market) return PRICING[p.id].market;
       return null;
@@ -1747,13 +1758,14 @@ function saveEditCat(){
   saveData(); $("#editCatModal").classList.remove("show"); renderAdmin(); renderCats(); renderProducts();
 }
 function openEditProd(id){
-  const p=DATA.products.find(x=>x.id===id); if(!p) return;
-  $("#editProdId").value=p.id; $("#editProdAr").value=p.ar; $("#editProdEn").value=p.en;
-  $("#editProdDescAr").value=p.descAr||""; $("#editProdDescEn").value=p.descEn||"";
+    const p=DATA.products.find(x=>x.id===id); if(!p) return;
+  migrateProduct(p); $("#editProdId").value=p.id;
+  $("#editProdAr").value=p.ar; $("#editProdEn").value=p.en;
+  $("#editProdDescAr").value=p.descAr; $("#editProdDescEn").value=p.descEn;
   $("#editProdPrice").value=p.price;
-  migrateProduct(p);
-  $("#editProdImgs").value=(p.imgs&&p.imgs.length)?p.imgs.join("\n"):(p.img||"");
-  renderImgPreview($("#editProdImgs"), $("#editProdPreview"));
+  $("#editProdMarket").value=(typeof p.market==="number"&&p.market>0)?p.market:"";
+  $("#editProdImgs").value=(p.imgs&&p.imgs.length)?p.imgs.join(", "):"";
+  renderImgPreview($("#editProdImgs"),$("#editProdPreview"));
   if(editProdPicker) editProdPicker.refresh();
   $("#editProdModal").classList.add("show");
 }
@@ -1762,10 +1774,11 @@ function saveEditProd(){
   const ar=$("#editProdAr").value.trim(), en=$("#editProdEn").value.trim();
   const descAr=$("#editProdDescAr").value.trim(), descEn=$("#editProdDescEn").value.trim();
   const price=Number($("#editProdPrice").value)||0;
+  const market = ($("#editProdMarket").value!=="" && !isNaN(Number($("#editProdMarket").value))) ? Number($("#editProdMarket").value) : undefined;
   const imgs=parseImgList($("#editProdImgs").value);
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:finalImgs}); }
+  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,market,imgs:finalImgs}); }
   saveData(); $("#editProdModal").classList.remove("show"); renderAdmin(); renderProducts();
 }
 function addCategory(){
@@ -1779,11 +1792,12 @@ function addProduct(){
   const ar=$("#prodAr").value.trim(), en=$("#prodEn").value.trim();
   const descAr=$("#prodDescAr").value.trim(), descEn=$("#prodDescEn").value.trim();
   const price=Number($("#prodPrice").value)||0;
+  const market = ($("#prodMarket").value!=="" && !isNaN(Number($("#prodMarket").value))) ? Number($("#prodMarket").value) : undefined;
   const imgs=parseImgList($("#prodImgs").value);
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,imgs:finalImgs}); saveData();
-  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice"].forEach(id=>$("#"+id).value="");
+  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,market,imgs:finalImgs}); saveData();
+  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodMarket"].forEach(id=>$("#"+id).value="");
   if(prodPicker) prodPicker.reset();
   renderAdmin(); renderProducts();
 }
