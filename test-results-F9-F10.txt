@@ -1,0 +1,149 @@
+===============================================================================
+  وَنَس (Wanas) Admin Panel — Test Results
+  Feature 9: Payment Info   |   Feature 10: Comms Add / Remove / Edit
+  Date: 2026-09-13          |  Browser: live (http://127.0.0.1:8080)
+===============================================================================
+
+ADMIN LOGIN
+  PW used: "wanas123" (default)
+  Result: Login successful, admin panel visible.
+
+===============================================================================
+FEATURE 9 — PAYMENT INFO
+===============================================================================
+
+[F9.1] UI: All 5 payment fields present with default values
+  Fields verified in #settingsTabs → "payment" tab:
+    ✓(cfgVodafone)   01020306395
+    ✓(cfgInstapay)   01020306395
+    ✓(cfgBank)       Bank: NBE\nIBAN: EG900003041450006160803000150
+    ✓(cfgWhatsapp)   01020306395
+    ✓(cfgEmail)      ahmed.alghoraib@gmail.com
+  PASS — all 5 fields rendered, default values shown.
+
+[F9.2] Change Vodafone number and save
+  Action: Changed cfgVodafone from "01020306395" → "01111111111"
+          Clicked #savePaymentBtn
+  Result: Save executed, toast "Saved ✓" shown.
+  PASS — save button functional, form accepted new value.
+
+[F9.3] localStorage persistence of new Vodafone
+  After save, localStorage.wanas_settings.vodafone = "01111111111"
+  All other payment fields unchanged:
+    instapay  = "01020306395"
+    bank      = "Bank: NBE\\nIBAN: EG900003041450006160803000150"
+    whatsapp  = "01020306395"
+    email     = "ahmed.alghoraib@gmail.com"
+  PASS — new Vodafone value persisted in localStorage.
+
+[F9.4] renderPay (checkout display) shows new Vodafone number
+  Opened checkout modal (cart → checkout).
+  payList innerHTML contains:
+    <div class="pay" data-k="vodafone">
+      <div class="ic">📱</div>
+      <div class="det"><b>فودافون كاش</b><span>01111111111</span></div>
+    </div>
+  The new number "01111111111" appears in the Vodafone Cash row.
+  Other rows unchanged (InstaPay, Bank, WhatsApp).
+  PASS — renderPay reflects the saved Vodafone change.
+
+  OVERALL FEATURE 9: PASS
+  All 4 sub-features verified: UI render, save, localStorage, checkout display.
+
+===============================================================================
+FEATURE 10 — COMMS ADD / REMOVE / EDIT
+===============================================================================
+
+[F10.1] UI: Initial comms render in commList (admin panel)
+  After admin unlock + renderAdmin():
+    commList contains 2 contact-item rows:
+      1. 📷 إنستجرام / Instagram — https://instagram.com/wanas.candles
+         [تعديل] [حذف]
+      2. 👍 فيسبوك / Facebook — https://facebook.com/wanas.candles
+         [تعديل] [حذف]
+  PASS — 2 default comms rendered with edit/delete buttons.
+
+[F10.2] UI: Initial comms render in footer (footerCommsContainer)
+  footerCommsContainer innerHTML:
+    <a href="https://instagram.com/wanas.candles" class="wanas-comm">📷 إنستجرام</a>
+    <a href="https://facebook.com/wanas.candles" class="wanas-comm">👍 فيسبوك</a>
+  PASS — 2 default comms rendered as footer links.
+
+[F10.3] Add new comm (Telegram) — appears in commList
+  Action: Set form fields:
+    icon = "✈️", ar = "تيليجرام", en = "Telegram",
+    value = "https://t.me/wanas_candles", type = "social"
+  Clicked #addCommBtn
+  Result: commList now has 3 contact-item rows (was 2).
+    New row: ✈️ تيليجرام / Telegram — https://t.me/wanas_candles
+             [تعديل] [حذف]
+  PASS — Telegram added to commList.
+
+[F10.4] Add new comm — appears in footer
+  After add, footerCommsContainer has 3 wanas-comm entries:
+    instagram, facebook, telegram
+  PASS — new comm visible in footer.
+
+[F10.5] Edit existing comm (Instagram, index 0)
+  Action: Called editComm(0) → form populated with Instagram data.
+    Changed: icon = "📸", ar = "إنستجرام محدث",
+             en = "Instagram", value = "https://instagram.com/wanas_new"
+    Clicked #addCommBtn (now labeled "Edit")
+  Result:
+    commList item 0 now shows:
+      📸 إنستجرام محدث / Instagram — https://instagram.com/wanas_new
+    (English name unchanged in UI due to language, but value updated.)
+  commList still has 3 items (Telegram intact).
+  PASS — Instagram entry updated in commList.
+
+[F10.6] Edit existing comm — changes appear in footer
+  After edit, footerCommsContainer shows:
+    Instagram link now points to https://instagram.com/wanas_new
+    (English name in footer shows "Instagram" — language-dependent; value changed.)
+  PASS — footer reflects edited Instagram URL.
+
+[F10.7] Delete comm (Telegram, index 2)
+  Action: Clicked [data-del-comm="2"] button on Telegram row.
+  Result:
+    commList now has 2 contact-item rows (was 3).
+    Telegram row removed.
+    Remaining: إنستجرام محدث, فيسبوك.
+  PASS — Telegram removed from commList.
+
+[F10.8] Delete comm — removal reflected in footer
+  After delete:
+    footerCommsContainer has 2 wanas-comm entries.
+    Telegram no longer in footer.
+  PASS — Telegram removed from footer.
+
+[F10.9] All comms operations persist in localStorage
+  Final localStorage.wanas_settings.comms:
+    [
+      {icon: "📸", ar: "إنستجرام محدث", en: "Instagram",
+       value: "https://instagram.com/wanas_new", type: "social"},
+      {icon: "👍", ar: "فيسبوك", en: "Facebook",
+       value: "https://facebook.com/wanas.candles", type: "social"}
+    ]
+  Matches UI state (2 comms, Instagram edited, Telegram deleted).
+  PASS — localStorage correctly reflects all add/edit/delete operations.
+
+  OVERALL FEATURE 10: PASS
+  All 9 sub-features verified: initial render (commList + footer),
+  add (commList + footer), edit (commList + footer), delete (commList + footer),
+  localStorage persistence.
+
+===============================================================================
+SUMMARY
+===============================================================================
+
+Feature 9 — Payment Info:        PASS (4/4 sub-features)
+Feature 10 — Comms Add/Remove/Edit: PASS (9/9 sub-features)
+
+Both features fully functional:
+  - UI renders correctly for all fields/buttons
+  - Save operations persist to localStorage
+  - renderPay (checkout) reflects saved payment changes
+  - renderFooterComms reflects saved comms changes
+  - Add, edit, delete all work end-to-end with localStorage sync
+
+===============================================================================
