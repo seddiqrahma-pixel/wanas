@@ -1,0 +1,176 @@
+{
+  "results": {
+    "s1_entry": {
+      "adminBtn_hidden_default": {
+        "ok": true,
+        "detail": "adminBtn visible=False"
+      },
+      "ctrl_shift_a_opens_modal": {
+        "ok": true,
+        "detail": "modal shown={'shown': True}"
+      },
+      "triple_click_logo_opens": {
+        "ok": true,
+        "detail": "modal={'shown': True}"
+      }
+    },
+    "s2_login": {
+      "wrong_pw_attempt_1": {
+        "ok": true,
+        "detail": "{'err_display': 'block', 'err_text': 'كلمة السر غلط', 'counter_display': 'block', 'counter_text': 'محاولات دخول فاشلة: 1 محاولة'} expected counter 'محاولات دخول فاشلة: 1 محاولة'"
+      },
+      "wrong_pw_attempt_2": {
+        "ok": true,
+        "detail": "{'err_display': 'block', 'err_text': 'كلمة السر غلط', 'counter_display': 'block', 'counter_text': 'محاولات دخول فاشلة: 2 محاولات'} expected counter 'محاولات دخول فاشلة: 2 محاولات'"
+      },
+      "wrong_pw_attempt_3": {
+        "ok": true,
+        "detail": "{'err_display': 'block', 'err_text': 'كلمة السر غلط', 'counter_display': 'block', 'counter_text': 'محاولات دخول فاشلة: 3 محاولات'} expected counter 'محاولات دخول فاشلة: 3 محاولات'"
+      },
+      "counter_persists_after_reload": {
+        "ok": true,
+        "detail": "wrongAttempts in localStorage after reload = 3"
+      }
+    },
+    "s3_kb_hint": {
+      "english_a_gives_en_hint": {
+        "ok": true,
+        "detail": "hints=['لوحة المفاتيح: إنجليزي']"
+      },
+      "arabic_key_gives_ar_hint": {
+        "ok": true,
+        "detail": "hint=لوحة المفاتيح: عربي"
+      },
+      "capslock_patch_shows_warning": {
+        "ok": true,
+        "detail": "hint=['لوحة المفاتيح: إنجليزي • ⚠ مفتاح CapsLock شغّال']"
+      },
+      "punctuation_clears_hint": {
+        "ok": true,
+        "detail": "afterPunct=''"
+      },
+      "blur_clears_hint": {
+        "ok": true,
+        "detail": "hint cleared by blur (before='')"
+      }
+    },
+    "s4": {
+      "correct_pw_unlocks_panel": {
+        "ok": true,
+        "detail": "panel hidden=False"
+      },
+      "toast_shown": {
+        "ok": true,
+        "detail": "toast='تم الدخول للوحة التحكم' showing=True"
+      },
+      "inadmin_counter_matches_3": {
+        "ok": true,
+        "detail": "counter='3 wrong attempts'"
+      },
+      "reset_zeroes_counter": {
+        "ok": true,
+        "detail": "after=0 wrong attempts ls=0"
+      }
+    },
+    "s5_change": {
+      "cfgNewPassRow_hidden_before_verify": {
+        "ok": true,
+        "detail": "display before verify='none'"
+      },
+      "wrong_current_msg": {
+        "ok": true,
+        "detail": "msg={'m': 'كلمة الدخول الحالية غلط', 'row': 'none'}"
+      },
+      "verify_check_enables_row": {
+        "ok": true,
+        "detail": "{'m': '✓', 'row': 'block', 'cdis': True, 'bdis': True}"
+      },
+      "password_changed_toast": {
+        "ok": true,
+        "detail": "toast=تم تغيير كلمة الدخول بنجاح row=none"
+      },
+      "new_pw_stored": {
+        "ok": true,
+        "detail": "stored pw='wanasNEW1'"
+      },
+      "logout_locks_panel": {
+        "ok": true,
+        "detail": "panel hidden=True, adminUnlocked=False"
+      },
+      "old_pw_fails": {
+        "ok": true,
+        "detail": "panel hidden=True (must stay locked)"
+      },
+      "new_pw_succeeds": {
+        "ok": true,
+        "detail": "panel hidden=False (must unlock)"
+      },
+      "reverted_to_wanas123": {
+        "ok": true,
+        "detail": "stored pw='wanas123'"
+      }
+    },
+    "s6_caps_cfg": {
+      "caps_indicator_on_cfgNewPass": {
+        "ok": true,
+        "detail": "hint=لوحة المفاتيح: إنجليزي • ⚠ مفتاح CapsLock شغّال"
+      }
+    },
+    "s7_validation": {
+      "current_empty_rejected": {
+        "ok": true,
+        "detail": "verify msg with empty current='كلمة الدخول الحالية غلط'"
+      },
+      "short_new_rejected_weakmsg": {
+        "ok": true,
+        "detail": "toast={'t': 'كلمة الدخول قصيرة جداً — ٤ أحرف على الأقل', 's': True, 'new': True} stored=wanas123"
+      },
+      "mismatch_rejected": {
+        "ok": true,
+        "detail": "toast={'t': 'كلمة الدخول الحالية غلط', 's': False, 'new': True} stored=wanas123"
+      }
+    },
+    "s8_token": {
+      "clearGitHub_wipes_all": {
+        "ok": true,
+        "detail": "after clear: {'ss': None, 'ls': None, 'field': ''}"
+      },
+      "publish_put_decoded_no_token": {
+        "ok": true,
+        "detail": "put decoded contains token: False"
+      },
+      "publish_wipes_token": {
+        "ok": true,
+        "detail": "after publish: {'status': '✓ تم النشر', 'tokenInPut': False, 'tokenInField': '', 'ss': None, 'ls': None}"
+      },
+      "publish_status_ok": {
+        "ok": true,
+        "detail": "status='✓ تم النشر'"
+      }
+    },
+    "s9_page_scan": {
+      "findings": {
+        "ok": true,
+        "detail": "[]"
+      }
+    },
+    "s10_visibility": {
+      "adminBtn_display_none_default": {
+        "ok": true,
+        "detail": "display=none"
+      },
+      "adminPanel_hidden_class": {
+        "ok": true,
+        "detail": "panel hidden=True"
+      },
+      "adminPanel_no_visible_box": {
+        "ok": true,
+        "detail": "panel width=0"
+      }
+    }
+  },
+  "console_errors": [],
+  "pass_count": 37,
+  "total_count": 37,
+  "secrets": []
+}

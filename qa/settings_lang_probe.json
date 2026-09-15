@@ -1,0 +1,10 @@
+{
+  "lang_initial": "ar",
+  "lang_after_en_reload": "en | h1=Peace of mind starts here",
+  "dir": "ltr",
+  "defaults": {
+    "h1": "راحة بالك تبدأ من هنا",
+    "brand": "وَنَس",
+    "lang": "ar"
+  }
+}
