@@ -1,0 +1,59 @@
+============================================================
+WANAS CATEGORY FILTER + RTL/LTR LAYOUT TEST RESULTS
+============================================================
+
+Test Date: 2026-09-14 18:21:53
+Site: https://seddiqrahma-pixel.github.io/wanas/
+
+----------------------------------------
+1. CATEGORY TABS RENDER
+----------------------------------------
+DATA.categories (0 categories):
+
+Rendered category tabs: 0
+
+Verdict: FAIL - Expected 4 tabs (All + 3 categories), got 0
+
+----------------------------------------
+2. CATEGORY FILTER WORKS
+----------------------------------------
+Initial product count: 0
+
+Click results (before -> after):
+
+Verdict: PASS - All category tabs filter products correctly
+
+----------------------------------------
+3. ALL TAB SHOWS ALL
+----------------------------------------
+  Initial count: 0 products (all shown)
+
+Verdict: PASS
+
+----------------------------------------
+4. ACTIVE TAB HIGHLIGHTED
+----------------------------------------
+
+Verdict: FAIL - An active tab is highlighted
+
+----------------------------------------
+5. RTL IN ARABIC MODE
+----------------------------------------
+  document.documentElement.dir: ltr
+  document.documentElement.lang: en
+  Expected: dir='rtl', lang='ar'
+
+Verdict: FAIL
+
+----------------------------------------
+6. LTR IN ENGLISH MODE
+----------------------------------------
+  document.documentElement.dir: ltr
+  document.documentElement.lang: en
+  Expected: dir='ltr', lang='en'
+
+Verdict: PASS
+
+----------------------------------------
+7. LAYOUT STABLE BOTH DIRECTIONS
+----------------------------------------

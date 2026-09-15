@@ -1,0 +1,10 @@
+{
+  "f1_add_form_has_market_field": "PASS",
+  "f2_add_saves_market_price": "PASS",
+  "f3_new_product_shows_discount": "PASS",
+  "f4_edit_modal_has_market_field": "PASS",
+  "f5_edit_updates_discount": "PASS",
+  "f6_backward_compat_existing": "PASS",
+  "f7_no_discount_when_price_higher": "PASS",
+  "overall_verdict": "PASS"
+}

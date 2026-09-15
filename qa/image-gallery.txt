@@ -1,0 +1,198 @@
+QA Report: Product Image Gallery Feature
+==========================================
+Site: https://seddiqrahma-pixel.github.io/wanas/
+Tested: 2026-09-14 (local browser session)
+Product tested: p3 — Baladi Rose Candle (وردة بلدي) — 9 images
+
+======================================================================
+F1: MAIN IMAGE SHOWS
+======================================================================
+Result: PASS
+
+Card p3 main image:
+  - src: https://seddiqrahma-pixel.github.io/wanas/products/p_baladi_rose/main.jpg
+  - naturalWidth: 851
+  - naturalHeight: 315
+  - parent: div.ph (data-pid="p3")
+
+Gallery opens on click of .ph div:
+  - .g-img src: https://seddiqrahma-pixel.github.io/wanas/products/p_baladi_rose/main.jpg
+  - naturalWidth: 851
+  - naturalHeight: 315
+
+======================================================================
+F2: THUMBNAIL STRIP FOR MULTI-IMAGE PRODUCTS
+======================================================================
+Result: PASS
+
+Product p3 has 9 images (DATA.products['p3'].imgs.length = 9).
+Thumbnail strip appears as:
+  - 9 x <button class="thumb" data-pid="p3" data-idx="0..8">
+  - Each button contains an <img> thumbnail
+  - First thumb (idx=0) has class "thumb active"
+  - Thumbnails show:
+    - idx 0: main.jpg (nw=851)
+    - idx 1-4: g1.jpg through g4.jpg (nw=414 each)
+    - idx 5-8: fb_photos/img_2..11.jpg (nw=0 — BROKEN)
+
+Gallery lightbox thumbnails (.g-thumb):
+  - 9 buttons with data-i="0" through "8"
+  - Same image sources as card thumbnails
+  - Active thumb highlighted with class "active"
+
+======================================================================
+F3: THUMBNAIL CLICK CHANGES MAIN IMAGE
+======================================================================
+Result: PASS
+
+Evidence:
+  BEFORE click (thumb idx=0 active):
+    - .g-img src = https://seddiqrahma-pixel.github.io/wanas/products/p_baladi_rose/main.jpg
+    - .g-img naturalWidth = 851
+
+  ACTION: Clicked .g-thumb[data-i="1"] (2nd image)
+
+  AFTER click:
+    - .g-img src = https://seddiqrahma-pixel.github.io/wanas/products/p_baladi_rose/g1.jpg
+    - .g-img naturalWidth = 414
+    - Active thumb now: data-i="1"
+
+  SRC CHANGED: YES (main.jpg → g1.jpg)
+  naturalWidth changed: 851 → 414
+
+Same behavior confirmed in English mode:
+  - Before: main.jpg (nw=851)
+  - After clicking thumb idx=1: g1.jpg (nw=414)
+
+======================================================================
+F4: GALLERY OVERLAY OPENS PROPERLY
+======================================================================
+Result: PASS
+
+Gallery overlay details:
+  - Element: <div class="gallery"> (created dynamically by openGallery())
+  - Appended to document.body
+  - Visible: YES (getBoundingClientRect: width > 0, height > 0)
+  - Contains:
+    - .g-close button (✕) — closes overlay
+    - .g-nav.g-prev (‹) — previous image
+    - .g-img — main display image
+    - .g-nav.g-next (›) — next image
+    - .g-count — shows "1 / 9" format
+    - .g-thumbs — thumbnail strip (9 thumbs for p3)
+
+  Body overflow: visible (no scroll lock — minor UX note)
+
+  Close behavior: clicking .g-close or clicking outside image removes overlay
+
+======================================================================
+F5: NO BROKEN IMAGES
+======================================================================
+Result: FAIL — 66 broken images found
+
+Total img elements on page: 115
+Broken (naturalWidth === 0): 66
+All 66 broken images are inside product cards.
+
+Broken images by product (14 products affected):
+  p3 (Baladi Rose): 4 broken — fb_photos/img_2.jpg, img_3.jpg, img_8.jpg, img_11.jpg
+  p2 (Cloud Mid): 4 broken — all 4 images (main.jpg, g1.jpg, g2.jpg + duplicate main)
+  p5 (Wool Ball): 4 broken — all 4 images
+  p6 (Big Rose): 4 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg (duplicate sets)
+  p8 (Bubble Big): 4 broken — main.jpg, g1.jpg, g2.jpg (duplicate sets)
+  p9 (Jar 100): 4 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg
+  p11 (Jar 150): 4 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg
+  p12 (Bonboniere 75): 5 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg, g4.jpg
+  p13 (Jar 250): 4 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg
+  p14 (Jar 380): 4 broken — main.jpg, g1.jpg, (g2 missing), g3.jpg, g4.jpg
+  p15 (Bubble Big dup): 3 broken — main.jpg, g1.jpg, g2.jpg
+  p17 (Big Rose dup): 4 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg
+  p18 (Jar 100 dup): 4 broken — main.jpg, g1.jpg, g2.jpg, g3.jpg
+  p27 (Jar 250 dup): 3 broken — main.jpg, g1.jpg, g2.jpg
+
+Root cause: Images under fb_photos/ and several product image directories
+return 404 (naturalWidth=0). The DATA.products entries reference these URLs
+but the files do not exist at the live GitHub Pages path.
+
+NOTE: Products with ALL images broken still show the gallery but display
+broken image icons in both the card thumbnails and the gallery lightbox.
+
+======================================================================
+F6: GALLERY WORKS IN BOTH LANGUAGES
+======================================================================
+Result: PASS (with notes)
+
+Arabic mode (default, dir=rtl):
+  - Card p3 shown with Arabic text (وردة بلدي)
+  - Gallery opens on .ph click
+  - .g-img shows main.jpg (nw=851)
+  - 9 .g-thumb buttons present
+  - Thumb click changes image (verified: main.jpg → g1.jpg)
+
+English mode (dir=ltr):
+  - After reload: dir=ltr, LANG undefined but UI in English
+  - Card p3 shown with English-compatible rendering
+  - Gallery opens on .ph click
+  - .g-img shows main.jpg (nw=851)
+  - 9 .g-thumb buttons present
+  - Thumb click changes image (verified: main.jpg → g1.jpg)
+
+Both modes: gallery functionality (open, thumb navigation, close) works
+identically. The gallery does NOT depend on LANG for its core behavior.
+
+NOTE: window.LANG is undefined in both modes on the live site — the site
+uses localStorage 'wanas_lang' only. The I18N system still renders correctly.
+
+======================================================================
+CONSOLE ERRORS
+======================================================================
+Count: 0 (no console errors captured during test session)
+
+The browser's error listeners did not capture any errors — likely because
+broken images trigger CORS-load failures that don't fire 'error' events
+on the window in this browser context, or the errors are silent image
+decoding failures (not JavaScript errors).
+
+Image brokenness is verified via naturalWidth===0, not via console errors.
+
+======================================================================
+OVERALL VERDICT
+======================================================================
+Gallery feature: FUNCTIONAL — PASS (4 of 5 functional tests pass)
+
+Breakdown:
+  f1_main_image_shows:          PASS
+  f2_thumb_strip_multi_image:   PASS
+  f3_thumb_click_changes_main:  PASS
+  f4_gallery_overlay_opens:     PASS
+  f5_no_broken_images:          FAIL (66 broken images, 14 products affected)
+  f6_gallery_works_in_both_langs: PASS
+
+Summary:
+  The gallery opens correctly, displays the main image, shows a thumbnail
+  strip for multi-image products, responds to thumbnail clicks by changing
+  the main image (src + naturalWidth change verified), and works in both
+  Arabic (RTL) and English (LTR) modes.
+
+  CRITICAL ISSUE: 66 of 115 images (57%) are broken across 14 products.
+  The thumbnails and gallery lightbox show broken image icons for these.
+  Products with ALL images broken (p2, p5, p6, p8, p9, etc.) have non-
+  functional visual galleries despite the JS working correctly.
+
+  Root cause: Missing image files at the referenced GitHub Pages paths
+  (fb_photos/*, products/p_cloud_mid/*, products/p_wool_ball/*, etc.).
+  These are 404s at the live URL.
+
+======================================================================
+TEST ENVIRONMENT
+======================================================================
+  Browser: Local Chromium (user's profile)
+  Site: https://seddiqrahma-pixel.github.io/wanas/
+  Product: p3 (Baladi Rose Candle / وردة بلدي)
+  Images in product: 9 (main.jpg + g1-g4.jpg + fb_photos/img_2,3,8,11.jpg)
+  Images with valid dimensions: 5 (main + g1-g4)
+  Images broken: 4 (fb_photos/*)
+  Gallery class: "gallery"
+  Main image selector: ".g-img"
+  Thumb selector: ".g-thumb"
+  Close selector: ".g-close"

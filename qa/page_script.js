@@ -1,687 +1,4 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>وَنَس | Wanas — شموع وعطور منزلية</title>
-<meta name="description" content="وَنَس — شموع معطرة، عطور منزلية، وهدايا يدوية من سوهاج. توصيل في مصر، دفع عبر فودافون كاش وإنستا باي." />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="وَنَس | Wanas" />
-<meta property="og:description" content="شموع معطرة، عطور منزلية، وهدايا يدوية — راحة بالك تبدأ من هنا." />
-<meta property="og:image" content="https://seddiqrahma-pixel.github.io/wanas/logo.png" />
-<meta property="og:url" content="https://seddiqrahma-pixel.github.io/wanas/" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="وَنَس | Wanas" />
-<meta name="twitter:description" content="شموع معطرة، عطور منزلية، وهدايا يدوية من سوهاج." />
-<meta name="twitter:image" content="https://seddiqrahma-pixel.github.io/wanas/logo.png" />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<style>
-  :root{
-    --bg:#faf6f0; --card:#ffffff; --ink:#2b2620; --muted:#7a7268;
-    --brand:#a98452; --brand2:#7d5a2e; --accent:#e7d8bf; --line:#ece3d6;
-    --ok:#2e7d52; --danger:#b23a3a; --radius:16px; --shadow:0 6px 24px rgba(80,60,30,.08);
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Segoe UI","Tahoma",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
-  [dir="ltr"] body{font-family:"Segoe UI",system-ui,sans-serif}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 18px}
-  header.nav{position:sticky;top:0;z-index:30;background:rgba(250,246,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1080px;margin:0 auto}
-  @media (max-width:400px){ .nav-in{gap:8px;padding:9px 10px} .logo .logo-img{height:36px} .logo{font-size:1.1rem;gap:6px} .logo small{display:none} .btn.ghost.sm{padding:6px 9px;font-size:.78rem} .cart-btn{padding:7px 10px;font-size:.82rem} .lang{padding:6px 9px;font-size:.82rem} }
-  @media (max-width:560px){
-    .close{width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
-    .ci .qty button{min-width:40px;height:40px;font-size:1.1rem}
-    .card .btn.sm.add-btn{min-height:40px;padding:10px 12px}
-    .cart-btn,.lang{min-height:40px}
-    .img-picker .ip-x,.img-picker .ip-add{width:44px;height:44px}
-  }
-  /* Admin entry hidden from buyers; owner opens it via Ctrl+Shift+A or triple-click the logo */
-  #adminBtn{display:none}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
-  .logo .mark{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d9a441,#b9792b);color:#fff;font-weight:700;font-size:20px}
-  .logo .logo-img{height:46px;width:auto;border-radius:10px}
-  .logo small{font-weight:600;color:var(--muted);font-size:.8rem}
-  .spacer{flex:1}
-  .btn{border:none;cursor:pointer;background:var(--brand2);color:#fff;padding:9px 16px;border-radius:10px;font-size:.95rem;font-weight:600;transition:.15s}
-  .btn:hover{background:var(--brand2)}
-  .btn.ghost{background:transparent;color:var(--brand2);border:1px solid var(--brand)}
-  .btn.sm{padding:6px 12px;font-size:.85rem}
-  .btn.danger{background:var(--danger)}
-  .lang{cursor:pointer;background:var(--accent);border:none;border-radius:10px;padding:7px 12px;font-weight:700;color:var(--brand2)}
-  .cart-btn{position:relative}
-  .cart-count{position:absolute;top:-7px;left:-7px;background:var(--danger);color:#fff;border-radius:50%;min-width:20px;height:20px;font-size:.72rem;display:grid;place-items:center;padding:0 4px}
-  .hero{padding:48px 0 28px;text-align:center}
-  .hero-logo{height:170px;width:auto;margin-bottom:14px;filter:drop-shadow(0 10px 26px rgba(125,90,46,.22))}
-  .hero h1{font-size:2.4rem;margin:0 0 8px;color:var(--brand2)}
-  .hero p{color:var(--muted);font-size:1.1rem;margin:0}
-  .section-title{font-size:1.4rem;margin:30px 0 14px;color:var(--brand2)}
-  .cat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-  .cat-tab{background:var(--card);border:1px solid var(--line);border-radius:30px;padding:8px 16px;cursor:pointer;font-weight:600;color:var(--muted)}
-  .cat-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column}
-  .card .ph{height:200px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fff);display:grid;place-items:center;font-size:2.4rem;margin-bottom:10px;overflow:hidden;cursor:pointer;position:relative}
-  .card .ph img{width:100%;height:100%;object-fit:contain}
-  .card .ph .more-badge{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;border-radius:20px;padding:2px 9px;font-size:.72rem}
-  .card .thumbs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-  .card .thumbs .thumb{width:46px;height:46px;border:1px solid var(--line);border-radius:8px;overflow:hidden;padding:0;cursor:pointer;background:#fff}
-  .card .thumbs .thumb img{width:100%;height:100%;object-fit:cover}
-  .card h3{margin:0 0 4px;font-size:1.05rem}
-  .card .desc{color:var(--muted);font-size:.88rem;flex:1}
-  .card .price{font-weight:800;color:var(--brand2);font-size:1.15rem;margin:10px 0}
-  .empty{color:var(--muted);padding:30px;text-align:center;grid-column:1/-1}
-  /* Cart drawer */
-  .drawer{position:fixed;top:0;right:0;height:100%;width:380px;max-width:92vw;background:var(--card);box-shadow:-8px 0 30px rgba(0,0,0,.15);transform:translateX(100%);transition:.25s;z-index:50;display:flex;flex-direction:column}
-  [dir="ltr"] .drawer{right:auto;left:0;transform:translateX(-100%)}
-  .drawer.open{transform:translateX(0)}
-  .drawer header{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
-  .drawer .items{flex:1;overflow:auto;padding:12px 16px}
-  .ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
-  .ci .ci-ph{width:56px;height:56px;border-radius:8px;background:var(--accent);display:grid;place-items:center;overflow:hidden;font-size:1.3rem;cursor:pointer}
-  .ci .ci-ph img{width:100%;height:100%;object-fit:contain}
-  .ci .ci-info{flex:1;font-size:.9rem}
-  .ci .ci-info b{display:block}
-  .ci .qty{display:flex;align-items:center;gap:6px}
-  .ci .qty button{width:24px;height:24px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer}
-  .ci .rm{color:var(--danger);background:none;border:none;cursor:pointer;font-size:.8rem}
-  .drawer footer{padding:16px;border-top:1px solid var(--line)}
-  .total{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem;margin-bottom:12px}
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.2s;z-index:40}
-  .overlay.show{opacity:1;pointer-events:auto}
-  /* Checkout / Payment */
-  .pay-list{display:grid;gap:10px;margin:14px 0}
-  .pay{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer}
-  .pay.sel{border-color:var(--brand);background:var(--accent)}
-  .pay .ic{font-size:1.4rem}
-  .pay .det{flex:1;font-size:.9rem}
-  .pay .det b{display:block}
-  .pay .det span{color:var(--muted);font-size:.82rem;word-break:break-all}
-  .field{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;margin:6px 0;font-family:inherit;font-size:.95rem}
-  textarea.field{resize:vertical;min-height:64px}
-  .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:60;padding:18px}
-  .modal.show{display:flex}
-  .modal .box{background:var(--card);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:22px;box-shadow:var(--shadow)}
-  .modal h2{margin-top:0;color:var(--brand2)}
-  .close{float:left;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
-  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;opacity:0;transition:.25s;z-index:80}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  /* Admin */
-  .admin-hint{font-size:.8rem;color:var(--muted)}
-  .admin .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0;box-shadow:var(--shadow)}
-  .admin .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px}
-  .admin .list-item{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
-  .admin .list-item .nm{flex:1}
-  .pill{display:inline-block;background:var(--accent);color:var(--brand2);border-radius:20px;padding:3px 10px;font-size:.78rem;margin:2px}
-  .hidden{display:none !important}
-  footer.foot{padding:30px 0;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);margin-top:40px}
-  .foot-logo{height:46px;width:auto;display:block;margin:0 auto 8px}
-  @media(max-width:560px){.hero h1{font-size:1.8rem}}
-  /* Multi-image picker (admin) */
-  .img-picker{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-  .img-picker .ip-thumb{position:relative;width:64px;height:64px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--accent)}
-  .img-picker .ip-thumb img{width:100%;height:100%;object-fit:cover}
-  .img-picker .ip-thumb .ip-x{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:.7rem;line-height:1;cursor:pointer}
-  .img-picker .ip-add{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border:1px dashed var(--brand);border-radius:10px;color:var(--brand);background:transparent;cursor:pointer;font-size:1.4rem}
-  .cost-line{font-size:.82rem;color:var(--muted);margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
-  .cost-line b{color:var(--ink)}
-  .cost-line .neg{color:var(--danger)}
-  /* Discount badge */
-  .price-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
-  .price.old{color:var(--muted);text-decoration:line-through;font-weight:600;font-size:.95rem}
-  .discount-badge{display:inline-block;background:var(--ok);color:#fff;font-weight:700;font-size:.78rem;padding:2px 9px;border-radius:20px}
-  .card .thumbs .thumb.active{outline:2px solid var(--brand);outline-offset:-2px}
 
-  /* Image gallery / lightbox */
-  .gallery{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:90;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px}
-  .gallery .g-img{max-width:92vw;max-height:72vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
-  .gallery .g-close{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer}
-  .gallery .g-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.8rem;cursor:pointer}
-  .gallery .g-prev{right:18px}
-  .gallery .g-next{left:18px}
-  .gallery .g-count{position:absolute;bottom:90px;color:#fff;font-size:.9rem;background:rgba(0,0,0,.4);padding:4px 12px;border-radius:20px}
-  .gallery .g-thumbs{position:absolute;bottom:18px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:92vw;overflow:auto}
-  .gallery .g-thumb{width:54px;height:54px;border:2px solid transparent;border-radius:8px;overflow:hidden;padding:0;cursor:pointer;background:#fff}
-  .gallery .g-thumb.active{border-color:#d9a441}
-  .gallery .g-thumb img{width:100%;height:100%;object-fit:cover}
-  /* multi-image admin inputs */
-  .img-help{font-size:.78rem;color:#8a7a6a;margin:2px 0 4px;line-height:1.4}
-  .img-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;min-height:0}
-  .img-preview:empty{display:none}
-  .img-thumb{width:56px;height:56px;border-radius:10px;overflow:hidden;border:1px solid rgba(122,72,42,.2);background:rgba(122,72,42,.06);display:flex;align-items:center;justify-content:center}
-  .img-thumb img{width:100%;height:100%;object-fit:cover}
-  /* ===== Admin settings (branding, password, pricing, contact methods) ===== */
-  .admin .settings-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:8px}
-  .admin .settings-tabs button{background:var(--accent);border:none;border-radius:20px;padding:6px 14px;font-size:.82rem;font-weight:700;color:var(--brand2);cursor:pointer;transition:.12s}
-  .admin .settings-tabs button:hover{background:#d4c3a6}
-  .admin .settings-tabs button.active{background:var(--brand2);color:#fff}
-  .admin .settings-panel{display:none}
-  .admin .settings-panel.active{display:block}
-  .admin .brand-preview{display:flex;align-items:center;gap:10px;padding:12px;background:var(--accent);border-radius:12px;margin-bottom:12px;flex-wrap:wrap}
-  .admin .brand-preview .bp-logo{height:42px;width:auto;border-radius:8px}
-  .admin .brand-preview .bp-text{font-weight:800;font-size:1.2rem;color:var(--brand2)}
-  .admin .brand-preview .bp-text small{display:block;font-weight:600;color:var(--muted);font-size:.78rem}
-  .admin .color-swatch{display:inline-block;width:24px;height:24px;border-radius:6px;border:1px solid var(--line);vertical-align:middle;margin-right:4px;cursor:pointer}
-  .admin .color-swatch input{width:28px;height:24px;border:none;padding:0;cursor:pointer}
-  .admin .field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-  .admin .field-row.single{grid-template-columns:1fr}
-  .admin .field-row label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:2px}
-  .admin .field-row input,.admin .field-row select{font-family:inherit;font-size:.9rem;padding:7px 9px;border:1px solid var(--line);border-radius:8px;width:100%}
-  .admin .pill-row{display:flex;flex-wrap:wrap;gap:6px}
-  .admin .contact-item{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px;background:var(--card)}
-  .admin .contact-item .ci-icon{font-size:1.3rem}
-  .admin .contact-item .ci-info{flex:1;font-size:.88rem}
-  .admin .contact-item .ci-info b{display:block}
-  .admin .contact-item .ci-info span{color:var(--muted);font-size:.78rem}
-  .admin .market-row{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px;background:var(--card);flex-wrap:wrap}
-  .admin .market-row .mr-info{flex:1;min-width:140px}
-  .admin .market-row .mr-info b{display:block;font-size:.95rem}
-  .admin .market-row .mr-info span{color:var(--muted);font-size:.78rem}
-  .admin .market-row input{width:100px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:.9rem}
-  .admin .badge-ok{background:var(--ok);color:#fff;border-radius:20px;padding:2px 8px;font-size:.72rem;font-weight:700}
-  .admin .badge-err{background:var(--danger);color:#fff;border-radius:20px;padding:2px 8px;font-size:.72rem;font-weight:700}
-  .admin .pw-strength{font-size:.78rem;margin-top:4px;color:var(--muted)}
-  .admin .pw-strength.ok{color:var(--ok)}
-  .admin .pw-strength.bad{color:var(--danger)}
-  .admin .hint{font-size:.78rem;color:var(--muted);margin:4px 0 8px;line-height:1.4}
-  .admin .divider{border-top:1px solid var(--line);margin:14px 0}
-  .admin label.check{display:flex;align-items:center;gap:6px;margin:4px 0;cursor:pointer;font-size:.88rem}
-  .admin label.check input{accent-color:var(--brand2)}
-</style>
-</head>
-<body>
-
-<header class="nav">
-  <div class="nav-in">
-    <a class="logo" href="#">
-      <img class="logo-img" src="logo.png" alt="وَنَس" />
-      <span data-i18n="brand">وَنَس</span>
-    </a>
-    <div class="spacer"></div>
-    <button class="lang" id="langBtn" title="Language">EN</button>
-    <button class="btn ghost sm" id="adminBtn" data-i18n="admin">لوحة التحكم</button>
-    <button class="btn cart-btn" id="cartBtn">
-      🛒 <span data-i18n="cart">السلة</span>
-      <span class="cart-count hidden" id="cartCount">0</span>
-    </button>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero wrap">
-  <img class="hero-logo" src="logo.png" alt="وَنَس" />
-  <h1 id="heroTitleText">راحة بالك تبدأ من هنا</h1>
-  <p id="heroSubText">منتجات وَنَس — جودة تهدي بالك</p>
-</section>
-
-<!-- STORE -->
-<main class="wrap" id="store">
-  <div class="cat-tabs" id="catTabs"></div>
-  <h2 class="section-title" data-i18n="products">المنتجات</h2>
-  <div class="grid" id="productGrid"></div>
-
-  <!-- Admin panel -->
-  <section class="admin hidden" id="adminPanel">
-    <h2 class="section-title" data-i18n="admin_panel">إدارة الأصناف والمنتجات</h2>
-    <p class="admin-hint" data-i18n="admin_hint">التغييرات محفوظة على جهازك فقط (LocalStorage)</p>
-
-    <div class="panel">
-      <h3 data-i18n="cats">الأصناف (Categories)</h3>
-      <div id="catList"></div>
-      <div class="row">
-        <input class="field" id="newCatAr" placeholder="اسم الصنف بالعربي" data-i18n-ph="cat_ar_ph">
-        <input class="field" id="newCatEn" placeholder="اسم الصنف (إنجليزي)" data-i18n-ph="cat_en_ph">
-        <button class="btn sm" id="addCatBtn" data-i18n="add_cat" data-tip="tip_add_cat">+ إضافة صنف</button>
-      </div>
-    </div>
-
-    <div class="panel">
-      <h3 data-i18n="prods">المنتجات (Products)</h3>
-      <div class="row">
-        <select class="field" id="prodCat"></select>
-        <input class="field" id="prodAr" placeholder="اسم المنتج عربي" data-i18n-ph="prod_ar_ph">
-        <input class="field" id="prodEn" placeholder="اسم المنتج (إنجليزي)" data-i18n-ph="prod_en_ph">
-      </div>
-      <div class="row">
-        <input class="field" id="prodDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
-        <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
-        <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
-      </div>
-      <div class="field-row single">
-        <label data-i18n="market_price">سعر السوق (للخصم)</label>
-        <input class="field" id="prodMarket" type="number" placeholder="سعر السوق" data-i18n-ph="market_ph" min="0" step="0.1">
-      </div>
-      <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
-      <div class="img-picker" id="prodPicker"></div>
-      <input type="file" id="prodFile" accept="image/*" multiple style="display:none">
-      <button type="button" class="btn ghost sm" id="prodUploadBtn" data-tip="tip_upload">📁 رفع صور (Upload)</button>
-      <textarea class="field" id="prodImgs" rows="2" placeholder="products/p_jar_150/main.jpg, products/p_jar_150/g1.jpg" data-i18n-ph="imgs_ph"></textarea>
-      <div class="img-preview" id="prodPreview"></div>
-      <button class="btn sm" id="addProdBtn" data-i18n="add_prod" data-tip="tip_add_prod">+ إضافة منتج</button>
-      <div id="prodList" style="margin-top:12px"></div>
-    </div>
-
-    <div class="panel">
-      <button class="btn sm" id="exportBtn" data-tip="tip_export">تصدير المنتجات (JSON)</button>
-      <button class="btn sm" id="importBtn" data-tip="tip_import">استيراد المنتجات (JSON)</button>
-      <input type="file" id="importFile" accept="application/json" style="display:none" />
-      <button class="btn danger sm" id="resetBtn" data-i18n="reset" data-tip="tip_reset">استعادة البيانات الافتراضية</button>
-    </div>
-
-    <!-- ========== الإعدادات ========== -->
-    <div class="panel" style="margin-top:8px">
-      <h2 class="section-title" style="margin-top:8px" data-i18n="settings">الإعدادات العامة</h2>
-      <div class="settings-tabs" id="settingsTabs">
-        <button class="active" data-st="branding" data-i18n="tab_branding" data-tip="tip_tab_branding">الشعار والكلمات</button>
-        <button data-st="password" data-i18n="tab_password" data-tip="tip_tab_password">كلمة الدخول</button>
-        <button data-st="market" data-i18n="tab_market" data-tip="tip_tab_market">سعر السوق والخصم</button>
-        <button data-st="payment" data-i18n="tab_payment" data-tip="tip_tab_payment">الدفع وطرق التواصل</button>
-        <button data-st="github" data-i18n="gh_title" data-tip="tip_tab_github">نشر على جيت هب</button>
-      </div>
-
-      <!-- GitHub publish -->
-      <div class="settings-panel" data-sp="github">
-        <div class="panel">
-          <h3 data-i18n="gh_title">نشر على جيت هب</h3>
-          <p class="admin-hint" data-i18n="gh_hint">حطّ التوكين واسم المستخدم والمستودع، ثم اضغط Publish عشان ترسل التغييرات للsite يعيش.</p>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="gh_token">توكين جيت هب</span></label>
-              <input class="field" id="ghToken" type="text" placeholder="github_pat_..." data-i18n-ph="gh_token_ph">
-            </div>
-          </div>
-          <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:8px">
-            <button class="btn sm" id="ghSaveBtn" data-i18n="gh_save" data-tip="tip_publish">حفظ التوكين</button>
-            <button class="btn ghost sm" id="ghClearBtn" data-i18n="gh_clear">مسح</button>
-          </div>
-          <div style="margin-bottom:8px" id="ghStatus"></div>
-          <button class="btn brand" id="ghPublishBtn" data-i18n="gh_btn" data-tip="tip_publish">نشر على جيت هب</button>
-          <p class="admin-hint" data-i18n="gh_warning">التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها.</p>
-        </div>
-      </div>
-
-      <div class="settings-panel" data-sp="branding">
-        <div class="panel">
-          <h3 data-i18n="brand_logo">الشعار</h3>
-          <div class="brand-preview" id="brandPreview">
-            <img class="bp-logo" id="bpLogo" src="logo.png" alt="">
-            <div class="bp-text">
-              <span id="bpBrandText"></span>
-              <span id="bpBrandTextAr" style="display:none"></span>
-              <span id="bpBrandTextEn" style="display:none"></span>
-              <span id="bpBrandLabel"></span>
-            </div>
-          </div>
-          <div class="field-row single">
-            <label data-i18n="logo_path">مسار شعار الصفحة (logo.png)</label>
-            <input class="field" id="cfgLogo" type="text" value="logo.png">
-          </div>
-          <div class="field-row single">
-            <label data-i18n="logo_icon_path">مسار أيقونة التذييل (logo-icon.png)</label>
-            <input class="field" id="cfgLogoSmall" type="text" value="logo-icon.png">
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3 data-i18n="brand_name_title">الكلمة جنب الشعار</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="brand_ar">الاسم عربي</span></label>
-              <input class="field" id="cfgBrandAr" value="وَنَس">
-            </div>
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="brand_en">الاسم إنجليزي</span></label>
-              <input class="field" id="cfgBrandEn" value="Wanas">
-            </div>
-          </div>
-          <div class="field-row">
-            <label data-i18n="font">الخط</label>
-            <select class="field" id="cfgBrandFont">
-              <option value="Segoe UI,Tahoma,system-ui,sans-serif" data-font-label="Segoe UI">Segoe UI</option>
-              <option value="'Cairo',Segoe UI,Tahoma,sans-serif" data-font-label="Cairo">Cairo</option>
-              <option value="'Amiri',serif" data-font-label="Amiri">Amiri</option>
-              <option value="'Almarai',Segoe UI,Tahoma,sans-serif" data-font-label="Almarai">Almarai</option>
-              <option value="Georgia,serif" data-font-label="Georgia">Georgia</option>
-            </select>
-            <label data-i18n="size">الحجم</label>
-            <input class="field" id="cfgBrandSize" type="number" min="0.5" max="3" step="0.1" value="1.4">
-          </div>
-          <div class="field-row">
-            <label data-i18n="color">اللون</label>
-            <div class="color-row"><input class="field" id="cfgBrandColor" type="color" value="#7d5a2e" style="height:34px;width:60px;padding:2px"></div>
-            <label data-i18n="color_brand">لون الكلمة</label>
-            <div class="color-row"><input class="field" id="cfgBrandTextColor" type="color" value="#7d5a2e" style="height:34px;width:60px;padding:2px"></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3 data-i18n="hero_title">كلمة الأعلى (بعد الشعار)</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="hero_title_ar">العنوان عربي</span></label>
-              <input class="field" id="cfgHeroTitleAr" value="راحة بالك تبدأ من هنا">
-            </div>
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="hero_title_en">العنوان إنجليزي</span></label>
-              <input class="field" id="cfgHeroTitleEn" value="Peace of mind starts here">
-            </div>
-          </div>
-          <div class="field-row">
-            <label data-i18n="font">الخط</label>
-            <select class="field" id="cfgHeroFont">
-              <option value="Segoe UI,system-ui,sans-serif" data-font-label="Segoe UI">Segoe UI</option>
-              <option value="'Cairo',Segoe UI,Tahoma,sans-serif" data-font-label="Cairo">Cairo</option>
-              <option value="'Amiri',serif" data-font-label="Amiri">Amiri</option>
-              <option value="'Almarai',Segoe UI,Tahoma,sans-serif" data-font-label="Almarai">Almarai</option>
-              <option value="Georgia,serif" data-font-label="Georgia">Georgia</option>
-            </select>
-            <label data-i18n="size">الحجم</label>
-            <input class="field" id="cfgHeroSize" type="number" min="0.5" max="4" step="0.1" value="2.4">
-          </div>
-          <div class="field-row">
-            <label data-i18n="color">لون العنوان</label>
-            <div class="color-row"><input class="field" id="cfgHeroColor" type="color" value="#a98452" style="height:34px;width:60px;padding:2px"></div>
-            <label data-i18n="color_sub">لون الكلمة تحتها</label>
-            <div class="color-row"><input class="field" id="cfgHeroSubColor" type="color" value="#7a7268" style="height:34px;width:60px;padding:2px"></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3 data-i18n="hero_sub">الكلمة تحت العنوان (بعد الشعار)</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="hero_sub_ar">تحت العنوان عربي</span></label>
-              <input class="field" id="cfgHeroSubAr" value="منتجات وَنَس — جودة تهدي بالك">
-            </div>
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="hero_sub_en">تحت العنوان إنجليزي</span></label>
-              <input class="field" id="cfgHeroSubEn" value="Wanas products — quality that soothes your soul">
-            </div>
-          </div>
-          <div class="field-row single">
-            <label data-i18n="font">الخط</label>
-            <select class="field" id="cfgHeroSubFont">
-              <option value="Segoe UI,system-ui,sans-serif" data-font-label="Segoe UI">Segoe UI</option>
-              <option value="'Cairo',Segoe UI,Tahoma,sans-serif" data-font-label="Cairo">Cairo</option>
-              <option value="'Amiri',serif" data-font-label="Amiri">Amiri</option>
-              <option value="'Almarai',Segoe UI,Tahoma,sans-serif" data-font-label="Almarai">Almarai</option>
-              <option value="Georgia,serif" data-font-label="Georgia">Georgia</option>
-            </select>
-          </div>
-          <div class="field-row">
-            <label data-i18n="size">الحجم</label>
-            <input class="field" id="cfgHeroSubSize" type="number" min="0.5" max="2" step="0.05" value="1.1">
-            <label data-i18n="color">اللون</label>
-            <div class="color-row"><input class="field" id="cfgHeroSubTextColor" type="color" value="#7a7268" style="height:34px;width:60px;padding:2px"></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3 data-i18n="footer">كلمة الأسفل (تحت الشعار الصغير)</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="footer_ar">الكلمة عربي</span></label>
-              <input class="field" id="cfgFooterAr" value="شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️">
-            </div>
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="footer_en">الكلمة إنجليزي</span></label>
-              <input class="field" id="cfgFooterEn" value="Candles that give you the comfort of the sun 🕯️">
-            </div>
-          </div>
-          <div class="field-row">
-            <label data-i18n="font">الخط</label>
-            <select class="field" id="cfgFooterFont">
-              <option value="Segoe UI,system-ui,sans-serif" data-font-label="Segoe UI">Segoe UI</option>
-              <option value="'Cairo',Segoe UI,Tahoma,sans-serif" data-font-label="Cairo">Cairo</option>
-              <option value="'Amiri',serif" data-font-label="Amiri">Amiri</option>
-              <option value="'Almarai',Segoe UI,Tahoma,sans-serif" data-font-label="Almarai">Almarai</option>
-              <option value="Georgia,serif" data-font-label="Georgia">Georgia</option>
-            </select>
-            <label data-i18n="size">الحجم</label>
-            <input class="field" id="cfgFooterSize" type="number" min="0.5" max="2" step="0.05" value="0.85">
-          </div>
-          <div class="field-row">
-            <label data-i18n="color">اللون</label>
-            <div class="color-row"><input class="field" id="cfgFooterColor" type="color" value="#7a7268" style="height:34px;width:60px;padding:2px"></div>
-            <label data-i18n="color_brand">لون الكلمة</label>
-            <div class="color-row"><input class="field" id="cfgFooterTextColor" type="color" value="#7a7268" style="height:34px;width:60px;padding:2px"></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3 data-i18n="cat_tabs_style_title">مظهر أزرار الأصناف</h3>
-          <div class="field-row">
-            <label data-i18n="font">الخط</label>
-            <select class="field" id="cfgCatFont">
-              <option value="Segoe UI,system-ui,sans-serif" data-font-label="Segoe UI">Segoe UI</option>
-              <option value="'Cairo',Segoe UI,Tahoma,sans-serif" data-font-label="Cairo">Cairo</option>
-              <option value="'Amiri',serif" data-font-label="Amiri">Amiri</option>
-              <option value="'Almarai',Segoe UI,Tahoma,sans-serif" data-font-label="Almarai">Almarai</option>
-              <option value="Georgia,serif" data-font-label="Georgia">Georgia</option>
-            </select>
-            <label data-i18n="size">الحجم</label>
-            <input class="field" id="cfgCatSize" type="number" min="0.5" max="1.8" step="0.05" value="0.95">
-          </div>
-          <div class="field-row">
-            <label data-i18n="color">لون العادي</label>
-            <div class="color-row"><input class="field" id="cfgCatColor" type="color" value="#7a7268" style="height:34px;width:60px;padding:2px"></div>
-            <label data-i18n="color_brand">لون الفعّال</label>
-            <div class="color-row"><input class="field" id="cfgCatColorActive" type="color" value="#ffffff" style="height:34px;width:60px;padding:2px"></div>
-          </div>
-          <div class="field-row">
-            <label data-i18n="color_brand2">خلفية الفعّال</label>
-            <div class="color-row"><input class="field" id="cfgCatBgActive" type="color" value="#a98452" style="height:34px;width:60px;padding:2px"></div>
-            <label data-i18n="color_line">الحد</label>
-            <div class="color-row"><input class="field" id="cfgCatBorder" type="color" value="#ece3d6" style="height:34px;width:60px;padding:2px"></div>
-          </div>
-        </div>
-
-        <button class="btn" id="saveBrandingBtn" style="width:100%;margin-top:6px" data-i18n="save">حفظ كل التغييرات</button>
-      </div>
-
-      <!-- Password -->
-      <div class="settings-panel" data-sp="password">
-        <div class="panel">
-          <h3 data-i18n="change_password">تغيير كلمة الدخول</h3>
-          <div class="field-row">
-            <label data-i18n="current_pass">كلمة الدخول الحالية</label>
-            <input class="field" id="cfgCurPass" type="password" autocomplete="off">
-            <label data-i18n="new_pass">كلمة دخول جديدة</label>
-            <input class="field" id="cfgNewPass" type="password" autocomplete="off">
-          </div>
-          <div class="field-row">
-            <label data-i18n="confirm_pass">تأكيد كلمة الدخول</label>
-            <input class="field" id="cfgConfirmPass" type="password" autocomplete="off">
-            <label style="visibility:hidden">_</label>
-            <div class="pw-strength" id="pwStrength"></div>
-          </div>
-          <button class="btn" id="savePassBtn" style="width:100%;margin-top:6px" data-i18n="save">حفظ كلمة الدخول</button>
-        </div>
-        <div class="panel">
-          <h3 data-i18n="wrong_attempts_title">محاولات دخول فاشلة</h3>
-          <p style="font-size:1rem;font-weight:700;color:var(--brand2)" id="wrongAttemptsDisplay">0 محاولة خاطئة</p>
-          <button class="btn danger sm" id="resetAttemptsBtn" data-i18n="reset_wrong_attempts">إعادة ضبط العداد</button>
-        </div>
-      </div>
-
-      <!-- Market -->
-      <div class="settings-panel" data-sp="market">
-        <div class="panel">
-          <h3 data-i18n="market_title">سعر السوق والخصم لكل منتج</h3>
-          <p class="admin-hint" data-i18n="market_hint">أدخل سعر السوق — لو كان سعرك أقل بيظهر خصم تلقائي على المنتج.</p>
-          <div id="marketList"></div>
-        </div>
-      </div>
-
-      <!-- Payment & contact -->
-      <div class="settings-panel" data-sp="payment">
-        <div class="panel">
-          <h3 data-i18n="payment_info_title">معلومات الدفع</h3>
-          <div class="field-row">
-            <label data-i18n="vodafone_cash">فودافون كاش</label>
-            <input class="field" id="cfgVodafone" value="01020306395">
-            <label data-i18n="instapay">إنستا باي</label>
-            <input class="field" id="cfgInstapay" value="01020306395">
-          </div>
-          <div class="field-row single">
-            <label data-i18n="bank_transfer">تحويل بنكي (اسم البنك + رقم IBAN)</label>
-            <textarea class="field" id="cfgBank" rows="2">Bank: NBE
-IBAN: EG900003041450006160803000150</textarea>
-          </div>
-          <div class="field-row">
-            <label data-i18n="whatsapp_number">واتساب (لإرسال الطلب)</label>
-            <input class="field" id="cfgWhatsapp" value="01020306395">
-            <label data-i18n="email">بريدك الإلكتروني</label>
-            <input class="field" id="cfgEmail" value="ahmed.alghoraib@gmail.com">
-          </div>
-          <button class="btn" id="savePaymentBtn" style="width:100%;margin-top:6px" data-i18n="save">حفظ معلومات الدفع</button>
-        </div>
-
-        <div class="panel">
-          <h3 data-i18n="comm_methods_title">طرق التواصل</h3>
-          <p class="admin-hint" data-i18n="comm_methods_hint">أضف/عدّل/حذف طرق التواصل اللي بتظهر فيأسفل الصفحة.</p>
-          <div id="commList"></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="comm_icon">أيقونة (إيموجي)</span></label>
-              <input class="field" id="cfgCommIcon" value="📷">
-            </div>
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="comm_type">النوع</span></label>
-              <select class="field" id="cfgCommType">
-                <option value="social" data-i18n="comm_type_social">ارتباط خارجي</option>
-                <option value="contact" data-i18n="comm_type_contact">اتصال (رقم)</option>
-                <option value="text" data-i18n="comm_type_text">نص بحت</option>
-              </select>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="comm_name_ar">الاسم عربي</span></label>
-              <input class="field" id="cfgCommAr" value="إنستجرام">
-            </div>
-            <div>
-              <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="comm_name_en">الاسم إنجليزي</span></label>
-              <input class="field" id="cfgCommEn" value="Instagram">
-            </div>
-          </div>
-          <div class="field-row single" style="margin-top:8px">
-            <label data-i18n="comm_value">الرابط أو الرقم</label>
-            <input class="field" id="cfgCommValue" value="https://instagram.com/wanas.candles">
-          </div>
-          <button class="btn sm" id="addCommBtn" style="margin-top:8px" data-i18n="add">+ إضافة طريقة تواصل</button>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- CART DRAWER -->
-<aside class="drawer" id="cartDrawer">
-  <header>
-    <strong data-i18n="cart">السلة</strong>
-    <button class="close" id="closeCart">✕</button>
-  </header>
-  <div class="items" id="cartItems"></div>
-  <footer>
-    <div class="total"><span data-i18n="total">الإجمالي</span><span id="cartTotal">0 جنيه</span></div>
-    <button class="btn" id="checkoutBtn" style="width:100%" data-i18n="checkout">إتمام الطلب</button>
-  </footer>
-</aside>
-<div class="overlay" id="overlay"></div>
-
-<!-- CHECKOUT MODAL -->
-<div class="modal" id="checkoutModal">
-  <div class="box">
-    <button class="close" id="closeCheckout">✕</button>
-    <h2 data-i18n="order_title">تأكيد الطلب</h2>
-    <div id="orderSummary"></div>
-
-    <label data-i18n="pay_method">طريقة الدفع</label>
-    <div class="pay-list" id="payList"></div>
-
-    <label data-i18n="cust_name">الاسم</label>
-    <input class="field" id="custName" data-i18n-ph="name_ph">
-    <label data-i18n="cust_phone">رقم الهاتف</label>
-    <input class="field" id="custPhone" data-i18n-ph="phone_ph">
-    <label data-i18n="cust_addr">العنوان (للشحن)</label>
-    <textarea class="field" id="custAddr" data-i18n-ph="addr_ph"></textarea>
-    <label data-i18n="cust_note">ملاحظات</label>
-    <textarea class="field" id="custNote" data-i18n-ph="note_ph"></textarea>
-
-    <button class="btn" id="sendOrderBtn" style="width:100%;margin-top:8px" data-i18n="send_order">إرسال الطلب (واتساب)</button>
-    <button class="btn ghost" id="sendMailBtn" style="width:100%;margin-top:8px" data-i18n="send_mail">إرسال عبر الإيميل</button>
-  </div>
-</div>
-
-<!-- EDIT PRODUCT MODAL -->
-<div class="modal" id="editProdModal">
-  <div class="box">
-    <button class="close" id="editProdClose">✕</button>
-    <h2 data-i18n="edit_product">تعديل المنتج</h2>
-    <input type="hidden" id="editProdId">
-    <div class="row">
-      <input class="field" id="editProdAr" placeholder="اسم المنتج عربي" data-i18n-ph="prod_ar_ph">
-      <input class="field" id="editProdEn" placeholder="اسم المنتج (إنجليزي)" data-i18n-ph="prod_en_ph">
-    </div>
-    <div class="row">
-      <input class="field" id="editProdDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
-      <input class="field" id="editProdDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
-    </div>
-    <div class="row">
-      <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
-    </div>
-    <div class="field-row single">
-      <label data-i18n="market_price">سعر السوق (للخصم)</label>
-      <input class="field" id="editProdMarket" type="number" placeholder="سعر السوق" data-i18n-ph="market_ph" min="0" step="0.1">
-    </div>
-    <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
-    <div class="img-picker" id="editProdPicker"></div>
-    <input type="file" id="editProdFile" accept="image/*" multiple style="display:none">
-    <button type="button" class="btn ghost sm" id="editProdUploadBtn" data-tip="tip_upload">📁 رفع صور (Upload)</button>
-    <textarea class="field" id="editProdImgs" rows="2" placeholder="products/p_jar_150/main.jpg, products/p_jar_150/g1.jpg" data-i18n-ph="imgs_ph"></textarea>
-    <div class="img-preview" id="editProdPreview"></div>
-    <button class="btn" id="editProdSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
-  </div>
-</div>
-
-<!-- EDIT CATEGORY MODAL -->
-<div class="modal" id="editCatModal">
-  <div class="box" style="max-width:360px">
-    <button class="close" id="editCatClose">✕</button>
-    <h2 data-i18n="edit_category">تعديل الصنف</h2>
-    <input type="hidden" id="editCatId">
-    <div class="row">
-      <input class="field" id="editCatAr" placeholder="اسم الصنف بالعربي" data-i18n-ph="cat_ar_ph">
-      <input class="field" id="editCatEn" placeholder="اسم الصنف (إنجليزي)" data-i18n-ph="cat_en_ph">
-    </div>
-    <button class="btn" id="editCatSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN MODAL -->
-<div class="modal" id="adminLoginModal">
-  <div class="box" style="max-width:360px">
-    <button class="close" id="adminLoginClose">✕</button>
-    <h2 data-i18n="admin_login_title">دخول لوحة التحكم</h2>
-    <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
-      <input class="field" id="adminPass" type="password" placeholder="كلمة الدخول" data-i18n-ph="admin_pass_ph" autocomplete="off">
-      <button class="btn" id="adminLoginBtn" style="width:100%" data-i18n="admin_login_btn">دخول</button>
-    </div>
-    <p class="admin-hint" id="adminLoginErr" style="color:var(--danger);display:none;margin-top:8px" data-i18n="login_fail">كلمة السر غلط</p>
-  </div>
-</div>
-
-<footer class="foot">
-  <img class="foot-logo" src="logo-icon.png" alt="وَنَس" />
-  <div><span data-i18n="brand">وَنَس</span> — © <span id="year"></span></div>
-  <div id="footerTaglineText" style="margin-top:4px">شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️</div>
-  <div id="footerCommsContainer" style="margin-top:8px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap"></div>
-</footer>
-
-<div class="toast" id="toast"></div>
-
-<script>
 /* ====================== i18n ====================== */
 const I18N = {
   ar:{
@@ -745,24 +62,7 @@ const I18N = {
     gh_title:"نشر على جيت هب", gh_hint:"حطّ التوكين واسم المستخدم والمستودع، ثم اضغط Publish عشان ترسل التغييرات للsite يعيش.",
     gh_token:"توكين جيت هب", gh_token_ph:"ghp_xxx…", gh_owner:"اسم المستخدم", gh_repo:"اسم المستودع",
     gh_btn:"نشر على جيت هب", gh_status:"جارٍ...", gh_ok:"✓ تم النشر", gh_err:"خطأ — حاول تاني",
-    gh_save:"حفظ التوكين", gh_clear:"مسح", gh_need:"مش مدينيهم كل الحقول", gh_warning:"التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها.",
-    /* hover notes (tooltips) — control panel buttons */
-    tip_add_cat:"+ بيضيف صنف جديد بيظهر كتب في واجهة المتجر (لازم الاسم عربي + إنجليزي).",
-    tip_upload:"اختار صور من جهازك — بتتحفظ مع المنتج وتظهر في المتجر.",
-    tip_add_prod:"+ بيضيف منتج جديد بالبيانات اللي فوق (الاسم، الوصف، السعر، الصور).",
-    tip_export:"ينزّل ملف JSON فيه كل الأصناف والمنتجات — نسخة احتياطية.",
-    tip_import:"يرجّع الأصناف والمنتجات من ملف JSON سبق تصديره.",
-    tip_reset:"بيمسح كل تعديلاتك ويرجّع بيانات المتجر الأصلية — مستحيل ترجع بعدها.",
-    tip_edit_prod:"يفتح نافذة تعديل بيانات المنتج (الاسم، السعر، الوصف، الصور).",
-    tip_del_prod:"بيشيل المنتج ده نهائيًا من المتجر.",
-    tip_edit_cat:"يفتح نافذة تعديل اسم الصنف (عربي/إنجليزي).",
-    tip_del_cat:"بيمسح الصنف نهائيًا — وكل منتجات جواه بتتمسح كمان!",
-    tip_tab_branding:"شعار الصفحة وكلمات الهيرو والتذييل وألوان المرجة.",
-    tip_tab_password:"تغيير كلمة دخول لوحة التحكم ومعرفة عدد المحاولات الغلط.",
-    tip_tab_market:"سعر السوق لكل منتج — لو سعر البيع أقل يظهر خصم تلقائي في المتجر.",
-    tip_tab_payment:"أرقام فودافون كاش وإنستا باي والحساب البنكي وطرق التواصل.",
-    tip_tab_github:"ينشر الأصناف والمنتجات والإعدادات على GitHub عشان الموقع يتحدث.",
-    tip_publish:"يرسل كل التغييرات لـ GitHub — لازم توكين محفوظ قبلها."
+    gh_save:"حفظ التوكين", gh_clear:"مسح", gh_need:"مش مدينيهم كل الحقول", gh_warning:"التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها."
   },
   en:{
     brand:"Wanas", brand_en:"Wanas", admin:"Admin Panel", cart:"Cart",
@@ -823,24 +123,7 @@ const I18N = {
     gh_title:"Publish to GitHub", gh_hint:"Enter your token, username, and repo, then press Publish to push your changes live.",
     gh_token:"GitHub token", gh_token_ph:"ghp_xxx...", gh_owner:"Username", gh_repo:"Repository",
     gh_btn:"Publish", gh_status:"publishing…", gh_ok:"✓ published", gh_err:"error — try again",
-    gh_save:"save token", gh_clear:"clear", gh_need:"please fill all fields", gh_warning:"The token is saved in your browser only — anyone who opens this page can read it.",
-    /* hover notes (tooltips) — control panel buttons */
-    tip_add_cat:"+ Adds a new category that appears as a tab in the storefront (needs an Arabic + an English name).",
-    tip_upload:"Pick images from your device — they are saved with the product and shown in the store.",
-    tip_add_prod:"+ Adds a new product using the fields above (name, description, price, images).",
-    tip_export:"Downloads a JSON file with all categories and products — a backup.",
-    tip_import:"Restores categories and products from a previously exported JSON file.",
-    tip_reset:"Wipes all your edits and restores the original store data — you cannot undo this.",
-    tip_edit_prod:"Opens an edit window for this product (name, price, description, images).",
-    tip_del_prod:"Permanently removes this product from the store.",
-    tip_edit_cat:"Opens an edit window for the category name (Arabic/English).",
-    tip_del_cat:"Permanently deletes this category — and all products inside it!",
-    tip_tab_branding:"Page logo, hero and footer words, and accent colors.",
-    tip_tab_password:"Change the control-panel login password and see failed-login attempts.",
-    tip_tab_market:"Market price per product — if your price is lower, a discount badge shows automatically in the store.",
-    tip_tab_payment:"Vodafone Cash, InstaPay, bank account numbers and contact methods.",
-    tip_tab_github:"Publishes categories, products and settings to GitHub so the live site updates.",
-    tip_publish:"Sends all your changes to GitHub — a saved token is required first."
+    gh_save:"save token", gh_clear:"clear", gh_need:"please fill all fields", gh_warning:"The token is saved in your browser only — anyone who opens this page can read it."
   }
 };
 let LANG = localStorage.getItem("wanas_lang") || "ar";
@@ -864,25 +147,25 @@ function defaultData(){
     ],
     products:[
       // شموع (Candles)
-      {id:"p3", cat:"c1", ar:"وردة بلدي", en:"Baladi Rose Candle", descAr:"شمعة منحوتة على شكل وردة بلدي بألوان هادية ورائحة زهرية.", descEn:"Hand-carved baladi rose candle in soft tones with a floral scent.", price:78, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p2", cat:"c1", ar:"سحابة وسط", en:"Cloud Candle (Medium)", descAr:"شمعة جيل على شكل سحابة بمشهد بحري — أجواء هدوء وراحة.", descEn:"Gel cloud candle with an ocean scene — calm, cozy vibes.", price:62, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
+      {id:"p3", cat:"c1", ar:"وردة بلدي", en:"Baladi Rose Candle", descAr:"شمعة منحوتة على شكل وردة بلدي بألوان هادية ورائحة زهرية.", descEn:"Hand-carved baladi rose candle in soft tones with a floral scent.", price:78, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg", "fb_photos/img_2.jpg", "fb_photos/img_3.jpg", "fb_photos/img_8.jpg", "fb_photos/img_11.jpg"]},
+      {id:"p2", cat:"c1", ar:"سحابة وسط", en:"Cloud Candle (Medium)", descAr:"شمعة جيل على شكل سحابة بمشهد بحري — أجواء هدوء وراحة.", descEn:"Gel cloud candle with an ocean scene — calm, cozy vibes.", price:62, imgs:["products/p_cloud_mid/main.jpg", "products/p_cloud_mid/g1.jpg", "products/p_cloud_mid/g2.jpg"]},
       {id:"p4", cat:"c1", ar:"عدد 2 كلاسيك طويل", en:"Classic Long Candles (x2)", descAr:"شمعتان طويلتان كلاسيك مزينتان بقلوب حمراء — لكل المناسبات.", descEn:"Two long classic taper candles decorated with red hearts.", price:80, imgs:["products/p_classic_long_2/main.jpg", "products/p_classic_long_2/g1.jpg", "products/p_classic_long_2/g2.jpg", "products/p_classic_long_2/g3.jpg", "products/p_classic_long_2/g4.jpg"]},
-      {id:"p5", cat:"c1", ar:"كرة صوف", en:"Wool Ball Candle", descAr:"شمعة على شكل كرة صوف برائحة دافئة تناسب الديكور المنزلي.", descEn:"Wool-ball shaped candle with a warm, cozy scent.", price:92, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p6", cat:"c1", ar:"سحابة كبيرة", en:"Cloud Candle (Large)", descAr:"شمعة جيل كبيرة على شكل سحابة بمشهد شاطئي — قطعة ديكور فريدة.", descEn:"Large gel cloud candle with a beach scene — a unique decor piece.", price:118, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p7", cat:"c1", ar:"موجة", en:"Wave Candle", descAr:"شمعة على شكل موجة بألوان هادية تضيف لمسة فنية لأي ركن.", descEn:"Wave-shaped candle in calm colors for an artistic touch.", price:132, imgs:["products/p_wave/g1.jpg", "products/p_wave/g2.jpg", "products/p_wave/g3.jpg"]},
-      {id:"p8", cat:"c1", ar:"وردة جوري كبير", en:"Large Jori Rose Candle", descAr:"شمعة وردة جوري كبيرة حمراء — قطعة ديكور جريئة تلفت النظر.", descEn:"Large red jori rose candle — a bold decor statement.", price:118, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p9", cat:"c1", ar:"بابل كبيرة", en:"Large Bubble Candle", descAr:"شمعة بابل كبيرة بشكل عصري — اختيار عصري لهدية مميزة.", descEn:"Large modern bubble candle — a stylish gift choice.", price:188, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
+      {id:"p5", cat:"c1", ar:"كرة صوف", en:"Wool Ball Candle", descAr:"شمعة على شكل كرة صوف برائحة دافئة تناسب الديكور المنزلي.", descEn:"Wool-ball shaped candle with a warm, cozy scent.", price:92, imgs:["products/p_wool_ball/main.jpg", "products/p_wool_ball/g1.jpg", "products/p_wool_ball/g2.jpg"]},
+      {id:"p6", cat:"c1", ar:"سحابة كبيرة", en:"Cloud Candle (Large)", descAr:"شمعة جيل كبيرة على شكل سحابة بمشهد شاطئي — قطعة ديكور فريدة.", descEn:"Large gel cloud candle with a beach scene — a unique decor piece.", price:118, imgs:["products/p_cloud_big/main.jpg", "products/p_cloud_big/g1.jpg", "products/p_cloud_big/g2.jpg"]},
+      {id:"p7", cat:"c1", ar:"موجة", en:"Wave Candle", descAr:"شمعة على شكل موجة بألوان هادية تضيف لمسة فنية لأي ركن.", descEn:"Wave-shaped candle in calm colors for an artistic touch.", price:132, imgs:["products/p_wave/main.jpg", "products/p_wave/g1.jpg", "products/p_wave/g2.jpg"]},
+      {id:"p8", cat:"c1", ar:"وردة جوري كبير", en:"Large Jori Rose Candle", descAr:"شمعة وردة جوري كبيرة حمراء — قطعة ديكور جريئة تلفت النظر.", descEn:"Large red jori rose candle — a bold decor statement.", price:118, imgs:["products/p_big_rose/main.jpg", "products/p_big_rose/g1.jpg", "products/p_big_rose/g2.jpg", "products/p_big_rose/g3.jpg"]},
+      {id:"p9", cat:"c1", ar:"بابل كبيرة", en:"Large Bubble Candle", descAr:"شمعة بابل كبيرة بشكل عصري — اختيار عصري لهدية مميزة.", descEn:"Large modern bubble candle — a stylish gift choice.", price:188, imgs:["products/p_bubble_big/main.jpg", "products/p_bubble_big/g1.jpg", "products/p_bubble_big/g2.jpg"]},
       {id:"p10", cat:"c1", ar:"فانوس", en:"Lantern Candle", descAr:"شمعة على شكل فانوس مع هلال — لمسة رمضانية دافئة.", descEn:"Lantern-shaped candle with crescent — a warm Ramadan touch.", price:188, imgs:["products/p_lantern/main.jpg", "products/p_lantern/g1.jpg", "products/p_lantern/g2.jpg"]},
       // برطمانات (Jars)
-      {id:"p11", cat:"c2", ar:"برطمان 100", en:"Jar 100", descAr:"شمعة صويا في برطمان زجاجي 100 — رائحة طبيعية دافئة تحترق ببطء.", descEn:"Soy candle in a 100 jar with a warm natural scent that burns slowly.", price:230, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p12", cat:"c2", ar:"برطمان 150", en:"Jar 150", descAr:"شمعة صويا في برطمان زجاجي 150 بديكور زرعي طبيعي.", descEn:"Soy candle in a 150 jar with natural botanical decor.", price:300, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p13", cat:"c3", ar:"بونبونيره 75", en:"Bonbonniere 75", descAr:"بونبونيره وردية بحامل خشبي — هدية زفاف أو مناسبة مميزة.", descEn:"Pink rose bonbonniere on a wooden stick — a wedding or occasion favor.", price:196, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p14", cat:"c2", ar:"برطمان 250", en:"Jar 250", descAr:"شمعة صويا فاخرة في برطمان خشبي 250 بلمسة ذهبية.", descEn:"Premium soy candle in a wooden-lid 250 jar with a gold touch.", price:440, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p15", cat:"c2", ar:"برطمان 380", en:"Jar 380", descAr:"شمعة متعددة الفتائل في برطمان كبير 380 — إضاءة دافئة للغرف.", descEn:"Multi-wick soy candle in a large 380 jar — warm room lighting.", price:622, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
+      {id:"p11", cat:"c2", ar:"برطمان 100", en:"Jar 100", descAr:"شمعة صويا في برطمان زجاجي 100 — رائحة طبيعية دافئة تحترق ببطء.", descEn:"Soy candle in a 100 jar with a warm natural scent that burns slowly.", price:230, imgs:["products/p_jar_100/main.jpg", "products/p_jar_100/g1.jpg", "products/p_jar_100/g2.jpg", "products/p_jar_100/g3.jpg"]},
+      {id:"p12", cat:"c2", ar:"برطمان 150", en:"Jar 150", descAr:"شمعة صويا في برطمان زجاجي 150 بديكور زرعي طبيعي.", descEn:"Soy candle in a 150 jar with natural botanical decor.", price:300, imgs:["products/p_jar_150/main.jpg", "products/p_jar_150/g1.jpg", "products/p_jar_150/g2.jpg", "products/p_jar_150/g3.jpg"]},
+      {id:"p13", cat:"c3", ar:"بونبونيره 75", en:"Bonbonniere 75", descAr:"بونبونيره وردية بحامل خشبي — هدية زفاف أو مناسبة مميزة.", descEn:"Pink rose bonbonniere on a wooden stick — a wedding or occasion favor.", price:196, imgs:["products/p_bonboniere_75/main.jpg", "products/p_bonboniere_75/g1.jpg", "products/p_bonboniere_75/g2.jpg", "products/p_bonboniere_75/g3.jpg", "products/p_bonboniere_75/g4.jpg"]},
+      {id:"p14", cat:"c2", ar:"برطمان 250", en:"Jar 250", descAr:"شمعة صويا فاخرة في برطمان خشبي 250 بلمسة ذهبية.", descEn:"Premium soy candle in a wooden-lid 250 jar with a gold touch.", price:440, imgs:["products/p_jar_250/main.jpg", "products/p_jar_250/g1.jpg", "products/p_jar_250/g2.jpg", "products/p_jar_250/g3.jpg"]},
+      {id:"p15", cat:"c2", ar:"برطمان 380", en:"Jar 380", descAr:"شمعة متعددة الفتائل في برطمان كبير 380 — إضاءة دافئة للغرف.", descEn:"Multi-wick soy candle in a large 380 jar — warm room lighting.", price:622, imgs:["products/p_jar_380/main.jpg", "products/p_jar_380/g1.jpg", "products/p_jar_380/g3.jpg", "products/p_jar_380/g4.jpg"]},
       // === new products from cost sheet (final 1125) ===
       {id:"p16", cat:"c1", ar:"فواحة استيك", en:"Steak Diffuser", descAr:"فواحة معطرة بنكهة استيك — لمسة مختلفة لجو منزلك.", descEn:"Scented diffuser with a unique steak aroma for a distinct home vibe.", price:26},
-      {id:"p17", cat:"c1", ar:"بابل صغير", en:"Small Bubble Candle", descAr:"شمعة بابل صغيرة بشكل عصري — قطعة ديكور لطيفة.", descEn:"Small modern bubble candle — a cute decor piece.", price:54, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
-      {id:"p18", cat:"c1", ar:"وردة جوري صغيرة", en:"Small Jori Rose Candle", descAr:"شمعة وردة جوري صغيرة حمراء — لمسة زهرية أنيقة.", descEn:"Small red jori rose candle — an elegant floral touch.", price:92, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
+      {id:"p17", cat:"c1", ar:"بابل صغير", en:"Small Bubble Candle", descAr:"شمعة بابل صغيرة بشكل عصري — قطعة ديكور لطيفة.", descEn:"Small modern bubble candle — a cute decor piece.", price:54, imgs:["products/p_bubble_big/main.jpg", "products/p_bubble_big/g1.jpg", "products/p_bubble_big/g2.jpg"]},
+      {id:"p18", cat:"c1", ar:"وردة جوري صغيرة", en:"Small Jori Rose Candle", descAr:"شمعة وردة جوري صغيرة حمراء — لمسة زهرية أنيقة.", descEn:"Small red jori rose candle — an elegant floral touch.", price:92, imgs:["products/p_big_rose/main.jpg", "products/p_big_rose/g1.jpg", "products/p_big_rose/g2.jpg", "products/p_big_rose/g3.jpg"]},
       {id:"p19", cat:"c3", ar:"بوكية 7 وردات", en:"7-Rose Bouquet Candle", descAr:"بوكة من 7 وردات مقفولة — هدية زهرية فاخرة.", descEn:"Bouquet of 7 closed roses — a luxury floral gift.", price:260},
       {id:"p20", cat:"c1", ar:"وردة بلدي 2", en:"Baladi Rose 2 (60g)", descAr:"شمعة وردة بلدي جديدة زن 60 جرام — رائحة زهرية هادية.", descEn:"New baladi rose candle, 60g, with a calm floral scent.", price:93, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
       {id:"p21", cat:"c1", ar:"وردة توليب", en:"Tulip Candle (40g)", descAr:"شمعة على شكل وردة توليب زن 40 جرام — تصميم ناعم.", descEn:"Tulip-shaped candle, 40g, soft design.", price:72},
@@ -891,7 +174,7 @@ function defaultData(){
       {id:"p24", cat:"c2", ar:"جار كونكريت 250 عسل", en:"Concrete Jar 250 (Honey)", descAr:"شمعة صويا في جار كونكريت 250 بعسل — لمسة طبيعية دافئة.", descEn:"Soy candle in a 250 concrete jar with honey wax — warm natural touch.", price:392},
       {id:"p25", cat:"c2", ar:"جار كونكريت 150 عسل", en:"Concrete Jar 150 (Honey)", descAr:"شمعة صويا في جار كونكريت 150 بعسل — ديكور عصري.", descEn:"Soy candle in a 150 concrete jar with honey wax — modern decor.", price:272},
       {id:"p26", cat:"c2", ar:"صدفة 200 عسل", en:"Shell 200g (Honey)", descAr:"شمعة صدفة 200 جرام بعسل — رائحة طبيعية دافئة.", descEn:"Shell candle 200g with honey wax — warm natural scent.", price:332},
-      {id:"p27", cat:"c3", ar:"بونبونيره 75 عسل", en:"Bonbonniere 75 (Honey)", descAr:"بونبونيره وردية بحامل خشبي بعسل — هدية مناسبة مميزة.", descEn:"Pink honey bonbonniere on a wooden stick — a special occasion favor.", price:182, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
+      {id:"p27", cat:"c3", ar:"بونبونيره 75 عسل", en:"Bonbonniere 75 (Honey)", descAr:"بونبونيره وردية بحامل خشبي بعسل — هدية مناسبة مميزة.", descEn:"Pink honey bonbonniere on a wooden stick — a special occasion favor.", price:182, imgs:["products/p_bonboniere_75/main.jpg", "products/p_bonboniere_75/g1.jpg", "products/p_bonboniere_75/g2.jpg", "products/p_bonboniere_75/g3.jpg", "products/p_bonboniere_75/g4.jpg"]},
       {id:"p28", cat:"c1", ar:"قطارة 30 مللي", en:"Dropper 30ml", descAr:"قطارة عطر 30 مللي — رائحة مركزة تدوم.", descEn:"30ml fragrance dropper — concentrated long-lasting scent.", price:120},
       {id:"p30", cat:"c1", ar:"وردة قرنفل", en:"Carnation Rose Candle", descAr:"شمعة على شكل وردة قرنفل — رائحة زهرية هادئة.", descEn:"Carnation rose-shaped candle with a calm floral scent.", price:54, imgs:["products/p_baladi_rose/main.jpg", "products/p_baladi_rose/g1.jpg", "products/p_baladi_rose/g2.jpg", "products/p_baladi_rose/g3.jpg", "products/p_baladi_rose/g4.jpg"]},
       {id:"p31", cat:"c1", ar:"وردة اقحوان", en:"Clove Rose Candle", descAr:"شمعة على شكل وردة اقحوان — عطر طبيعي دافئ.", descEn:"Clove rose-shaped candle with a warm natural fragrance.", price:26},
@@ -1043,8 +326,6 @@ function applyLang(){
   $("#langBtn").textContent = (LANG==="ar")?"EN":"ع";
   $$("[data-i18n]").forEach(el=>{ const k=el.getAttribute("data-i18n"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.textContent=I18N[LANG][k]; });
   $$("[data-i18n-ph]").forEach(el=>{ const k=el.getAttribute("data-i18n-ph"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.placeholder=I18N[LANG][k]; });
-  // hover notes (tooltips) on admin buttons
-  $$("[data-tip]").forEach(el=>{ const k=el.getAttribute("data-tip"); if(I18N[LANG]&&I18N[LANG][k]!=null) el.title=I18N[LANG][k]; });
   // refresh hero/footer text from settings
   if(S){
     const h1 = document.getElementById("heroTitleText");
@@ -1749,15 +1030,13 @@ function tryAdminLogin(){
 function renderAdmin(){
   // categories
   const cl=$("#catList"); cl.innerHTML="";
-  const tipEl=(el)=>{ const k=el.getAttribute("data-tip"); if(k&&I18N[LANG]&&I18N[LANG][k]!=null) el.title=I18N[LANG][k]; };
   DATA.categories.forEach(c=>{
     const row=document.createElement("div"); row.className="list-item";
     row.innerHTML=`<span class="nm">${c.ar} / ${c.en}</span>
-      <button class="btn ghost sm ed-cat" data-tip="tip_edit_cat">${t("edit")}</button>
-      <button class="btn danger sm del-cat" data-tip="tip_del_cat">${t("delete")}</button>`;
+      <button class="btn ghost sm ed-cat">${t("edit")}</button>
+      <button class="btn danger sm del-cat">${t("delete")}</button>`;
     row.querySelector(".del-cat").onclick=()=>{ DATA.categories=DATA.categories.filter(x=>x.id!==c.id); DATA.products=DATA.products.filter(p=>p.cat!==c.id); saveData(); renderAdmin(); renderCats(); renderProducts(); };
     row.querySelector(".ed-cat").onclick=()=>openEditCat(c.id);
-    row.querySelectorAll("[data-tip]").forEach(tipEl);
     cl.appendChild(row);
   });
   // render settings panels inside admin
@@ -1777,11 +1056,10 @@ function renderAdmin(){
     const profit=(cost!=null)?(p.price-cost):null;
     const profTxt=(cost!=null)?` • ${LANG==="ar"?"تكلفة":"Cost"}: ${money(cost)} • ${LANG==="ar"?"سوق":"Market"}: ${(market!=null)?money(market):"—"} • ${LANG==="ar"?"ربح":"Profit"}: ${money(profit)}`:"";
     row.innerHTML=`<span class="nm">${p.ar} / ${p.en} — ${money(p.price)} ${cat?("("+(LANG==="ar"?cat.ar:cat.en)+")"):""}${profTxt}</span>
-      <button class="btn ghost sm ed-prod" data-tip="tip_edit_prod">${t("edit")}</button>
-      <button class="btn danger sm del-prod" data-tip="tip_del_prod">${t("delete")}</button>`;
+      <button class="btn ghost sm ed-prod">${t("edit")}</button>
+      <button class="btn danger sm del-prod">${t("delete")}</button>`;
     row.querySelector(".del-prod").onclick=()=>{ DATA.products=DATA.products.filter(x=>x.id!==p.id); saveData(); renderAdmin(); renderProducts(); };
     row.querySelector(".ed-prod").onclick=()=>openEditProd(p.id);
-    row.querySelectorAll("[data-tip]").forEach(tipEl);
     pl.appendChild(row);
   });
 }
@@ -1962,6 +1240,3 @@ function init(){
     .catch(()=>{ bind(); });
 }
 init();
-</script>
-</body>
-</html>
