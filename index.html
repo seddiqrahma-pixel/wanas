@@ -286,20 +286,19 @@
       <div class="settings-panel" data-sp="github">
         <div class="panel">
           <h3 data-i18n="gh_title">نشر على جيت هب</h3>
-          <p class="admin-hint" data-i18n="gh_hint">حطّ التوكين واسم المستخدم والمستودع، ثم اضغط Publish عشان ترسل التغييرات للsite يعيش.</p>
+          <p class="admin-hint" data-i18n="gh_hint">الصق توكين جيت هب في الخانة ثم اضغط «نشر على جيت هب». التوكين يُستخدم للنشر فقط ولا يُخزَّن — يُمسح تلقائيًا بعد النشر الناجح.</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
             <div>
               <label class="field-row" style="label{font-size:0;font-weight:0}"><span style="font-size:.78rem;color:var(--muted)" data-i18n="gh_token">توكين جيت هب</span></label>
-              <input class="field" id="ghToken" type="text" placeholder="github_pat_..." data-i18n-ph="gh_token_ph">
+              <input class="field" id="ghToken" type="password" placeholder="github_pat_..." data-i18n-ph="gh_token_ph">
             </div>
           </div>
           <div style="display:flex;align-items:flex-end;gap:8px;margin-bottom:8px">
-            <button class="btn sm" id="ghSaveBtn" data-i18n="gh_save" data-tip="tip_publish">حفظ التوكين</button>
             <button class="btn ghost sm" id="ghClearBtn" data-i18n="gh_clear">مسح</button>
           </div>
           <div style="margin-bottom:8px" id="ghStatus"></div>
           <button class="btn brand" id="ghPublishBtn" data-i18n="gh_btn" data-tip="tip_publish">نشر على جيت هب</button>
-          <p class="admin-hint" data-i18n="gh_warning">التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها.</p>
+          <p class="admin-hint" data-i18n="gh_warning">التوكين بيُستخدم للنشر بس — لا يتخزن على المتصفح ولا يظهر لأي حد، وبيمسح نفسه بعد نجاح النشر.</p>
         </div>
       </div>
 
@@ -760,10 +759,10 @@ const I18N = {
     product_market:"سعر السوق", product_cost:"التكلفة", product_profit:"الربح", product_discount:"خصم",
     product_no_market:"—",
     market_ph:"Market price (set to show discount)",
-    gh_title:"نشر على جيت هب", gh_hint:"الصق توكين جيت هب في الخانة، ثم اضغط «حفظ التوكين» واخيرًا «نشر على جيت هب» ليتم تحديث الموقع بكل تعديلاتك.",
+    gh_title:"نشر على جيت هب", gh_hint:"الصق التوكين في الخانة ثم اضغط «نشر على جيت هب» — هيُستخدم للنشر فقط ويُمسح بعد نجاح النشر.",
     gh_token:"توكين جيت هب", gh_token_ph:"ghp_xxx…", gh_owner:"اسم المستخدم", gh_repo:"اسم المستودع",
     gh_btn:"نشر على جيت هب", gh_status:"جارٍ...", gh_ok:"✓ تم النشر", gh_err:"خطأ — حاول تاني",
-    gh_save:"حفظ التوكين", gh_clear:"مسح", gh_need:"مش مدينيهم كل الحقول", gh_warning:"التوكين بيتحفظ على متصفحك بس — أي حد يفتح الصفحة يقراها.",
+    gh_save:"حفظ التوكين", gh_clear:"مسح", gh_need:"الصق التوكين الأول", gh_warning:"التوكين بيُستخدم للنشر بس — لا يتخزن ولا يظهر لأي حد، وبيمسح بعد نجاح النشر.",
     gh_block_err:"مفيش بلوك PUBLISHED_DATA في index.html — محتاج تحديث يدوي",
     /* hover notes (tooltips) — control panel buttons */
     tip_add_cat:"+ بيضيف صنف جديد بيظهر كتب في واجهة المتجر (لازم الاسم عربي + إنجليزي).",
@@ -848,10 +847,10 @@ const I18N = {
     product_market:"Market price", product_cost:"Cost", product_profit:"Profit", product_discount:"Discount", product_no_market:"—",
     publish_to_github:"Publish to GitHub", publish_data:"Data to push", publish_when:"When you click this, the button writes all categories, products, and settings directly into the repository's index.html — the single file the site reads. No separate data file.",
     github_token:"GitHub token (repo)", publish_msg:"Published", publish_err:"Publish failed — check the console",
-    gh_title:"Publish to GitHub", gh_hint:"Enter your token, username, and repo, then press Publish to push your changes live.",
+    gh_title:"Publish to GitHub", gh_hint:"Paste your token in the field then press Publish — it is used for publishing only and is wiped after a successful publish.",
     gh_token:"GitHub token", gh_token_ph:"ghp_xxx...", gh_owner:"Username", gh_repo:"Repository",
     gh_btn:"Publish", gh_status:"publishing…", gh_ok:"✓ published", gh_err:"error — try again",
-    gh_save:"save token", gh_clear:"clear", gh_need:"please fill all fields", gh_warning:"The token is saved in your browser only — anyone who opens this page can read it.",
+    gh_save:"save token", gh_clear:"clear", gh_need:"paste your token first", gh_warning:"The token is used for publishing only — it is never stored and wipes itself after success.",
     gh_block_err:"No PUBLISHED_DATA block in index.html — manual update needed",
     /* hover notes (tooltips) — control panel buttons */
     tip_add_cat:"+ Adds a new category that appears as a tab in the storefront (needs an Arabic + an English name).",
@@ -1637,31 +1636,38 @@ function resetWrongAttempts(){
   toast("Reset ✓");
 }
 /* ====================== GitHub publish ====================== */
-const GH_KEY = "wanas_gh";
-function ghLoad(){ try{ return JSON.parse(localStorage.getItem(GH_KEY))||{} }catch(e){ return {} } }
-function ghSave(v){ localStorage.setItem(GH_KEY, JSON.stringify(v)); }
+const GH_KEY = "wanas_gh";         // OLD localStorage key — migrated away, never written again
+const GH_SESSION_KEY = "wanas_gh_session";  // sessionStorage: survives reload, dies with the tab
+function ghLoad(){ try{ return JSON.parse(sessionStorage.getItem(GH_SESSION_KEY))||{} }catch(e){ return {} } }
+function ghSave(v){ sessionStorage.setItem(GH_SESSION_KEY, JSON.stringify(v)); }
 function ghOwner(){ return "seddiqrahma-pixel"; }
 function ghRepo(){ return "wanas"; }
-function ghToken(){ const g=ghLoad(); return g.token || ""; }
+/* Token never persists: session-only, never written to index.html, wiped after publish.
+   Any token an OLD version left in localStorage is deleted (migrated away). */
+(function migrateOldToken(){
+  try{ const old = JSON.parse(localStorage.getItem("wanas_gh")); if(old && old.token){ sessionStorage.setItem(GH_SESSION_KEY, JSON.stringify(old)); } localStorage.removeItem("wanas_gh"); }catch(e){}
+})();
+function ghToken(){
+  const s = ghLoad();
+  if(s.token) return s.token;
+  const f=$("#ghToken"); return (f && f.value.trim()) || "";
+}
 function renderGitHubForm(){
   $("#ghToken").value = ghToken();
   $("#ghStatus").textContent = "";
   $("#ghPublishBtn").textContent = t("gh_btn");
 }
-function saveGitHub(){
-  const token = $("#ghToken").value.trim();
-  if(!token){ toast(t("gh_need")); return; }
-  ghSave({token});
-  toast(t("gh_saved"));
-}
+/* One-click wipe of any token remembrance, wherever it lives */
 function clearGitHub(){
-  ghSave({});
-  renderGitHubForm();
-  toast("Cleared");
+  try{ sessionStorage.removeItem(GH_SESSION_KEY); }catch(e){}
+  try{ localStorage.removeItem("wanas_gh"); }catch(e){}
+  $("#ghToken").value = "";
+  $("#ghStatus").textContent = "";
+  toast("Cleared ✓");
 }
 function publishToGitHub(){
-  const token = ghToken() || ($("#ghToken") && $("#ghToken").value.trim()) || "";
-  if(token && token!==ghToken()){ ghSave({token}); }   // auto-save token shown in the field
+  const token = ghToken() || "";
+  if(token){ ghSave({token}); }   // remember FOR THIS TAB ONLY (sessionStorage) until success
   const owner = ghOwner(), repo = ghRepo();
   if(!token){ toast(t("gh_need")); return; }
   const st = $("#ghStatus");
@@ -1708,6 +1714,10 @@ function publishToGitHub(){
   .then(()=>{
     st.textContent = t("gh_ok");
     $("#ghPublishBtn").disabled = false;
+    /* Published successfully: forget the token now — it lives nowhere */
+    try{ sessionStorage.removeItem(GH_SESSION_KEY); }catch(e){}
+    try{ localStorage.removeItem("wanas_gh"); }catch(e){}
+    $("#ghToken").value = "";
     toast(t("gh_ok"));
   })
   .catch(err=>{
@@ -2039,7 +2049,6 @@ function bind(){
   };
   $("#importBtn").onclick=()=>$("#importFile").click();
   $("#saveBrandingBtn").onclick=saveBranding;
-  $("#ghSaveBtn").onclick=saveGitHub;
   $("#ghClearBtn").onclick=clearGitHub;
   $("#ghPublishBtn").onclick=()=>publishToGitHub().catch(e=>{ toast(t("gh_err")); console.error(e); });
   if($("#catTabsStyleBtn")) $("#catTabsStyleBtn").onclick=()=>{ showSettingsPanel("cat_tabs_style"); renderCatStyleEditor(); };
