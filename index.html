@@ -724,7 +724,7 @@ const I18N = {
     pay_inst:"إنستا باي", pay_inst_det:"التحويل لاسم المستخدم",
     pay_bank:"تحويل بنكي", pay_bank_det:"بيانات الحساب البنكي",
     pay_wa:"طلب عبر واتساب", pay_wa_det:"بدون دفع أونلاين — نراجع طلبك ونأكد",
-    order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املى البيانات المطلوبة أولاً",
+    order_sent:"تم تجهيز رسالة الطلب ✅", fill_fields:"املأ البيانات المطلوبة أولاً",
     login_ok:"تم الدخول للوحة التحكم", login_fail:"كلمة السر غلط", password_changed:"تم تغيير كلمة الدخول بنجاح",
     storage_full:"مساحة التخزين ممتلئة — اختار صور أصغر أو احذف صور قديمة",
     gh_saved:"تم حفظ التوكين — تقدر تنشر دلوقتي ✅",
@@ -1115,6 +1115,7 @@ function buildPicker(ids){
       if(e.key==="Enter"){
         const v=LINK.value.trim();
         if(v && isImg(v)){ list.push(v); commit(); renderPicker(); }
+        else if(v){ toast(LANG==="ar"?"الرابط مش صورة مدعومة (jpg/png/webp/gif)":"Not a supported image link (jpg/png/webp/gif)"); }
         LINK.value=""; LINK.style.display="none";
       }
     });
@@ -1149,7 +1150,21 @@ function applyLang(){
   }
 }
 
-/* ====================== Store render ====================== */
+/* Rebuild all settings form inputs from the current S (used after reset/import/publish-hydrate) */
+function buildAllForms(){
+  if(typeof renderBrandingForm==="function") renderBrandingForm();
+  const pv=$("#cfgVodafone"); if(pv) pv.value = S.vodafone || PAYMENT.vodafone;
+  const pi=$("#cfgInstapay"); if(pi) pi.value = S.instapay || PAYMENT.instapay;
+  const pb=$("#cfgBank"); if(pb) pb.value = S.bank || PAYMENT.bank;
+  const pw=$("#cfgWhatsapp"); if(pw) pw.value = S.whatsapp || PAYMENT.whatsapp;
+  const pe=$("#cfgEmail"); if(pe) pe.value = S.email || PAYMENT.email;
+  if(typeof renderCommList==="function") renderCommList();
+  if(typeof renderWrongAttempts==="function") renderWrongAttempts();
+  if(typeof renderMarketList==="function") renderMarketList();
+}
+/* ====================== Storefront edge guards ====================== */
+function escHtml(s){ return String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function clampNum(v, mn, mx, dflt){ const n=parseFloat(v); return isNaN(n)?dflt:Math.min(mx,Math.max(mn,n)); }
 function renderCats(){
   const tabs = $("#catTabs"); tabs.innerHTML="";
   const all = document.createElement("div");
@@ -1173,7 +1188,7 @@ function renderProducts(){
     const card=document.createElement("div"); card.className="card";
     const cat = DATA.categories.find(c=>c.id===p.cat);
     const imgs = (p.imgs&&p.imgs.length)?p.imgs:[].filter(Boolean);
-    const imgHtml = (imgs[0] && isImg(imgs[0]))?`<img src="${imgs[0]}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(imgs[0]||"📦");
+    const imgHtml = (imgs[0] && isImg(imgs[0]))?`<img src="${escHtml(imgs[0])}" alt="${escHtml(LANG==="ar"?p.ar:p.en)}" loading="lazy">`:(imgs[0]&&escHtml(imgs[0]))||"📦";
     const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb ${i===0?'active':''}" data-pid="${p.id}" data-idx="${i}" aria-label="${LANG==="ar"?p.ar:p.en} - ${i+1}" role="button"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
     const market = (() => {
       if(S.marketPrices && S.marketPrices[p.id] != null) return S.marketPrices[p.id];
@@ -1187,13 +1202,13 @@ function renderProducts(){
       : `<div class="price-row"><span class="price">${money(p.price)}</span></div>`;
     card.innerHTML=`
       <div class="ph" data-pid="${p.id}">${imgHtml}${imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""}</div>
-      <h3>${LANG==="ar"?p.ar:p.en}</h3>
-      <div class="desc">${LANG==="ar"?p.descAr:p.descEn}</div>
+      <h3>${escHtml(LANG==="ar"?p.ar:p.en)}</h3>
+      <div class="desc">${escHtml(LANG==="ar"?p.descAr:p.descEn)}</div>
       ${priceRow}
       ${thumbs}
       <button class="btn sm add-btn">${t("add")}</button>`;
     const mainEl = card.querySelector(".ph");
-    const setMain = (i)=>{ const m=imgs[i]||""; mainEl.innerHTML = ((m && isImg(m))?`<img src="${m}" alt="${LANG==="ar"?p.ar:p.en}" loading="lazy">`:(m||"📦")) + (imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""); };
+    const setMain = (i)=>{ const m=imgs[i]||""; mainEl.innerHTML = ((m && isImg(m))?`<img src="${escHtml(m)}" alt="${escHtml(LANG==="ar"?p.ar:p.en)}" loading="lazy">`:escHtml(m||"📦")) + (imgs.length>1?`<span class="more-badge">+${imgs.length-1}</span>`:""); };
     let activeImg = 0;
     card.querySelector(".add-btn").onclick=()=>addToCart(p.id);
     mainEl.onclick=()=>openGallery(p.id, activeImg);
@@ -1229,7 +1244,7 @@ function renderCart(){
     const imgHtml=(imgs[0]&&isImg(imgs[0]))?`<img src="${imgs[0]}" alt="${LANG==="ar"?p.ar:p.en}">`:(imgs[0]||"📦");
     row.innerHTML=`
       <div class="ci-ph" data-pid="${p.id}" data-idx="0">${imgHtml}</div>
-      <div class="ci-info"><b>${LANG==="ar"?p.ar:p.en}</b>${money(p.price)}</div>
+      <div class="ci-info"><b>${escHtml(LANG==="ar"?p.ar:p.en)}</b>${money(p.price)}</div>
       <div class="qty"><button class="dec">−</button><span>${i.qty}</span><button class="inc">+</button></div>
       <button class="rm">${t("remove")}</button>`;
     row.querySelector(".dec").onclick=()=>changeQty(i.id,-1);
@@ -1250,7 +1265,7 @@ function openGallery(pid, idx){
     overlay.innerHTML=`
       <button class="g-close" aria-label="Close gallery">✕</button>
       <button class="g-nav g-prev" aria-label="Previous image">‹</button>
-      <img class="g-img" src="${imgs[cur]}" alt="${LANG==="ar"?p.ar:p.en}">
+      <img class="g-img" src="${escHtml(imgs[cur])}" alt="${escHtml(LANG==="ar"?p.ar:p.en)}">
       <button class="g-nav g-next" aria-label="Next image">›</button>
       <div class="g-count">${cur+1} / ${imgs.length}</div>
       ${imgs.length>1?`<div class="g-thumbs">`+imgs.map((s,i)=>`<button class="g-thumb ${i===cur?'active':''}" data-i="${i}"><img src="${s}" alt=""></button>`).join("")+`</div>`:""}`;
@@ -1274,7 +1289,7 @@ function renderPay(){
   ];
   opts.forEach(o=>{
     const el=document.createElement("div"); el.className="pay"; el.dataset.k=o.k;
-    el.innerHTML=`<div class="ic">${o.ic}</div><div class="det"><b>${o.name}</b><span>${o.det}</span></div>`;
+    el.innerHTML=`<div class="ic">${escHtml(o.ic)}</div><div class="det"><b>${escHtml(o.name)}</b><span>${escHtml(String(o.det))}</span></div>`;
     el.onclick=()=>{
       selectedPay=o.k;
       $$("#payList .pay").forEach(x=>x.classList.remove("sel"));
@@ -1559,25 +1574,25 @@ function saveBranding(){
   S.brandAr = $("#cfgBrandAr").value.trim() || "وَنَس";
   S.brandEn = $("#cfgBrandEn").value.trim() || "Wanas";
   S.brandFont = $("#cfgBrandFont").value || "Segoe UI,Tahoma,system-ui,sans-serif";
-  S.brandSize = parseFloat($("#cfgBrandSize").value) || 1.4;
+  S.brandSize = clampNum($("#cfgBrandSize").value, 0.5, 4, 1.4);
   S.brandColor = $("#cfgBrandColor").value || "#7d5a2e";
   S.heroTitleAr = $("#cfgHeroTitleAr").value.trim() || "راحة بالك تبدأ من هنا";
   S.heroTitleEn = $("#cfgHeroTitleEn").value.trim() || "Peace of mind starts here";
   S.heroFont = $("#cfgHeroFont").value || "Segoe UI,system-ui,sans-serif";
-  S.heroSize = parseFloat($("#cfgHeroSize").value) || 2.4;
+  S.heroSize = clampNum($("#cfgHeroSize").value, 0.5, 6, 2.4);
   S.heroColor = $("#cfgHeroColor").value || "#a98452";
   S.heroSubAr = $("#cfgHeroSubAr").value.trim() || "منتجات وَنَس — جودة تهدي بالك";
   S.heroSubEn = $("#cfgHeroSubEn").value.trim() || "Wanas products — quality that soothes your soul";
   S.heroSubFont = $("#cfgHeroSubFont").value || "Segoe UI,system-ui,sans-serif";
-  S.heroSubSize = parseFloat($("#cfgHeroSubSize").value) || 1.1;
+  S.heroSubSize = clampNum($("#cfgHeroSubSize").value, 0.5, 4, 1.1);
   S.heroSubColor = $("#cfgHeroSubColor").value || "#7a7268";
   S.footerAr = $("#cfgFooterAr").value.trim() || "شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️";
   S.footerEn = $("#cfgFooterEn").value.trim() || "Candles that give you the comfort of the sun 🕯️";
   S.footerFont = $("#cfgFooterFont").value || "Segoe UI,system-ui,sans-serif";
-  S.footerSize = parseFloat($("#cfgFooterSize").value) || 0.85;
+  S.footerSize = clampNum($("#cfgFooterSize").value, 0.5, 2, 0.85);
   S.footerColor = $("#cfgFooterColor").value || "#7a7268";
   S.catFont = $("#cfgCatFont").value || "Segoe UI,Tahoma,system-ui,sans-serif";
-  S.catSize = parseFloat($("#cfgCatSize").value) || 0.95;
+  S.catSize = clampNum($("#cfgCatSize").value, 0.5, 2, 0.95);
   S.catColor = $("#cfgCatColor").value || "#7a7268";
   S.catActiveColor = $("#cfgCatColorActive").value || "#ffffff";
   S.catActiveBg = $("#cfgCatBgActive").value || "#a98452";
@@ -1591,14 +1606,14 @@ function saveBranding(){
   toast("Saved ✓");
 }
 function savePassword(){
-  const cur = $("cfgCurPass") ? $("#cfgCurPass").value : "";
+  const cur = $("#cfgCurPass") ? $("#cfgCurPass").value : "";
   const np = $("#cfgNewPass").value;
   const cp = $("#cfgConfirmPass").value;
-  if(cur!==currentAdminPW()){ toast(t("wrong_pwd2")); return; }
+  if(!cur || cur!==currentAdminPW()){ toast(LANG==="ar"?"اكتب كلمة الدخول الحالية صح الأول":"Type the current password correctly first"); return; }
   if(np!==cp){ toast(t("wrong_pwd2")); return; }
-  if(np.length<4){ toast(t("weak")); return; }
+  if(np.length<4){ toast(LANG==="ar" ? "كلمة الدخول قصيرة جداً — ٤ أحرف على الأقل" : "Password too short — 4 characters minimum"); return; }
   saveAdminPWCodes(pwCodeArray(np));
-  S.password = np;
+  delete S.password;   // password lives only in wanas_adminPW (char codes), never inside wanas_settings
   saveSettings();
   toast(t("password_changed"));
   $("#cfgCurPass").value = ""; $("#cfgCurPass").disabled=false;
@@ -1838,11 +1853,12 @@ function renderFooterComms(){
     if(c.type==="contact" && !isLink){
       const digits = String(val).replace(/[^0-9]/g,"");
       const intl = digits.charAt(0)==="0" ? "20"+digits.slice(1) : (digits.indexOf("20")===0 ? digits : "20"+digits);
-      el = `<a href="https://wa.me/${intl}" target="_blank" rel="noopener" class="wanas-comm" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><span style="font-size:1.2rem;margin-right:6px">${c.icon||"📷"}</span>${LANG==="ar"?c.ar:c.en}</a>`;
+      el = `<a href="https://wa.me/${intl}" target="_blank" rel="noopener" class="wanas-comm" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><span style="font-size:1.2rem;margin-right:6px">${escHtml(c.icon||"📷")}</span>${escHtml(LANG==="ar"?c.ar:c.en)}</a>`;
     } else if(isLink){
-      el = `<a href="${val}" target="_blank" rel="noopener" class="wanas-comm" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><span style="font-size:1.2rem;margin-right:6px">${c.icon||"📷"}</span>${LANG==="ar"?c.ar:c.en}</a>`;
+      const safeHref = /^https?:\/\//i.test(val) ? val : "#";
+      el = `<a href="${escHtml(safeHref)}" target="_blank" rel="noopener" class="wanas-comm" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><span style="font-size:1.2rem;margin-right:6px">${escHtml(c.icon||"📷")}</span>${escHtml(LANG==="ar"?c.ar:c.en)}</a>`;
     } else {
-      el = `<span class="wanas-comm" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><span style="font-size:1.2rem;margin-right:6px">${c.icon||"📷"}</span>${LANG==="ar"?c.ar:c.en}</span>`;
+      el = `<span class="wanas-comm" style="font-weight:700;color:var(--brand2);display:inline-flex;align-items:center;background:rgba(122,72,42,0.08);padding:6px 14px;border-radius:999px"><span style="font-size:1.2rem;margin-right:6px">${escHtml(c.icon||"📷")}</span>${escHtml(LANG==="ar"?c.ar:c.en)}</span>`;
     }
     if(el) container.innerHTML += el;
   });
@@ -1952,11 +1968,12 @@ function saveEditProd(){
   const id=$("#editProdId").value;
   const ar=$("#editProdAr").value.trim(), en=$("#editProdEn").value.trim();
   const descAr=$("#editProdDescAr").value.trim(), descEn=$("#editProdDescEn").value.trim();
-  const price=Number($("#editProdPrice").value)||0;
+  const price=Number($("#editProdPrice").value);
+  if(!(price>0)){ toast(LANG==="ar"?"اكتب سعر صحيح أكبر من صفر":"Enter a valid price above zero"); return; }
   const imgs=parseImgList($("#editProdImgs").value);
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; delete p.market; Object.assign(p,{ar,en,descAr,descEn,price,imgs:finalImgs}); }
+  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:finalImgs}); }
   if(!saveData()){ toast(t("storage_full")); return; }
   $("#editProdModal").classList.remove("show"); renderAdmin(); renderProducts();
 }
@@ -1970,7 +1987,8 @@ function addProduct(){
   const cat=$("#prodCat").value; if(!cat){ toast(t("fill_fields")); return; }
   const ar=$("#prodAr").value.trim(), en=$("#prodEn").value.trim();
   const descAr=$("#prodDescAr").value.trim(), descEn=$("#prodDescEn").value.trim();
-  const price=Number($("#prodPrice").value)||0;
+  const price=Number($("#prodPrice").value);
+  if(!(price>0)){ toast(LANG==="ar"?"اكتب سعر صحيح أكبر من صفر":"Enter a valid price above zero"); return; }
   const imgs=parseImgList($("#prodImgs").value);
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
@@ -1983,7 +2001,7 @@ function addProduct(){
 
 /* ====================== Events ====================== */
 function bind(){
-  $("#langBtn").onclick=()=>{ LANG = LANG==="ar"?"en":"ar"; localStorage.setItem("wanas_lang",LANG); applyLang(); renderCats(); renderProducts(); renderCart(); if(adminUnlocked) renderAdmin(); };
+  $("#langBtn").onclick=()=>{ LANG = LANG==="ar"?"en":"ar"; localStorage.setItem("wanas_lang",LANG); applyLang(); renderCats(); renderProducts(); renderCart(); renderFooterComms(); if(adminUnlocked) renderAdmin(); };
   $("#cartBtn").onclick=()=>openDrawer(true);
   $("#closeCart").onclick=()=>openDrawer(false);
   $("#overlay").onclick=()=>{ openDrawer(false); closeModal(); };
@@ -2036,7 +2054,10 @@ function bind(){
   renderGitHubForm();
   renderFooterComms();
 
-  $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); applyPricing(); saveData(); renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
+  $("#resetBtn").onclick=()=>{ if(confirm(t("confirm_reset"))){ DATA=defaultData(); applyPricing(); saveData();
+    S = Object.assign({}, DEFAULT_SETTINGS); S.marketPrices={}; S.wrongAttempts=0; saveSettings();
+    applyPaymentSettings(); applyLangText(); buildAllForms();
+    renderCats(); renderProducts(); renderAdmin(); toast("OK"); } };
   // Export: products-only (wanas-products.json) or full backup incl. settings (wanas-backup-full.json)
   $("#exportBtn").onclick=()=>{
     const b=new Blob([JSON.stringify({type:"products", exportedAt:new Date().toISOString(), categories:DATA.categories, products:DATA.products},null,2)],{type:"application/json"});
