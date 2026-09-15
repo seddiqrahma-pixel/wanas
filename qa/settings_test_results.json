@@ -1,0 +1,50 @@
+{
+  "summary": "Settings test: 25 passed steps, 13 bugs.",
+  "working": [
+    "A baseline lang=ar header=وَنَس footer=وَنَس",
+    "A after save(AR mode): header=براند-عربي-جديد footer=براند-عربي-جديد previewAr=براند-عربي-جديد previewEnHiddenArMode=BrandEN-Test",
+    "A EN mode: header=BrandEN-Test footer=BrandEN-Test previewEn=BrandEN-Test",
+    "B header logo src after cfgLogo=logo-icon.png: logo-icon.png footer(hd): logo-icon.png",
+    "B after cfgLogoSmall=logo.png: footer logo src=logo.png header=logo-icon.png",
+    "B nonexistent path: src=no-such-logo-xyz.png probe={'src': 'no-such-logo-xyz.png', 'naturalWidth': 0, 'fallbackAttr': False}",
+    "C brand font/size: {'f': 'Amiri, serif', 's': '32px'}",
+    "C brand color computed: rgb(18, 52, 86)",
+    "D hero AR: {'h1': 'New Hero Title', 'sub': 'New Hero Sub', 'f': 'Cairo, \"Segoe UI\", Tahoma, sans-serif', 's': '51.2px', 'col': 'rgb(153, 0, 0)', 'subCol': 'rgb(122, 114, 104)'}",
+    "D hero EN: {'h1': 'عنوان-هيرو-جديد', 'sub': 'وصف-هيرو-جديد'}",
+    "D hero sub size: 24px (expect 24px)",
+    "E tagline AR: Tagline-EN",
+    "E added comm: href=https://wa.me/201000000000 text=💬WhatsApp Test",
+    "E edited comm: {'href': 'https://example.com/edited', 'text': '💬WhatsApp Test'}",
+    "E delete comm: 3 -> 2",
+    "E tagline EN: تاج-لاين-عربي",
+    "F colors: {'brand': 'rgb(0, 255, 0)', 'h1': 'rgb(0, 0, 255)', 'sub': 'rgb(255, 0, 255)', 'foot': 'rgb(255, 170, 0)', 'tagline': 'rgb(255, 170, 0)', 'actBg': 'rgb(169, 132, 82)', 'actCol': 'rgb(255, 255, 255)'}",
+    "F white hero color: rgb(255, 255, 255)",
+    "G initial marketPrices=None products=30",
+    "G marketPrices persisted: {'p3': 99999, 'p2': 186}",
+    "G product p3: {'pid': 'p3', 'old': '99999 EGP', 'badge': '-100%'} | product p2: {'pid': 'p2', 'old': '186 EGP', 'badge': '-67%'} | pct0=100 pct1=67",
+    "G product p4 market<price: {'old': None, 'badge': None} (expect no badge)",
+    "G cleared: marketPrices={'p2': 186, 'p4': 79}, card={'old': None, 'badge': None}",
+    "H after reload: hero='New Hero Title' tagline='Tagline-EN' brandAr hdr='Wanas' flogo=logo-icon.png settings={'logoPath': 'logo.png', 'logoIconPath': 'logo-icon.png', 'marketPrices': {'p2': 186, 'p4': 79}}",
+    "H reset: products=30 defaults={'brandAr': 'وَنَس', 'heroTitleAr': 'راحة بالك تبدأ من هنا', 'logoPath': 'logo.png'} header=Wanas hero='New Hero Title'"
+  ],
+  "bugs": [
+    "D hero title AR not applied: 'New Hero Title'",
+    "D hero sub AR not applied: 'New Hero Sub'",
+    "D hero EN texts failed: {'h1': 'عنوان-هيرو-جديد', 'sub': 'وصف-هيرو-جديد'}",
+    "E tagline AR failed: 'Tagline-EN'",
+    "E expected wa.me/200100000000 got https://wa.me/201000000000",
+    "E comm text mismatch '💬WhatsApp Test'",
+    "E edit failed {'href': 'https://example.com/edited', 'text': '💬WhatsApp Test'}",
+    "E tagline EN failed: 'تاج-لاين-عربي'",
+    "F actBg expected rgb(0, 170, 170) got rgb(169, 132, 82)",
+    "H hero title not persisted: 'New Hero Title'",
+    "H tagline not persisted: 'Tagline-EN'",
+    "H default hero not restored: 'New Hero Title'",
+    "H default brand not restored: 'Wanas'"
+  ],
+  "console_errors": [],
+  "counts": {
+    "products_after_reset": 30,
+    "checks_run": 38
+  }
+}

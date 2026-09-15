@@ -1,0 +1,175 @@
+{
+ "scenarios": {
+  "s1_entry": {
+   "adminBtn_hidden_default": {
+    "ok": true,
+    "detail": "adminBtn visible=False"
+   },
+   "ctrl_shift_a_opens_modal": {
+    "ok": true,
+    "detail": "modal shown=True"
+   },
+   "triple_click_logo_opens": {
+    "ok": true,
+    "detail": "modal=True"
+   }
+  },
+  "s2_login": {
+   "wrong_pw_attempt_1": {
+    "ok": false,
+    "detail": "errvis=False errtxt=كلمة السر غلط counter={'display': 'block', 'text': 'محاولات دخول فاشلة: 1 محاولة'} expected_n=1"
+   },
+   "wrong_pw_attempt_2": {
+    "ok": false,
+    "detail": "errvis=False errtxt=كلمة السر غلط counter={'display': 'block', 'text': 'محاولات دخول فاشلة: 2 محاولات'} expected_n=2"
+   },
+   "wrong_pw_attempt_3": {
+    "ok": false,
+    "detail": "errvis=False errtxt=كلمة السر غلط counter={'display': 'block', 'text': 'محاولات دخول فاشلة: 3 محاولات'} expected_n=3"
+   },
+   "counter_persists_after_reload": {
+    "ok": true,
+    "detail": "localStorage wrongAttempts=3"
+   }
+  },
+  "s3_kb_hint": {
+   "english_a_gives_en_hint": {
+    "ok": true,
+    "detail": "english hint='وَنَس\\n    \\n    \\n    EN\\n    لوحة التحكم\\n    \\n      🛒 السلة\\n      0'"
+   },
+   "arabic_key_gives_ar_hint": {
+    "ok": true,
+    "detail": "arabic hint='✕\\n    دخول لوحة التحكم\\n    \\n      \\n      لوحة المفاتيح: عربي\\n      دخول\\n    \\n    كلمة السر غلط'"
+   },
+   "capslock_patch_shows_warning": {
+    "ok": false,
+    "detail": "caps warn visible=False"
+   },
+   "blur_clears_hint": {
+    "ok": false,
+    "detail": "before='التغييرات محفوظة على جهازك فقط (LocalStorage)' after='التغييرات محفوظة على جهازك فقط (LocalStorage)'"
+   }
+  },
+  "s4": {
+   "correct_pw_unlocks_panel": {
+    "ok": true,
+    "detail": "panel hidden=False, errdisp=none"
+   },
+   "toast_shown": {
+    "ok": false,
+    "detail": "toast=['تم الدخول للوحة التحكم']"
+   },
+   "inadmin_counter_matches_3": {
+    "ok": true,
+    "detail": "in-admin counter='3 wrong attempts'"
+   },
+   "reset_zeroes_counter": {
+    "ok": true,
+    "detail": "after reset='0 wrong attempts'"
+   },
+   "localStorage_counter_cleared_to_0": {
+    "ok": true,
+    "detail": "ls=0"
+   }
+  },
+  "s7_validation": {
+   "cfgNewPassRow_hidden_before_verify": {
+    "ok": true,
+    "detail": "row hidden=True"
+   },
+   "wrong_current_msg": {
+    "ok": false,
+    "detail": "msg='كلمة الدخول الحالية غلط' rowhidden=True"
+   },
+   "short_new_rejected_weak": {
+    "ok": false,
+    "detail": "toasts={}"
+   },
+   "password_unchanged_after_weak": {
+    "ok": false,
+    "detail": "pw=None"
+   },
+   "mismatch_rejected": {
+    "ok": false,
+    "detail": "toasts={}"
+   },
+   "password_unchanged_after_mismatch": {
+    "ok": false,
+    "detail": "pw=None"
+   }
+  },
+  "s5_change": {
+   "row_hidden_then_shown_after_verify": {
+    "ok": false,
+    "detail": "msg='✓' hidden_pre=False shown_post=True"
+   },
+   "password_changed_toast": {
+    "ok": false,
+    "detail": "toasts={}"
+   },
+   "new_pw_stored": {
+    "ok": false,
+    "detail": "pw=None"
+   },
+   "logout_locks_panel": {
+    "ok": false,
+    "detail": "panel hidden=False"
+   },
+   "old_pw_fails": {
+    "ok": false,
+    "detail": "old pw rejected"
+   },
+   "new_pw_succeeds": {
+    "ok": true,
+    "detail": "old→new flow works"
+   },
+   "reverted_to_wanas123": {
+    "ok": false,
+    "detail": "pw=None"
+   }
+  },
+  "s6_caps_cfg": {
+   "caps_indicator_on_cfgNewPass": {
+    "ok": false,
+    "detail": "data-caps=False"
+   }
+  },
+  "s8_token": {
+   "token_not_in_localStorage_paneldirect": {
+    "ok": true,
+    "detail": "wanas_gh=None"
+   },
+   "clearGitHub_wipes_all": {
+    "ok": true,
+    "detail": "after clear: {'ss': None, 'ls': None, 'field': ''}"
+   },
+   "token_not_in_published\tcontent": {
+    "ok": true,
+    "detail": "token in put=False"
+   },
+   "token_wiped_after_publish": {
+    "ok": true,
+    "detail": "after publish: {'ss': None, 'field': '', 'ls': None}"
+   },
+   "publish_status_ok": {
+    "ok": true,
+    "detail": "status='✓ تم النشر'"
+   }
+  },
+  "s10_visibility": {
+   "adminBtn_display_none_by_default": {
+    "ok": true,
+    "detail": "display=none"
+   },
+   "adminPanel_hidden_by_class": {
+    "ok": true,
+    "detail": "panel has hidden class=True"
+   }
+  }
+ },
+ "bugs": [],
+ "console_errors": [],
+ "s9_secrets": [
+  "wanas_gh key referenced in code (expected, used for migration)"
+ ]
+}
