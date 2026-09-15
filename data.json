@@ -1,0 +1,129 @@
+{
+  "categories": [
+    {
+      "id": "c1",
+      "ar": "شموع",
+      "en": "Candles"
+    },
+    {
+      "id": "c2",
+      "ar": "برطمانات",
+      "en": "Jars"
+    },
+    {
+      "id": "c3",
+      "ar": "هدايا",
+      "en": "Gifts"
+    }
+  ],
+  "products": [
+    {
+      "id": "p28",
+      "cat": "c1",
+      "ar": "قطارة 30 مللي",
+      "en": "Dropper 30ml",
+      "descAr": "قطارة عطر 30 مللي — رائحة مركزة تدوم.",
+      "descEn": "30ml fragrance dropper — concentrated long-lasting scent.",
+      "price": 120,
+      "cost": 90,
+      "market": 120,
+      "imgs": []
+    },
+    {
+      "id": "p30",
+      "cat": "c1",
+      "ar": "وردة قرنفل",
+      "en": "Carnation Rose Candle",
+      "descAr": "شمعة على شكل وردة قرنفل — رائحة زهرية هادئة.",
+      "descEn": "Carnation rose-shaped candle with a calm floral scent.",
+      "price": 54,
+      "imgs": [
+        "products/p_baladi_rose/main.jpg",
+        "products/p_baladi_rose/g1.jpg",
+        "products/p_baladi_rose/g2.jpg",
+        "products/p_baladi_rose/g3.jpg",
+        "products/p_baladi_rose/g4.jpg"
+      ],
+      "cost": 27,
+      "market": 54
+    },
+    {
+      "id": "p31",
+      "cat": "c1",
+      "ar": "وردة اقحوان",
+      "en": "Clove Rose Candle",
+      "descAr": "شمعة على شكل وردة اقحوان — عطر طبيعي دافئ.",
+      "descEn": "Clove rose-shaped candle with a warm natural fragrance.",
+      "price": 26,
+      "cost": 13,
+      "market": 26,
+      "imgs": []
+    },
+    {
+      "id": "x01uaiap",
+      "cat": "c3",
+      "ar": "تست",
+      "en": "test",
+      "descAr": "تجربة",
+      "descEn": "trial",
+      "price": 50,
+      "imgs": [
+        "📦"
+      ]
+    }
+  ],
+  "settings": {
+    "logoPath": "logo.png",
+    "logoIconPath": "logo-icon.png",
+    "brandAr": "وَنَس",
+    "brandEn": "Wanas",
+    "brandFont": "Segoe UI,Tahoma,system-ui,sans-serif",
+    "brandSize": 1.4,
+    "brandColor": "#7d5a2e",
+    "heroTitleAr": "راحة بالك تبدأ من هنا",
+    "heroTitleEn": "Peace of mind starts here",
+    "heroFont": "Segoe UI,system-ui,sans-serif",
+    "heroSize": 2.4,
+    "heroColor": "#a98452",
+    "heroSubAr": "منتجات وَنَس — جودة تهدي بالك",
+    "heroSubEn": "Wanas products — quality that soothes your soul",
+    "heroSubFont": "Segoe UI,system-ui,sans-serif",
+    "heroSubSize": 1.1,
+    "heroSubColor": "#7a7268",
+    "footerAr": "شُمُوعٌ تَمْنَحُكَ دَفْءَ الشَّمْسِ 🕯️",
+    "footerEn": "Candles that give you the comfort of the sun 🕯️",
+    "footerFont": "Segoe UI,system-ui,sans-serif",
+    "footerSize": 0.85,
+    "footerColor": "#7a7268",
+    "catFont": "Segoe UI,Tahoma,system-ui,sans-serif",
+    "catSize": 0.95,
+    "catColor": "#7a7268",
+    "catActiveColor": "#ffffff",
+    "catActiveBg": "#a98452",
+    "catBorder": "#ece3d6",
+    "whatsapp": "01020306395",
+    "email": "ahmed.alghoraib@gmail.com",
+    "vodafone": "01020306395",
+    "instapay": "01020306395",
+    "bank": "Bank: NBE\\nIBAN: EG900003041450006160803000150",
+    "comms": [
+      {
+        "icon": "📷",
+        "ar": "إنستجرام",
+        "en": "Instagram",
+        "value": "https://instagram.com/wanas.candles",
+        "type": "social"
+      },
+      {
+        "icon": "👍",
+        "ar": "فيسبوك",
+        "en": "Facebook",
+        "value": "https://facebook.com/wanas.candles",
+        "type": "social"
+      }
+    ],
+    "marketPrices": {
+      "x01uaiap": 100
+    }
+  }
+}
