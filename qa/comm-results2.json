@@ -1,0 +1,90 @@
+{
+  "tests": [
+    {
+      "name": "fresh_defaults_exactly_2",
+      "ok": true,
+      "detail": "['Instagram', 'Facebook']"
+    },
+    {
+      "name": "https_guard_javascript_blocked",
+      "ok": true,
+      "detail": "{'js': 0, 'chip': [{'tag': 'SPAN', 'href': None, 'text': '\ud83c\udfb5\u062a\u064a\u0643'}], 'entry': {'icon': '\ud83c\udfb5', 'ar': '\u062a\u064a\u0643', 'en': 'TikTok', 'value': 'javascript:alert(1)', 'type': 'social'}}"
+    },
+    {
+      "name": "https_guard_ftp_blocked",
+      "ok": true,
+      "detail": "[{'tag': 'SPAN', 'href': None, 'text': '\u2753\u0645\u0634\u0628\u0648\u0647'}]"
+    },
+    {
+      "name": "text_chip_no_href",
+      "ok": true,
+      "detail": "[{'tag': 'SPAN', 'href': None, 'text': '\ud83d\udccd\u0639\u0646\u0648\u0627\u0646'}]"
+    },
+    {
+      "name": "dedupe_identical",
+      "ok": false,
+      "detail": "{'dupeEntries': 2, 'counts': [6, 7]}"
+    },
+    {
+      "name": "editComm_idx_correct",
+      "ok": true,
+      "detail": "4"
+    },
+    {
+      "name": "edit_applies",
+      "ok": true,
+      "detail": "['Instagram', 'Facebook', 'TikTok', 'Sus', 'AddressEd', 'Dupe', 'Dupe']"
+    },
+    {
+      "name": "edit_no_count_change",
+      "ok": true,
+      "detail": "7"
+    },
+    {
+      "name": "xss_bold_adminlist_raw_html",
+      "ok": true,
+      "detail": "{'b_count': 11, 'first_b': '<b>bd</b>'}"
+    },
+    {
+      "name": "xss_img_adminlist_real_element",
+      "ok": true,
+      "detail": "{'img_count': 1, 'executed': False, 'note': 'onerror makes a real img request; element injected'}"
+    },
+    {
+      "name": "xss_img_onerror_actually_fires",
+      "ok": false,
+      "detail": "False"
+    },
+    {
+      "name": "xss_footer_escaped",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "delete_removes_row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "persistence_reload",
+      "ok": true,
+      "detail": "8"
+    },
+    {
+      "name": "mock_publish_contains_all_comms",
+      "ok": true,
+      "detail": "{'mock': 8, 'live': 8}"
+    },
+    {
+      "name": "EXCEPTION",
+      "ok": false,
+      "detail": "WebSocketTimeoutException('Connection timed out')"
+    }
+  ],
+  "console_errors": [],
+  "counts": {
+    "total": 16,
+    "pass": 13,
+    "fail": 3
+  }
+}

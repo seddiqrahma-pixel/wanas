@@ -1,0 +1,15 @@
+{
+  "tests": [
+    {
+      "name": "xss_img_adminlist_injected_elem",
+      "ok": false,
+      "detail": "{'img': 1, 'src': 'http://127.0.0.1:8422/never', 'executed': False, 'innerHTML': '\ud83d\udcf7'}"
+    },
+    {
+      "name": "defaults_after_reset",
+      "ok": false,
+      "detail": ""
+    }
+  ],
+  "console_errors": []
+}

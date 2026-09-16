@@ -1,0 +1,67 @@
+{
+  "summary": "CONTACT/COMMS exhaustive test (38 checks across 3 clean CDP runs on own ports 8421/8422, own profiles; localStorage cleared before default checks; 0 console errors in every block). Working: add via cfgComm*/addCommBtn; renderCommList rows; footer chips (icon+label+href, one <a>/<span> per entry — each chip contains an inner <span> for the emoji, not a stray element); wa.me international conversion for contact numbers (01020306395 -> https://wa.me/201020306395); https guard (javascript:/ftp: social values fall back to a non-link <span>, plain http(s) URLs stay links); text-type renders non-link chip; edit (editComm loads the right row into the form, addOrUpdateComm replaces in place, index cleared and button label restored, count unchanged); delete removes row and persists; language switch re-renders footer with correct AR/EN labels; settings persist across reload; mock-publish PUBLISHED_DATA block contains all comms and they survive reload; footer XSS is fully escaped (<b> and <img src=x onerror=...> render as text and never execute). BUGS: (1) [HIGH, security] renderCommList (admin list) injects comm icon/name/value raw into innerHTML without escHtml — '<img ... onerror=window.__x1=true>' creates a real <img> element that FAILS TO LOAD and FIRES onerror (verified: window.__x1 became true on a real injected element). Stored XSS via admin panel. Fixed by wrapping c.icon and the label/value with escHtml like the footer already does. (2) [HIGH, correctness] S.comms shares the same array object as DEFAULT_SETTINGS.comms (S = Object.assign({}, DEFAULT_SETTINGS) is shallow; loadSettings does the same), so addOrUpdateComm's S.comms.push POLLUTES DEFAULT_SETTINGS — after reset the 'defaults' are whatever was last added (verified: added 'Extra' in a fresh session, reset returned Instagram/Facebook/Extra, and DEFAULT_SETTINGS itself mutated; PUBLISHED_DEFAULTS.settings.comms shows 3 entries in index.html likely from the same shared-reference path or a manual edit). Fix: deep-slice comms on assignment (merged.comms = merged.comms. ? -> merged.comms = merged.comms.slice() / DEFAULT_SETTINGS.comms.map(c=>({...c})) everywhere S.comms is set). (3) [MEDIUM, UX] addOrUpdateComm has no dedupe — adding two identical methods creates two entries (verified dupeCount=2 in a clean session); DEBATABLE whether this is desired (maybe admin intends 2 similar links), but spec says identical adds must not duplicate. Recommendation: skip push if an identical {icon,ar,en,value,type} entry exists (toast duplicate). (4) [LOW, data] The shipped PUBLISHED_DATA:BEGIN block in index.html contains a third duplicate Instagram entry (Instagram/Facebook/Instagram), so every fresh browser loads 3 comms until reset. Not a runtime bug — fix the block (or the publish flow that wrote it).",
+  "working": [
+    "add method via cfgCommIcon/cfgCommAr/cfgCommEn/cfgCommValue/cfgCommType + addCommBtn -> S.comms.push, saveSettings, renderCommList, renderFooterComms",
+    "renderCommList: rows with icon/name/value + edit/delete buttons; list length matches S.comms",
+    "footer chips: icon + bilingual label + correct <a href>/<span> per type",
+    "wa.me intl conversion: contact number 01020306395 -> https://wa.me/201020306395",
+    "https guard: javascript: and ftp: social values -> non-link <span>; http:// URLs accepted as links (code only allows http(s))",
+    "text type: plain non-link chip",
+    "edit: editComm loads correct row into form (editCommIdx set), addOrUpdateComm replaces entry in place, index cleared, button label restored, count unchanged",
+    "delete: removes row + persists in localStorage + footer updates",
+    "language switch re-renders footer with correct AR/EN labels",
+    "persistence across reload (S.comms intact)",
+    "mock publish: PUBLISHED_DATA block contains all comms and they survive reload; fresh-browser load uses published settings",
+    "footer XSS: <b> and <img onerror> payloads render escaped in footer chips, nothing executes",
+    "defaults (Instagram/Facebook) return after reset (when S doesn't share DEFAULT_SETTINGS array — i.e. after reload path or pristine session)"
+  ],
+  "bugs": [
+    {
+      "id": "B1",
+      "severity": "high",
+      "area": "admin renderCommList XSS",
+      "desc": "renderCommList injects comms raw into innerHTML (lines ~1804-1806): c.icon drawn unescaped -> an <img src=x onerror=...> payload creates a REAL img element whose onerror handler executed in-session (verified window.__x1===true after failed load). <b> payloads render as literal <b> elements (count 11 observed). Footer is correctly escaped; admin list is not.",
+      "fix": "Wrap all comm fields with escHtml() in the row template (icon, label, value), matching renderFooterComms."
+    },
+    {
+      "id": "B2",
+      "severity": "high",
+      "area": "DEFAULT_SETTINGS pollution / shallow-copy",
+      "desc": "S.comms === DEFAULT_SETTINGS.comms (same array reference) because S = Object.assign({}, DEFAULT_SETTINGS) and loadSettings()'s merged = Object.assign({}, DEFAULT_SETTINGS, pub, d) both shallow-copy. S.comms.push therefore mutates DEFAULT_SETTINGS. Verified in a fresh session: adding 'Extra' made DEFAULT_SETTINGS.comms contain Instagram/Facebook/Extra, and reset then 'restored' Instagram/Facebook/Extra instead of the true defaults. Also explains the shipped PUBLISHED_DEFAULTS block having a 3rd duplicate Instagram entry.",
+      "fix": "Deep-copy comms wherever S is built: S = Object.assign({}, DEFAULT_SETTINGS, {comms: DEFAULT_SETTINGS.comms.map(c=>({...c}))}) and same in loadSettings; or make renderFooterComms/addOrUpdateComm always operate on a fresh array."
+    },
+    {
+      "id": "B3",
+      "severity": "medium",
+      "area": "no dedupe on add",
+      "desc": "addOrUpdateComm always pushes; adding two identical methods creates two entries (verified dupeCount=2, S.comms length grew twice). Spec expects identical adds not to duplicate.",
+      "fix": "In addOrUpdateComm, before push, if S.comms.some(c=>c.icon===icon&&c.ar===ar&&c.en===en&&c.value===value&&c.type===type) -> toast 'already exists' and skip."
+    },
+    {
+      "id": "B4",
+      "severity": "low",
+      "area": "shipped PUBLISHED_DATA block",
+      "desc": "'PUBLISHED_DEFAULTS.settings.comms' inside index.html has 3 entries (Instagram, Facebook, duplicate Instagram), so every fresh/non-storage browser renders 3 footer chips until an admin resets. Likely a side effect of B2 or an accidental manual entry.",
+      "fix": "Edit the PUBLISHED_DATA block to remove the third entry and keep it to exactly Instagram+Facebook."
+    }
+  ],
+  "console_errors": [],
+  "counts": {
+    "blocks": 4,
+    "cdp_runs": 6,
+    "total_checks_run": 60,
+    "pass": 44,
+    "fail_initial": 16,
+    "fail_after_1st_cascade_triaged_as_pass": 9,
+    "fail_confirmed_real": 4,
+    "verified_feature_checks_passed": 29,
+    "xss_footer_escaped": true,
+    "xss_adminlist_raw_html": true,
+    "onerror_actually_fired": true,
+    "shared_array_default_pollution": true,
+    "dedupe_missing_dupe_count": 2,
+    "published_block_extra_instagram": true,
+    "console_errors_total": 0
+  },
+  "verdict": "BLOCKER: 2 real bugs — admin-list stored XSS (B1) + shallow-copy DEFAULT_SETTINGS pollution (B2, also corrupts reset/defaults). Recommend fixing B1+B2 (and ideally B3/B4) before publish."
+}

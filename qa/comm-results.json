@@ -1,0 +1,200 @@
+{
+  "tests": [
+    {
+      "name": "published_block_loads_on_fresh",
+      "ok": true,
+      "detail": "{'entries': 3, 'note': 'PUBLISHED_DEFAULTS.settings.comms wins on fresh load'}"
+    },
+    {
+      "name": "BUG_check_published_block_duplicate_Instagram",
+      "ok": false,
+      "detail": "[{'ar': '\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645', 'en': 'Instagram', 'type': 'social', 'value': 'https://instagram.com/wanas.candles'}, {'ar': '\u0641\u064a\u0633\u0628\u0648\u0643', 'en': 'Facebook', 'type': 'social', 'value': 'https://facebook.com/wanas.candles'}, {'ar': '\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645', 'en': 'Instagram', 'type': 'social', 'value': 'https://instagram.com/wanas.candles'}]"
+    },
+    {
+      "name": "admin_login",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "defaults_after_reset_button",
+      "ok": true,
+      "detail": "['Instagram', 'Facebook']"
+    },
+    {
+      "name": "renderCommList_defaults",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "footer_default_chips",
+      "ok": true,
+      "detail": "[{'tag': 'A', 'href': 'https://instagram.com/wanas.candles', 'text': '\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645'}, {'tag': 'A', 'href': 'https://facebook.com/wanas.candles', 'text': '\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643'}]"
+    },
+    {
+      "name": "add_contact_method_fields",
+      "ok": true,
+      "detail": "[{'en': 'Instagram', 'type': 'social'}, {'en': 'Facebook', 'type': 'social'}, {'en': 'WhatsApp', 'type': 'contact'}]"
+    },
+    {
+      "name": "wa_me_intl_conversion",
+      "ok": true,
+      "detail": "{'href': 'https://wa.me/201020306395', 'text': '\ud83d\udcac\u0648\u0627\u062a\u0633'}"
+    },
+    {
+      "name": "https_guard_social_exec_blocked",
+      "ok": false,
+      "detail": "{'js_count': 0, 'tiktok': []}"
+    },
+    {
+      "name": "https_guard_allows_http_and_https",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "https_guard_scheme_block",
+      "ok": false,
+      "detail": "[]"
+    },
+    {
+      "name": "add_text_method",
+      "ok": false,
+      "detail": "7"
+    },
+    {
+      "name": "text_chip_no_href",
+      "ok": false,
+      "detail": "[]"
+    },
+    {
+      "name": "saved_to_localStorage",
+      "ok": false,
+      "detail": "7"
+    },
+    {
+      "name": "lang_switch_renders_footer",
+      "ok": true,
+      "detail": "{'before': ['\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645', '\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643', '\ud83d\udcac\u0648\u0627\u062a\u0633', '\ud83c\udfb5\u062a\u064a\u0643 \u062a\u0648\u0643', '\ud83d\udd17\u0645\u0648\u0642\u0639', '\u2753\u0645\u0634\u0628\u0648\u0647', '\ud83d\udccd\u0627\u0644\u0639\u0646\u0648\u0627\u0646'], 'after': ['\ud83d\udcf7Instagram', '\ud83d\udc4dFacebook', '\ud83d\udcacWhatsApp', '\ud83c\udfb5TikTok', '\ud83d\udd17Site', '\u2753Suspicious', '\ud83d\udccdAddress']}"
+    },
+    {
+      "name": "footer_labels_match_current_lang",
+      "ok": true,
+      "detail": "{'expected': ['Instagram', 'Facebook', 'WhatsApp', 'TikTok', 'Site', 'Suspicious', 'Address'], 'got': ['Instagram', 'Facebook', 'WhatsApp', 'TikTok', 'Site', 'Suspicious', 'Address']}"
+    },
+    {
+      "name": "editComm_sets_idx",
+      "ok": false,
+      "detail": "6"
+    },
+    {
+      "name": "editComm_loads_into_form",
+      "ok": true,
+      "detail": "{'icon': '\ud83d\udccd', 'en': 'Address', 'type': 'text'}"
+    },
+    {
+      "name": "edit_comm_applies_update",
+      "ok": true,
+      "detail": "['Instagram', 'Facebook', 'WhatsApp', 'TikTok', 'Site', 'Suspicious', 'AddressEd']"
+    },
+    {
+      "name": "editCommIdx_cleared_after_save",
+      "ok": true,
+      "detail": "None"
+    },
+    {
+      "name": "addCommBtn_label_restored",
+      "ok": true,
+      "detail": "\u0625\u0636\u0627\u0641\u0629"
+    },
+    {
+      "name": "edit_preserves_count",
+      "ok": false,
+      "detail": "7"
+    },
+    {
+      "name": "BUG_check_dedupe_identical",
+      "ok": false,
+      "detail": "{'total': 9, 'dupeCount': 2}"
+    },
+    {
+      "name": "delete_comm_row",
+      "ok": true,
+      "detail": "{'before': 9, 'after': 8}"
+    },
+    {
+      "name": "footer_after_delete",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "saved_after_delete",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "xss_bold_footer_escaped",
+      "ok": true,
+      "detail": "{'bold_footer': 0, 'chip': {'text': '<b>bd</b><b>XSSar</b>', 'b': False, 'href': None}}"
+    },
+    {
+      "name": "BUG_check_bold_adminlist_escaped",
+      "ok": false,
+      "detail": "12"
+    },
+    {
+      "name": "xss_bold_value_not_executed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "xss_img_footer_escaped",
+      "ok": true,
+      "detail": "{'img_footer': 0, 'exec': False, 'chip': {'text': '<img src=x onerror=window.__xssImgExecuted=true>XSSar2', 'img': False}}"
+    },
+    {
+      "name": "BUG_check_img_adminlist_escaped",
+      "ok": false,
+      "detail": "{'img_list': 1, 'exec': False}"
+    },
+    {
+      "name": "persistence_after_reload",
+      "ok": true,
+      "detail": "{'before': 10, 'after': 10}"
+    },
+    {
+      "name": "footer_chips_after_reload",
+      "ok": true,
+      "detail": "[{'tag': 'A', 'href': 'https://instagram.com/wanas.candles', 'text': '\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645'}, {'tag': 'A', 'href': 'https://facebook.com/wanas.candles', 'text': '\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643'}, {'tag': 'A', 'href': 'https://wa.me/201020306395', 'text': '\ud83d\udcac\u0648\u0627\u062a\u0633'}, {'tag': 'SPAN', 'href': None, 'text': '\ud83c\udfb5\u062a\u064a\u0643 \u062a\u0648\u0643'}, {'tag': 'A', 'href': 'http://example.com', 'text': '\ud83d\udd17\u0645\u0648\u0642\u0639'}, {'tag': 'SPAN', 'href': None, 'text': '\u2753\u0645\u0634\u0628\u0648\u0647'}, {'tag': "
+    },
+    {
+      "name": "xss_still_escaped_after_reload",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "published_block_after_mock_publish",
+      "ok": true,
+      "detail": "{'comms': 10}"
+    },
+    {
+      "name": "published_mock_comms_survive_reload",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "defaults_return_after_reset",
+      "ok": true,
+      "detail": "['Instagram', 'Facebook']"
+    },
+    {
+      "name": "footer_defaults_after_reset",
+      "ok": true,
+      "detail": "[{'tag': 'A', 'href': 'https://instagram.com/wanas.candles', 'text': '\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645'}, {'tag': 'A', 'href': 'https://facebook.com/wanas.candles', 'text': '\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643'}]"
+    }
+  ],
+  "console_errors": [],
+  "counts": {
+    "total": 38,
+    "pass": 27,
+    "fail": 11
+  }
+}
