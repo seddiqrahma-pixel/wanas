@@ -1,0 +1,23 @@
+{"t": "fresh_chips", "v": [{"label": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "href": "https://instagram.com/wanas.candles"}, {"label": "\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643", "href": "https://facebook.com/wanas.candles"}, {"label": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "href": "https://instagram.com/wanas.candles"}]}
+{"t": "S_comms_len", "v": 3}
+{"t": "admin_unlocked", "v": true}
+{"t": "after_xss_add_chips", "v": [{"label": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "href": "https://instagram.com/wanas.candles"}, {"label": "\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643", "href": "https://facebook.com/wanas.candles"}, {"label": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "href": "https://instagram.com/wanas.candles"}, {"label": "@<b>Bold</b>", "href": "https://example.com\" onmouseover=\"alert(1)"}]}
+{"t": "imginjected", "v": false}
+{"t": "anchors_count", "v": 4}
+{"t": "after_contact_chips", "v": [{"label": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "href": "https://instagram.com/wanas.candles"}, {"label": "\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643", "href": "https://facebook.com/wanas.candles"}, {"label": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "href": "https://instagram.com/wanas.candles"}, {"label": "@<b>Bold</b>", "href": "https://example.com\" onmouseover=\"alert(1)"}, {"label": "W\u0648\u0627\u062a\u0633", "href": "https://wa.me/201221203954"}]}
+{"t": "editComm_state", "v": {"idx": 0, "icon": "\ud83d\udcf7", "ar": "\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "value": "https://instagram.com/wanas.candles", "btn": "Edit"}}
+{"t": "after_edit_S_comms_0_en", "v": "EDITED-EN"}
+{"t": "editCommIdx_after", "v": null}
+{"t": "after_edit_S_comms_0_en_v2", "v": "EDITED-EN"}
+{"t": "editCommIdx_after2", "v": null}
+{"t": "dedupe", "v": {"len1": 7, "len2": 8}}
+{"t": "delete", "v": {"before": 8, "after": 7}}
+{"t": "footer_before_switch_ar", "v": "\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645@<b>Bold</b>W\u0648\u0627\u062a\u0633\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645D\u062f\u0648\u0628D\u062f\u0648\u0628"}
+{"t": "footer_after_switch_en", "v": "\ud83d\udc4dFacebook\ud83d\udcf7Instagram@<b>XSSB</b>WWhatsApp01\ud83d\udcf7EDITED-ENDDupDDup"}
+{"t": "footer_back_ar", "v": "\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645@<b>Bold</b>W\u0648\u0627\u062a\u0633\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645D\u062f\u0648\u0628D\u062f\u0648\u0628"}
+{"t": "after_reload_S_comms", "v": -1}
+{"t": "after_reload_footer", "v": "\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645@<b>Bold</b>W\u0648\u0627\u062a\u0633\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645D\u062f\u0648\u0628D\u062f\u0648\u0628"}
+{"t": "after_reset", "v": {"comms": [{"icon": "\ud83d\udcf7", "ar": "\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "en": "Instagram", "value": "https://instagram.com/wanas.candles", "type": "social"}, {"icon": "\ud83d\udc4d", "ar": "\u0641\u064a\u0633\u0628\u0648\u0643", "en": "Facebook", "value": "https://facebook.com/wanas.candles", "type": "social"}], "footerText": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643"}}
+{"t": "pubData_settings_comms", "v": [{"icon": "\ud83d\udcf7", "ar": "\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645", "en": "Instagram", "value": "https://instagram.com/wanas.candles", "type": "social"}, {"icon": "\ud83d\udc4d", "ar": "\u0641\u064a\u0633\u0628\u0648\u0643", "en": "Facebook", "value": "https://facebook.com/wanas.candles", "type": "social"}]}
+{"t": "published_block_default_footer", "v": "\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645\ud83d\udc4d\u0641\u064a\u0633\u0628\u0648\u0643\ud83d\udcf7\u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645"}
+{"t": "console_errors", "v": []}

@@ -1,0 +1,43 @@
+
+window.doAdminLoginNPC = () => {
+  document.querySelector('#adminBtn').click();
+  document.querySelector('#adminPass').value = 'wanas123';
+  document.querySelector('#adminLoginBtn').click();
+};
+window.goPaymentTab = () => {
+  if (document.querySelector('#adminPanel').classList.contains('hidden')) return 'not_logged_in';
+  const b = document.querySelector('#settingsTabs button[data-st="payment"]');
+  if (!b) return 'no_tab_btn';
+  b.click();
+  return document.querySelector('.settings-panel[data-sp="payment"]').classList.contains('active');
+};
+window.getPayFields = () => {
+  const g = id => { const e = document.querySelector(id); return e ? e.value : null; };
+  return {vodafone: g('#cfgVodafone'), instapay: g('#cfgInstapay'), bank: g('#cfgBank'),
+          whatsapp: g('#cfgWhatsapp'), email: g('#cfgEmail')};
+};
+window.getFooter = () => ({
+  tagline: (document.querySelector('#footerTaglineText')||{}).textContent || null
+});
+window.doAddProduct = () => {
+  const btn = document.querySelectorAll('#productGrid .card .add-btn')[0];
+  btn.click();
+  document.querySelector('#cartBtn').click();
+  document.querySelector('#checkoutBtn').click();
+  return document.querySelector('#checkoutModal').classList.contains('show');
+};
+window.payListText = () => Array.from(document.querySelectorAll('#payList .pay')).map(e => e.textContent);
+window.closeCheckout = () => document.querySelector('#closeCheckout').click();
+window.previewOrderText = () => {
+  document.querySelector('#custName').value = 'QA Buyer';
+  document.querySelector('#custPhone').value = '01000000000';
+  document.querySelector('#custAddr').value = 'QA';
+  document.querySelector('#custNote').value = '';
+  const vod = Array.from(document.querySelectorAll('#payList .pay')).find(e => e.dataset.k === 'vodafone');
+  vod.click();
+  return window.buildOrderText();
+};
+window.saveVod = (v) => {
+  document.querySelector('#cfgVodafone').value = v;
+  document.querySelector('#savePaymentBtn').click();
+};
