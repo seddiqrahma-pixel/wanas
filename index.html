@@ -36,6 +36,17 @@
     .cart-btn,.lang{min-height:40px}
     .img-picker .ip-x,.img-picker .ip-add{width:44px;height:44px}
   }
+  /* cropper overlay */
+  .cropper-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+  .cropper-box{background:var(--card);border-radius:var(--radius);padding:18px;max-width:560px;width:100%;max-height:92vh;overflow:auto}
+  .cropper-box h3{margin:0 0 10px}
+  .crop-canvas-wrap{position:relative;display:inline-block;max-width:100%;line-height:0;border:1px solid var(--line)}
+  .crop-canvas-wrap img{max-width:100%;max-height:420px;display:block;user-select:none;-webkit-user-drag:none}
+  .crop-sel{position:absolute;border:2px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,.45);cursor:move;box-sizing:border-box}
+  .ip-cover{position:absolute;top:4px;inset-inline-start:6px;background:var(--ok);color:#fff;font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:20px;pointer-events:none}
+  .ip-tools{position:absolute;bottom:4px;inset-inline-end:4px;display:flex;gap:3px}
+  .ip-tools button{border:none;background:rgba(0,0,0,.55);color:#fff;border-radius:7px;width:22px;height:22px;font-size:.72rem;cursor:pointer;line-height:1}
+  .ip-tools .ip-crop:hover,.ip-tools .ip-up:hover{background:var(--brand2)}
   /* Admin entry hidden from buyers; owner opens it via Ctrl+Shift+A or triple-click the logo */
   #adminBtn{display:none}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.4rem;color:var(--brand2)}
@@ -251,14 +262,16 @@
         <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
         <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
       </div>
-      <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
+      <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط (Images — upload from your device or paste URLs)</label>
+      <p class="img-help" data-i18n="img_reco">💡 الأفضل: صورة مربعة مركز فيها المنتج، 1200×1200 بكسل أو أكبر — وبعد الرفع اضغط ✂ للقص (Images: square ≥1200×1200, product centered; use ✂ to crop)</p>
       <input type="file" id="prodFile" accept="image/*" multiple style="display:none">
       <input class="imgs-store" id="prodImgs" type="hidden">
-      <button type="button" class="btn ghost sm" id="prodUploadBtn" data-tip="tip_upload">📁 رفع صور (Upload)</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <button type="button" class="btn ghost sm" id="prodUploadBtn" data-tip="tip_upload">📁 رفع صور</button>
+        <button type="button" class="btn ghost sm" id="prodAddLinkBtn" data-tip="tip_paste_link">🔗 إضافة صورة برابط</button>
+      </div>
+      <input class="field" id="prodLinkInput" placeholder="https://..." style="display:none;margin-bottom:6px">
       <div class="img-picker" id="prodPicker"></div>
-      <button type="button" class="btn ghost sm" id="prodAddLinkBtn" data-tip="tip_paste_link">🔗 إضافة صورة برابط</button>
-      <input class="field" id="prodLinkInput" placeholder="https://... أو products/p_jar_150/main.jpg" style="display:none;margin-top:6px">
-      <div class="img-preview" id="prodPreview"></div>
       <button class="btn sm" id="addProdBtn" data-i18n="add_prod" data-tip="tip_add_prod">+ إضافة منتج</button>
       <div id="prodList" style="margin-top:12px"></div>
     </div>
@@ -644,11 +657,12 @@ IBAN: EG900003041450006160803000150</textarea>
     <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
     <input type="file" id="editProdFile" accept="image/*" multiple style="display:none">
     <input class="imgs-store" id="editProdImgs" type="hidden">
-    <button type="button" class="btn ghost sm" id="editProdUploadBtn" data-tip="tip_upload">📁 رفع صور (Upload)</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <button type="button" class="btn ghost sm" id="editProdUploadBtn" data-tip="tip_upload">📁 رفع صور</button>
+      <button type="button" class="btn ghost sm" id="editProdAddLinkBtn" data-tip="tip_paste_link">🔗 إضافة صورة برابط</button>
+    </div>
+    <input class="field" id="editProdLinkInput" placeholder="https://..." style="display:none;margin-bottom:6px">
     <div class="img-picker" id="editProdPicker"></div>
-    <button type="button" class="btn ghost sm" id="editProdAddLinkBtn" data-tip="tip_paste_link">🔗 إضافة صورة برابط</button>
-    <input class="field" id="editProdLinkInput" placeholder="https://... أو products/p_jar_150/main.jpg" style="display:none;margin-top:6px">
-    <div class="img-preview" id="editProdPreview"></div>
     <button class="btn" id="editProdSave" style="width:100%;margin-top:8px" data-i18n="save">حفظ</button>
   </div>
 </div>
@@ -707,6 +721,8 @@ const I18N = {
     kb_label:"لوحة المفاتيح", kb_ar:"عربي", kb_en:"إنجليزي", caps_on:"⚠ مفتاح CapsLock شغّال",
     attempts_note:"محاولات دخول فاشلة:",
     tip_lang:"تبديل لغة الموقع بين العربية والإنجليزية", tip_admin:"لوحة التحكم — إدارة المنتجات والإعدادات والنشر",
+    cover:"الغلاف", tip_cover:"خليها أول صورة (هي الغلاف بتاع المنتج)", tip_crop:"قص الصورة أو اختار الجزء اللي يظهر",
+    crop_title:"قص الصورة", crop_apply:"قص ✓", crop_hint:"اسحب المربع لتحديد الجزء، استخدم ＋/－ لتكبير/تصغير المربع",
     order_title:"تأكيد الطلب", pay_method:"طريقة الدفع",
     cust_name:"الاسم", cust_phone:"رقم الهاتف", cust_addr:"العنوان (للشحن)", cust_note:"ملاحظات",
     send_order:"إرسال الطلب (واتساب)", send_mail:"إرسال عبر الإيميل",
@@ -797,6 +813,8 @@ const I18N = {
     kb_label:"Keyboard", kb_ar:"Arabic", kb_en:"English", caps_on:"⚠ CapsLock is ON",
     attempts_note:"Failed login attempts:",
     tip_lang:"Switch the site language between Arabic and English", tip_admin:"Control panel — manage products, settings and publishing",
+    cover:"Cover", tip_cover:"Make this the first image (the product cover)", tip_crop:"Crop the image or choose which part shows",
+    crop_title:"Crop image", crop_apply:"Crop ✓", crop_hint:"Drag the box to choose the part; use ＋/－ to resize the box",
     order_title:"Confirm Order", pay_method:"Payment Method",
     cust_name:"Name", cust_phone:"Phone", cust_addr:"Address (shipping)", cust_note:"Notes",
     send_order:"Send order (WhatsApp)", send_mail:"Send via Email",
@@ -1084,23 +1102,27 @@ function renderImgPreview(inputEl, previewEl){
    Backed by a hidden <input class="imgs-store"> per picker (assigned dynamically)
    so save paths don't depend on a visible textarea. */
 function buildPicker(ids){
-  const P=$("#"+ids.picker), F=$("#"+ids.file), B=$("#"+ids.btn), PV=$("#"+ids.preview);
+  const P=$("#"+ids.picker), F=$("#"+ids.file), B=$("#"+ids.btn);
   const store=$("#"+ids.ta);            // hidden input keeping the serialized list
   const LINK=$("#"+ids.link);           // optional: link-URL input
   const LINKBTN=$("#"+ids.linkBtn);     // optional: "add link" button
   let list=parseImgList(store.value);
+  const commit=()=>{ store.value=list.join("\n"); };
   const renderPicker=()=>{
     P.innerHTML="";
     list.forEach((src,i)=>{
       const cell=document.createElement("div"); cell.className="ip-thumb";
-      cell.innerHTML=(isImg(src)?`<img src="${src}" alt="">`:`<span class="img-fallback" title="${src}">${src}</span>`)+`<button type="button" class="ip-x" aria-label="Remove image">✕</button>`;
+      cell.innerHTML=(isImg(src)?`<img src="${escHtml(src)}" alt="">`:`<span class="img-fallback" title="${escHtml(src)}">${escHtml(src)}</span>`)
+        +(i===0?`<span class="ip-cover">${t("cover")}</span>`:"")
+        +`<div class="ip-tools"><button type="button" class="ip-crop" title="${t("tip_crop")}">✂</button><button type="button" class="ip-up" title="${t("tip_cover")}">↑</button><button type="button" class="ip-x" aria-label="${t("remove")}">✕</button></div>`;
+      cell.querySelector(".ip-crop").onclick=(e)=>{ e.stopPropagation(); openCropper(src, (croppedDataUrl)=>{ if(croppedDataUrl){ list[i]=croppedDataUrl; commit(); } renderPicker(); }); };
       cell.querySelector(".ip-x").onclick=()=>{ list.splice(i,1); commit(); renderPicker(); };
+      cell.querySelector(".ip-up").onclick=(e)=>{ e.stopPropagation(); if(i===0) return; list.splice(i,1); list.unshift(src); commit(); renderPicker(); };
       P.appendChild(cell);
     });
     const add=document.createElement("button"); add.type="button"; add.className="ip-add"; add.textContent="+"; add.setAttribute("aria-label","Add image"); add.onclick=()=>F.click();
     P.appendChild(add);
   };
-  const commit=()=>{ store.value=list.join("\n"); renderImgPreview(store,PV); };
   B.onclick=()=>F.click();
   F.onchange=()=>{ const files=Array.from(F.files||[]); if(!files.length) return; let n=0;
     for(const f of files){ readImageCompressed(f).then(src=>{ list.push(src); if(++n===files.length){ commit(); renderPicker(); } }); }
@@ -1120,10 +1142,89 @@ function buildPicker(ids){
       }
     });
   }
-  store.addEventListener("input", ()=>{ list=parseImgList(store.value); renderPicker(); renderImgPreview(store,PV); });
-  renderPicker(); renderImgPreview(store,PV);
-  return { refresh:()=>{ list=parseImgList(store.value); renderPicker(); renderImgPreview(store,PV); },
-           reset:()=>{ list=[]; store.value=""; commit(); renderPicker(); } };
+  store.addEventListener("input", ()=>{ list=parseImgList(store.value); renderPicker(); });
+  renderPicker();
+  const out = {
+    refresh:()=>{ list=parseImgList(store.value); renderPicker(); },
+    reset:()=>{ list=[]; store.value=""; commit(); renderPicker(); }
+  };
+  return out;
+}
+
+/* ====================== Image cropper (1:1 square for product cards) ====================== */
+/* openCropper(src, onDone) — onDone(dataUrl|null). Square crop: drag box to move, wheel or +- buttons to resize. */
+function openCropper(src, onDone){
+  let ov = document.querySelector(".cropper-overlay"); if(ov) ov.remove();
+  ov = document.createElement("div"); ov.className="cropper-overlay";
+  document.body.appendChild(ov);
+  ov.innerHTML = `
+    <div class="cropper-box">
+      <h3>${t("crop_title")}</h3>
+      <div class="crop-canvas-wrap" id="cropWrap">
+        <img id="cropImg" src="${escHtml(src)}" crossorigin="anonymous" alt="">
+        <div class="crop-sel" id="cropSel"></div>
+      </div>
+      <p class="img-help">${t("crop_hint")}</p>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn sm" id="cropSmaller">－</button>
+        <button class="btn sm" id="cropBigger">＋</button>
+        <button class="btn ghost sm" id="cropCancel" style="margin-inline-start:auto">${t("cancel")}</button>
+        <button class="btn sm" id="cropApply">${t("crop_apply")}</button>
+      </div>
+    </div>`;
+  const img = ov.querySelector("#cropImg"), sel = ov.querySelector("#cropSel");
+  let selSize = 0.6, sx = 0.2, sy = 0.2, dispW = 600, dispH = 600, natW = 1, natH = 1;
+  function layout(){
+    const size = Math.round(dispW * selSize);
+    sel.style.width = size+"px"; sel.style.height = size+"px";
+    sel.style.left = Math.round(sx * dispW)+"px"; sel.style.top = Math.round(sy * dispH)+"px";
+  }
+  function warm(){
+    natW=img.naturalWidth||1; natH=img.naturalHeight||1;
+    const r = img.getBoundingClientRect();
+    dispW = r.width||600; dispH = r.height||600;
+    sx=Math.min(1-selSize,Math.max(0,sx)); sy=Math.min(1-selSize,Math.max(0,sy)); layout();
+  }
+  img.onload = warm;
+  setTimeout(warm, 80);
+  sel.addEventListener("pointerdown", (e)=>{
+    e.preventDefault();
+    const startX=e.clientX, startY=e.clientY, s0x=sx, s0y=sy;
+    const move=(ev)=>{
+      sx=Math.min(1-selSize,Math.max(0,s0x+(ev.clientX-startX)/dispW));
+      sy=Math.min(1-selSize,Math.max(0,s0y+(ev.clientY-startY)/dispH));
+      layout();
+    };
+    const up=()=>{ window.removeEventListener("pointermove",move); window.removeEventListener("pointerup",up); };
+    window.addEventListener("pointermove",move); window.addEventListener("pointerup",up);
+  });
+  const resize=(d)=>{ selSize=Math.min(1,Math.max(0.2,selSize+d));
+    sx=Math.min(1-selSize,Math.max(0,sx)); sy=Math.min(1-selSize,Math.max(0,sy)); layout(); };
+  ov.querySelector("#cropBigger").onclick=()=>resize(+0.08);
+  ov.querySelector("#cropSmaller").onclick=()=>resize(-0.08);
+  ov.addEventListener("wheel",(e)=>{ e.preventDefault(); resize(e.deltaY>0?-0.05:0.05); },{passive:false});
+  ov.querySelector("#cropCancel").onclick=()=>ov.remove();
+  ov.querySelector("#cropApply").onclick=()=>{
+    try{
+      const cv=document.createElement("canvas");
+      const cw=Math.max(300, Math.round(selSize*dispW*2)); // output ~square, min 300px
+      cv.width=cw; cv.height=cw;
+      const ctx=cv.getContext("2d");
+      const scaleX = natW/dispW, scaleY = natH/dispH;
+      const cW = selSize*dispW*scaleX, cH = selSize*dispH*scaleY;
+      const cX = sx*dispW*scaleX, cY = sy*dispH*scaleY;
+      const side = Math.min(cW,cH);
+      const offX = (cW-side)/2, offY = (cH-side)/2;
+      ctx.drawImage(img, cX+offX, cY+offY, side, side, 0, 0, cw, cw);
+      const out = cv.toDataURL("image/jpeg", 0.85);
+      ov.remove();
+      onDone(out);
+    }catch(e){
+      toast(LANG==="ar"?"مش قادر أقص الصورة دي (قيود الصورة من رابط خارجي) — ارفعها من جهازك أو استخدم رابط مباشر":"Cannot crop this image (cross-origin) — upload it from your device or use a direct link");
+      ov.remove();
+      onDone(null);
+    }
+  };
 }
 
 /* ====================== Render i18n ====================== */
@@ -1980,7 +2081,6 @@ function openEditProd(id){
   $("#editProdDescAr").value=p.descAr; $("#editProdDescEn").value=p.descEn;
   $("#editProdPrice").value=p.price;
   $("#editProdImgs").value=(p.imgs&&p.imgs.length)?p.imgs.join("\n"):"";
-  renderImgPreview($("#editProdImgs"),$("#editProdPreview"));
   if(editProdPicker) editProdPicker.refresh();
   $("#editProdModal").classList.add("show");
 }
@@ -2046,8 +2146,8 @@ function bind(){
   $("#editCatClose").onclick=()=>{ $("#editCatModal").classList.remove("show"); };
   $("#editProdSave").onclick=saveEditProd;
   $("#editProdClose").onclick=()=>{ $("#editProdModal").classList.remove("show"); };
-  prodPicker=buildPicker({picker:"prodPicker",file:"prodFile",btn:"prodUploadBtn",ta:"prodImgs",preview:"prodPreview",link:"prodLinkInput",linkBtn:"prodAddLinkBtn"});
-  editProdPicker=buildPicker({picker:"editProdPicker",file:"editProdFile",btn:"editProdUploadBtn",ta:"editProdImgs",preview:"editProdPreview",link:"editProdLinkInput",linkBtn:"editProdAddLinkBtn"});
+  prodPicker=buildPicker({picker:"prodPicker",file:"prodFile",btn:"prodUploadBtn",ta:"prodImgs",link:"prodLinkInput",linkBtn:"prodAddLinkBtn"});
+  editProdPicker=buildPicker({picker:"editProdPicker",file:"editProdFile",btn:"editProdUploadBtn",ta:"editProdImgs",link:"editProdLinkInput",linkBtn:"editProdAddLinkBtn"});
 
   // === settings ===
   document.querySelectorAll("#settingsTabs button").forEach(b=>b.onclick=()=>showSettingsTab(b.dataset.st));
