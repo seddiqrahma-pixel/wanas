@@ -261,6 +261,7 @@
         <input class="field" id="prodDescAr" placeholder="وصف عربي" data-i18n-ph="prod_desc_ar_ph">
         <input class="field" id="prodDescEn" placeholder="وصف (إنجليزي)" data-i18n-ph="prod_desc_en_ph">
         <input class="field" id="prodPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
+        <input class="field" id="prodMarket" type="number" placeholder="سعر السوق (اختياري — للخصم)" data-i18n-ph="market_ph" min="0" step="0.1" data-tip="tip_market_field">
       </div>
       <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط (Images — upload from your device or paste URLs)</label>
       <p class="img-help" data-i18n="img_reco">💡 الأفضل: صورة مربعة مركز فيها المنتج، 1200×1200 بكسل أو أكبر — وبعد الرفع اضغط ✂ للقص (Images: square ≥1200×1200, product centered; use ✂ to crop)</p>
@@ -290,7 +291,6 @@
       <div class="settings-tabs" id="settingsTabs">
         <button class="active" data-st="branding" data-i18n="tab_branding" data-tip="tip_tab_branding">الشعار والكلمات</button>
         <button data-st="password" data-i18n="tab_password" data-tip="tip_tab_password">كلمة الدخول</button>
-        <button data-st="market" data-i18n="tab_market" data-tip="tip_tab_market">سعر السوق والخصم</button>
         <button data-st="payment" data-i18n="tab_payment" data-tip="tip_tab_payment">الدفع وطرق التواصل</button>
         <button data-st="github" data-i18n="gh_title" data-tip="tip_tab_github">نشر على جيت هب</button>
       </div>
@@ -527,14 +527,7 @@
         </div>
       </div>
 
-      <!-- Market -->
-      <div class="settings-panel" data-sp="market">
-        <div class="panel">
-          <h3 data-i18n="market_title">سعر السوق والخصم لكل منتج</h3>
-          <p class="admin-hint" data-i18n="market_hint">أدخل سعر السوق — لو كان سعرك أقل بيظهر خصم تلقائي على المنتج.</p>
-          <div id="marketList"></div>
-        </div>
-      </div>
+      <!-- Market: moved into product add/edit forms (per-product) -->
 
       <!-- Payment & contact -->
       <div class="settings-panel" data-sp="payment">
@@ -653,6 +646,7 @@ IBAN: EG900003041450006160803000150</textarea>
     </div>
     <div class="row">
       <input class="field" id="editProdPrice" type="number" placeholder="السعر" data-i18n-ph="price_ph" min="0" step="0.1">
+      <input class="field" id="editProdMarket" type="number" placeholder="سعر السوق (اختياري — للخصم)" data-i18n-ph="market_ph" min="0" step="0.1" data-tip="tip_market_field">
     </div>
     <label class="img-help" data-i18n="prod_imgs_label">صور المنتج — ارفع من جهازك أو الصق روابط/مسارات (Images — upload from your device or paste URLs/paths)</label>
     <input type="file" id="editProdFile" accept="image/*" multiple style="display:none">
@@ -1120,8 +1114,8 @@ function buildPicker(ids){
       cell.querySelector(".ip-up").onclick=(e)=>{ e.stopPropagation(); if(i===0) return; list.splice(i,1); list.unshift(src); commit(); renderPicker(); };
       P.appendChild(cell);
     });
-    const add=document.createElement("button"); add.type="button"; add.className="ip-add"; add.textContent="+"; add.setAttribute("aria-label","Add image"); add.onclick=()=>F.click();
-    P.appendChild(add);
+    /* NOTE: no "+" add tile here — the labeled "📁 رفع صور" button is the single
+       upload entry point (user request: one upload control, not two). */
   };
   B.onclick=()=>F.click();
   F.onchange=()=>{ const files=Array.from(F.files||[]); if(!files.length) return; let n=0;
@@ -1261,7 +1255,6 @@ function buildAllForms(){
   const pe=$("#cfgEmail"); if(pe) pe.value = S.email || PAYMENT.email;
   if(typeof renderCommList==="function") renderCommList();
   if(typeof renderWrongAttempts==="function") renderWrongAttempts();
-  if(typeof renderMarketList==="function") renderMarketList();
 }
 /* ====================== Storefront edge guards ====================== */
 function escHtml(s){ return String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
@@ -1304,8 +1297,10 @@ function renderProducts(){
     const imgHtml = (imgs[0] && isImg(imgs[0]))?`<img src="${escHtml(imgs[0])}" alt="${escHtml(LANG==="ar"?p.ar:p.en)}" loading="lazy">`:(imgs[0]&&escHtml(imgs[0]))||"📦";
     const thumbs = imgs.length>1?`<div class="thumbs">`+imgs.map((s,i)=>`<button class="thumb ${i===0?'active':''}" data-pid="${p.id}" data-idx="${i}" aria-label="${LANG==="ar"?p.ar:p.en} - ${i+1}" role="button"><img src="${s}" alt=""></button>`).join("")+`</div>`:"";
     const market = (() => {
-      if(S.marketPrices && S.marketPrices[p.id] != null) return S.marketPrices[p.id];
+      /* per-product market price set in the add/edit form wins; legacy settings
+         value kept only as fallback for old data */
       if(p.market!=null && p.market>0) return p.market;
+      if(S.marketPrices && S.marketPrices[p.id] != null) return S.marketPrices[p.id];
       if(PRICING[p.id] && PRICING[p.id].market) return PRICING[p.id].market;
       return null;
     })();
@@ -1850,6 +1845,17 @@ function publishToGitHub(){
     try{ sessionStorage.removeItem(GH_SESSION_KEY); }catch(e){}
     try{ localStorage.removeItem("wanas_gh"); }catch(e){}
     $("#ghToken").value = "";
+    /* Published = the site's embedded data is now the truth. Discard this device's
+       stored products snapshot so the panel re-reads the published block instead of
+       showing a stale local copy. Settings need no discard: what's stored IS what
+       was just published. Cart and language are untouched. */
+    try{ localStorage.removeItem("wanas_data"); }catch(e){}
+    DATA = defaultData();
+    applyPricing();
+    buildAllForms();
+    applyPaymentSettings();
+    applyLangText();
+    renderAdmin(); renderCats(); renderProducts(); renderCart();
     toast(t("gh_ok"));
   })
   .catch(err=>{
@@ -1866,39 +1872,6 @@ function applyLangText(){
   applyAllStyles();
   renderBrandPreview();
   renderFooterComms();
-}
-function renderMarketList(){
-  const box = $("#marketList");
-  if(!box) return;
-  box.innerHTML = "";
-  if(!DATA || !DATA.products.length){ box.innerHTML = `<div class="empty">${t("empty_store")}</div>`; return; }
-  DATA.products.forEach(p=>{
-    const stored = (S.marketPrices && S.marketPrices[p.id]);
-    const market = (typeof stored==="number") ? stored : (p.market!=null && p.market>0 ? p.market : (PRICING[p.id] && PRICING[p.id].market ? PRICING[p.id].market : null));
-    const cost = (PRICING[p.id] && PRICING[p.id].cost);
-    const row = document.createElement("div");
-    row.className = "market-row";
-    const disc = (typeof market==="number" && p.price < market) ? Math.round((1 - p.price/market)*100) : 0;
-    row.innerHTML = `
-      <div class="mr-info">
-        <b>${LANG==="ar"?p.ar:p.en}</b>
-        <span>${catLabel(p.cat)} — ${money(p.price)}</span>
-        ${disc>0?` <span class="discount-badge">-${disc}%</span>`:""}
-      </div>
-      <label>${t("market_price")}:</label>
-      <input type="number" class="mr-market" data-id="${p.id}" value="${market!=null?market:""}" placeholder="0">
-    `;
-    box.appendChild(row);
-    row.querySelector(".mr-market").addEventListener("change", function(){
-      const id = this.dataset.id;
-      const v = parseFloat(this.value);
-      if(!isNaN(v) && v>0){ if(!S.marketPrices) S.marketPrices = {}; S.marketPrices[id] = v; }
-      else { if(S.marketPrices) delete S.marketPrices[id]; }
-      saveSettings();
-      renderMarketList();
-      renderProducts();
-    });
-  });
 }
 function catLabel(catId){
   if(!catId) return "";
@@ -2037,7 +2010,6 @@ function renderAdmin(){
   });
   // render settings panels inside admin
   renderWrongAttempts();
-  renderMarketList();
   renderCommList();
   // product cat select
   const pc=$("#prodCat"); pc.innerHTML="";
@@ -2081,6 +2053,7 @@ function openEditProd(id){
   $("#editProdDescAr").value=p.descAr; $("#editProdDescEn").value=p.descEn;
   $("#editProdPrice").value=p.price;
   $("#editProdImgs").value=(p.imgs&&p.imgs.length)?p.imgs.join("\n"):"";
+  $("#editProdMarket").value=(p.market!=null&&p.market>0)?p.market:"";
   if(editProdPicker) editProdPicker.refresh();
   $("#editProdModal").classList.add("show");
 }
@@ -2093,7 +2066,9 @@ function saveEditProd(){
   const imgs=parseImgList($("#editProdImgs").value);
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:finalImgs}); }
+  const p=DATA.products.find(x=>x.id===id); if(p){ migrateProduct(p); delete p.img; Object.assign(p,{ar,en,descAr,descEn,price,imgs:finalImgs});
+    const mk=Number($("#editProdMarket").value);
+    if(Number.isFinite(mk)&&mk>0){ p.market=mk; } else { delete p.market; } }
   if(!saveData()){ toast(t("storage_full")); return; }
   $("#editProdModal").classList.remove("show"); renderAdmin(); renderProducts();
 }
@@ -2109,12 +2084,16 @@ function addProduct(){
   const descAr=$("#prodDescAr").value.trim(), descEn=$("#prodDescEn").value.trim();
   const price=Number($("#prodPrice").value);
   if(!(price>0)){ toast(LANG==="ar"?"اكتب سعر صحيح أكبر من صفر":"Enter a valid price above zero"); return; }
+  const mk=Number($("#prodMarket").value);
+  const market=(Number.isFinite(mk)&&mk>0)?mk:null;
   const imgs=parseImgList($("#prodImgs").value);
   const finalImgs=imgs.length?imgs:["📦"];
   if(!ar||!en){ toast(t("fill_fields")); return; }
-  DATA.products.push({id:uid(),cat,ar,en,descAr,descEn,price,imgs:finalImgs});
+  const np={id:uid(),cat,ar,en,descAr,descEn,price,imgs:finalImgs};
+  if(market!=null) np.market=market;
+  DATA.products.push(np);
   if(!saveData()){ toast(t("storage_full")); return; }
-  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice"].forEach(id=>$("#"+id).value="");
+  ["prodAr","prodEn","prodDescAr","prodDescEn","prodPrice","prodMarket"].forEach(id=>$("#"+id).value="");
   if(prodPicker) prodPicker.reset();
   renderAdmin(); renderProducts();
 }
