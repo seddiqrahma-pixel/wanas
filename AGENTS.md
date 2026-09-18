@@ -34,6 +34,10 @@ These rules were distilled from past Wanas sessions. Follow them automatically.
 ## Git & deployment
 - **Never merge, push, or deploy unless explicitly told.** Your standing rule:
   deploy only on explicit command.
+- **Before any push, always run: `git fetch && git log --oneline main..origin/main`.** If it
+  prints anything, someone else (likely the admin panel on another device) published
+  meanwhile — pull/reset onto origin and reapply local changes instead of force-pushing.
+  Force push is forbidden without explicit user approval.
 - Use conventional commits (e.g. `docs:`, `fix:`).
 - Delete feature branches after they are merged (use `git branch --merged` /
   GitHub auto-delete). Don't leave stale branches like `feat/admin-multi-image`.
