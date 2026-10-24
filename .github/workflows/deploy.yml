@@ -275,8 +275,6 @@ jobs:
             http://localhost:3000/admin.html
           budgetPath: ./lighthouse-budget.json
           uploadArtifacts: true
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
   # ============================================================
   # PREVIEW DEPLOY — For PRs, runs after build succeeds
