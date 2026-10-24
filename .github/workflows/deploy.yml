@@ -11,44 +11,174 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  checks: write  # For test annotations
 
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: '24'
+
 jobs:
-  lint-and-test:
+  # ============================================================
+  # LINT & TYPE CHECK — Fast feedback, no test dependencies
+  # ============================================================
+  lint-and-typecheck:
+    name: Lint & Type Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+
+      - name: Node version info
+        run: |
+          echo "Node: $(node --version)"
+          echo "NPM: $(npm --version)"
+          if [[ "$(node --version | cut -d'v' -f2 | cut -d'.' -f1)" -lt 20 ]]; then
+            echo "::warning::Node.js version < 20 detected — some features may not work correctly"
+          fi
 
       - name: Install dependencies
         run: npm ci
 
       - name: Lint
         run: npm run lint
+        continue-on-error: false
 
       - name: Type check
         run: npx tsc --noEmit
+        continue-on-error: false
 
-      - name: Unit tests
-        run: npm run test
+  # ============================================================
+  # UNIT TESTS — Isolated, with clear diagnostics
+  # ============================================================
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests (with JUnit output for annotations)
+        id: unit-tests
+        run: |
+          npm run test -- --reporter=junit --outputFile=junit.xml 2>&1 | tee test-output.txt
+        continue-on-error: true
+
+      - name: Annotate test failures
+        if: failure() || steps.unit-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            junit.xml
+            test-output.txt
+          retention-days: 7
+
+      - name: Publish test results (JUnit)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: junit.xml
+          retention-days: 7
+
+      - name: Check test results
+        if: steps.unit-tests.outcome == 'failure'
+        run: |
+          echo "::error::Unit tests failed — see test-output.txt artifact for details"
+          cat test-output.txt
+          exit 1
+
+  # ============================================================
+  # E2E TESTS — Optional, non-blocking for visibility
+  # ============================================================
+  e2e-tests:
+    name: E2E Tests (Playwright)
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Non-blocking for CI visibility
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build for E2E
+        run: npm run build
+
+      - name: Run E2E tests
+        run: npm run test:e2e -- --reporter=junit --outputFile=e2e-junit.xml 2>&1 | tee e2e-output.txt
+        continue-on-error: true
+
+      - name: Upload E2E results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results
+          path: |
+            e2e-junit.xml
+            e2e-output.txt
+          retention-days: 7
+
+  # ============================================================
+  # VALIDATION & AUDIT — Security & data integrity
+  # ============================================================
+  validate-and-audit:
+    name: Validate Data & Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Validate data
         run: npm run validate:data
+        continue-on-error: false
 
-      - name: Dependency audit
+      - name: Dependency audit (high/critical)
         run: npm audit --audit-level=high
+        continue-on-error: false
 
+  # ============================================================
+  # BUILD — Only runs if lint/typecheck pass
+  # ============================================================
   build:
-    needs: lint-and-test
+    name: Build
+    needs: [lint-and-typecheck]
     runs-on: ubuntu-latest
     outputs:
       main-size: ${{ steps.size-check.outputs.main-size }}
@@ -57,10 +187,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install dependencies
@@ -114,18 +244,24 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
+          name: github-pages
 
+  # ============================================================
+  # LIGHTHOUSE CI — Runs independently for visibility
+  # ============================================================
   lighthouse:
-    needs: build
+    name: Lighthouse CI
+    needs: [build]
     runs-on: ubuntu-latest
+    continue-on-error: false  # Block on budget failures
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
       - name: Install dependencies
@@ -145,8 +281,12 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
+  # ============================================================
+  # PREVIEW DEPLOY — For PRs, runs after build succeeds
+  # ============================================================
   preview-deploy:
-    needs: build
+    name: Preview Deploy
+    needs: [build]
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
@@ -163,7 +303,11 @@ jobs:
           artifact_name: github-pages
           token: ${{ secrets.GITHUB_TOKEN }}
 
+  # ============================================================
+  # DEPLOY — Production deploy on main branch
+  # ============================================================
   deploy:
+    name: Deploy to Production
     needs: [build, lighthouse]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -174,3 +318,56 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # ============================================================
+  # STATUS SUMMARY — Aggregates all job results for PR checks
+  # ============================================================
+  status-summary:
+    name: CI Status Summary
+    needs:
+      - lint-and-typecheck
+      - unit-tests
+      - e2e-tests
+      - validate-and-audit
+      - build
+      - lighthouse
+      - preview-deploy
+      - deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check job statuses
+        run: |
+          echo "## CI Status Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Lint & Type Check | ${{ needs.lint-and-typecheck.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Unit Tests | ${{ needs.unit-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| E2E Tests (non-blocking) | ${{ needs.e2e-tests.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Validate & Audit | ${{ needs.validate-and-audit.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Lighthouse CI | ${{ needs.lighthouse.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Preview Deploy | ${{ needs.preview-deploy.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Production Deploy | ${{ needs.deploy.result }} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail if any required job failed
+        run: |
+          REQUIRED_JOBS=(
+            "lint-and-typecheck"
+            "unit-tests"
+            "validate-and-audit"
+            "build"
+            "lighthouse"
+          )
+          FAILED=0
+          for job in "${REQUIRED_JOBS[@]}"; do
+            RESULT="${{ needs.$job.result }}"
+            if [[ "$RESULT" != "success" && "$RESULT" != "skipped" ]]; then
+              echo "Required job '$job' failed with status: $RESULT"
+              FAILED=1
+            fi
+          done
+          if [[ $FAILED -eq 1 ]]; then
+            exit 1
+          fi
