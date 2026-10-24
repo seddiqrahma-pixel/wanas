@@ -6,12 +6,10 @@ vi.mock('undici', () => ({
     request: vi.fn(),
     pool: vi.fn(),
     agent: vi.fn(),
-    pipeline: vi.fn(),
   },
   request: vi.fn(),
   pool: vi.fn(),
   agent: vi.fn(),
-  pipeline: vi.fn(),
   Dispatcher: vi.fn(),
   Client: vi.fn(),
   Agent: vi.fn(),
@@ -41,7 +39,6 @@ vi.mock('undici', () => ({
   Writable: vi.fn(),
   Transform: vi.fn(),
   PassThrough: vi.fn(),
-  pipeline: vi.fn(),
 }));
 
 // Mock fetch globally
