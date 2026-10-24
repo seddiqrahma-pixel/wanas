@@ -1,0 +1,176 @@
+name: Build & Deploy Wanas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Unit tests
+        run: npm run test
+
+      - name: Validate data
+        run: npm run validate:data
+
+      - name: Dependency audit
+        run: npm audit --audit-level=high
+
+  build:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    outputs:
+      main-size: ${{ steps.size-check.outputs.main-size }}
+      admin-size: ${{ steps.size-check.outputs.admin-size }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache Vite
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.cache/vite
+            node_modules/.cache/vite-plugin-image-optimizer
+          key: vite-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            vite-${{ runner.os }}-
+
+      - name: Sync products from sheet_data
+        run: npm run sync:products
+        continue-on-error: true
+
+      - name: Optimize images
+        run: npm run optimize:images
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+      - name: Create 404.html for SPA fallback
+        run: cp dist/index.html dist/404.html
+
+      - name: Verify bundle size budgets
+        id: size-check
+        run: |
+          MAIN_JS=$(find dist/assets -name 'main-*.js' ! -name '*.map' | head -1)
+          ADMIN_JS=$(find dist/assets -name 'admin-*.js' ! -name '*.map' | head -1)
+          MAIN_GZ=$(gzip -c "$MAIN_JS" | wc -c)
+          ADMIN_GZ=$(gzip -c "$ADMIN_JS" | wc -c)
+          echo "main-size=$MAIN_GZ" >> $GITHUB_OUTPUT
+          echo "admin-size=$ADMIN_GZ" >> $GITHUB_OUTPUT
+          echo "Main JS (gzipped): $MAIN_GZ bytes"
+          echo "Admin JS (gzipped): $ADMIN_GZ bytes"
+          if [ "$MAIN_GZ" -gt 102400 ]; then
+            echo "::error::Main bundle exceeds 100KB gzipped budget ($MAIN_GZ bytes)"
+            exit 1
+          fi
+          if [ "$ADMIN_GZ" -gt 51200 ]; then
+            echo "::error::Admin bundle exceeds 50KB gzipped budget ($ADMIN_GZ bytes)"
+            exit 1
+          fi
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  lighthouse:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for Lighthouse
+        run: npm run build
+
+      - name: Serve and run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/admin.html
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  preview-deploy:
+    needs: build
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages Preview
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    needs: [build, lighthouse]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

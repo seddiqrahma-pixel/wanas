@@ -1,0 +1,60 @@
+{
+  "products": [
+    {
+      "id": "test-product-1",
+      "slug": "test-product-1",
+      "category": "candles",
+      "name": { "ar": "منتج اختبار 1", "en": "Test Product 1" },
+      "description": { "ar": "وصف اختبار 1", "en": "Test description 1" },
+      "price_egp": 100,
+      "images": ["test1/main.jpg"],
+      "variants": [{ "id": "test-product-1-default", "price_egp": 100, "sku": "TEST-001", "weight_g": 100 }],
+      "tags": ["test"],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "test-product-2",
+      "slug": "test-product-2",
+      "category": "gifts",
+      "name": { "ar": "منتج اختبار 2", "en": "Test Product 2" },
+      "description": { "ar": "وصف اختبار 2", "en": "Test description 2" },
+      "price_egp": 200,
+      "images": ["test2/main.jpg"],
+      "variants": [{ "id": "test-product-2-default", "price_egp": 200, "sku": "TEST-002", "weight_g": 200 }],
+      "tags": ["test"],
+      "featured": false,
+      "active": true
+    },
+    {
+      "id": "test-product-inactive",
+      "slug": "test-product-inactive",
+      "category": "candles",
+      "name": { "ar": "منتج غير نشط", "en": "Inactive Product" },
+      "description": { "ar": "وصف", "en": "Description" },
+      "price_egp": 50,
+      "images": ["inactive/main.jpg"],
+      "variants": [{ "id": "test-product-inactive-default", "price_egp": 50, "sku": "TEST-003", "weight_g": 50 }],
+      "tags": ["test"],
+      "featured": false,
+      "active": false
+    }
+  ],
+  "categories": [
+    { "id": "candles", "name": { "ar": "شموع", "en": "Candles" }, "order": 1 },
+    { "id": "gifts", "name": { "ar": "هدايا", "en": "Gifts" }, "order": 2 }
+  ],
+  "brand": {
+    "name": { "ar": "وَنَس", "en": "Wanas" },
+    "tagline": { "ar": "شمع", "en": "Candles" },
+    "location": { "ar": "سوهاج", "en": "Sohag" },
+    "service": { "ar": "خدمة", "en": "Service" }
+  },
+  "payments": {
+    "methods": [
+      { "id": "vodafone_cash", "name": { "ar": "فودافون كاش", "en": "Vodafone Cash" }, "number": "01020306395", "type": "mobile_wallet" }
+    ],
+    "currency": "EGP",
+    "note": { "ar": "ملاحظة", "en": "Note" }
+  }
+}

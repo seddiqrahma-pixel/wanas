@@ -1,0 +1,19 @@
+{
+  "generated": "2026-10-24T00:26:58.682Z",
+  "source": "/Users/ahmed.alghoraib/Desktop/Wanas/src/assets/products",
+  "output": "/Users/ahmed.alghoraib/Desktop/Wanas/public/products",
+  "widths": [
+    400,
+    800,
+    1200
+  ],
+  "formats": [
+    "webp",
+    "avif",
+    "jpeg",
+    "png"
+  ],
+  "files": [
+    "wanas-test/large-image.png"
+  ]
+}
