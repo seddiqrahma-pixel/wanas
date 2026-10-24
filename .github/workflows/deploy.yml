@@ -252,7 +252,6 @@ jobs:
     name: Lighthouse CI
     needs: [build]
     runs-on: ubuntu-latest
-    continue-on-error: false  # Block on budget failures
     steps:
       - name: Checkout
         uses: actions/checkout@v4
