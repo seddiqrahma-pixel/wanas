@@ -267,6 +267,13 @@ jobs:
       - name: Build for Lighthouse
         run: npm run build
 
+      - name: Start Vite preview server
+        run: |
+          npx vite preview --port 3000 --host 0.0.0.0 &
+          echo "Vite preview server started on port 3000"
+          sleep 5
+          curl -f http://localhost:3000 || exit 1
+
       - name: Serve and run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
         with:
