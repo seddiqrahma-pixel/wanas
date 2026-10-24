@@ -12,6 +12,7 @@ export default defineConfig({
     sourcemap: true,
     minify: 'esbuild',
     cssCodeSplit: true,
+    cssMinify: true,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'src/index.html'),
@@ -21,6 +22,13 @@ export default defineConfig({
         manualChunks: {
           'vendor': ['idb'],
           'admin': ['src/scripts/admin.ts'],
+        },
+        // Ensure CSS files are named properly
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'assets/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
         },
       },
     },
@@ -65,5 +73,9 @@ export default defineConfig({
       '@styles': resolve(__dirname, 'src/styles'),
       '@assets': resolve(__dirname, 'src/assets'),
     },
+  },
+  // Ensure CSS is extracted and not inlined
+  css: {
+    devSourcemap: true,
   },
 });

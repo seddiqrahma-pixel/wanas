@@ -2,7 +2,6 @@
 // Wanas — Main Entry Point (Buyer App)
 // ==========================================================================
 
-import '../styles/main.css';
 import { initI18n, t, getLocale } from './i18n';
 import { loadSiteData, getProducts } from './data';
 import { renderProductsGrid } from '../components/ProductCard';
