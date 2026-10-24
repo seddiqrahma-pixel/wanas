@@ -346,21 +346,28 @@ jobs:
 
       - name: Fail if any required job failed
         run: |
-          REQUIRED_JOBS=(
-            "lint-and-typecheck"
-            "unit-tests"
-            "validate-and-audit"
-            "build"
-            "lighthouse"
-          )
           FAILED=0
-          for job in "${REQUIRED_JOBS[@]}"; do
-            RESULT="${{ needs.$job.result }}"
-            if [[ "$RESULT" != "success" && "$RESULT" != "skipped" ]]; then
-              echo "Required job '$job' failed with status: $RESULT"
-              FAILED=1
-            fi
-          done
+          # Check each required job explicitly
+          if [[ "${{ needs.lint-and-typecheck.result }}" != "success" && "${{ needs.lint-and-typecheck.result }}" != "skipped" ]]; then
+            echo "Required job 'lint-and-typecheck' failed with status: ${{ needs.lint-and-typecheck.result }}"
+            FAILED=1
+          fi
+          if [[ "${{ needs.unit-tests.result }}" != "success" && "${{ needs.unit-tests.result }}" != "skipped" ]]; then
+            echo "Required job 'unit-tests' failed with status: ${{ needs.unit-tests.result }}"
+            FAILED=1
+          fi
+          if [[ "${{ needs.validate-and-audit.result }}" != "success" && "${{ needs.validate-and-audit.result }}" != "skipped" ]]; then
+            echo "Required job 'validate-and-audit' failed with status: ${{ needs.validate-and-audit.result }}"
+            FAILED=1
+          fi
+          if [[ "${{ needs.build.result }}" != "success" && "${{ needs.build.result }}" != "skipped" ]]; then
+            echo "Required job 'build' failed with status: ${{ needs.build.result }}"
+            FAILED=1
+          fi
+          if [[ "${{ needs.lighthouse.result }}" != "success" && "${{ needs.lighthouse.result }}" != "skipped" ]]; then
+            echo "Required job 'lighthouse' failed with status: ${{ needs.lighthouse.result }}"
+            FAILED=1
+          fi
           if [[ $FAILED -eq 1 ]]; then
             exit 1
           fi
