@@ -112,7 +112,6 @@ jobs:
   e2e-tests:
     name: E2E Tests (Playwright)
     runs-on: ubuntu-latest
-    continue-on-error: true  # Non-blocking for CI visibility
     steps:
       - name: Checkout
         uses: actions/checkout@v4
