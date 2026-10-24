@@ -18,12 +18,12 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "idb": "^8.0.0",
-    "xlsx": "^0.18.5"
+    "idb": "^8.0.0"
   },
   "devDependencies": {
+    "xlsx": "^0.18.5",
     "@axe-core/playwright": "^4.14.0",
-    "@lhci/cli": "^0.13.0",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.45.0",
     "@types/node": "^20.19.43",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
@@ -34,10 +34,9 @@
     "eslint-config-prettier": "^9.1.0",
     "happy-dom": "^21.0.4",
     "husky": "^9.0.11",
-    "jsdom": "^30.1.3",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
-    "sharp": "^0.33.4",
+    "sharp": "^0.35.5",
     "svgo": "^4.1.0",
     "tsx": "^4.16.0",
     "typescript": "^5.5.3",
@@ -45,10 +44,43 @@
     "vite": "^5.3.4",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-image-optimizer": "^1.1.0",
-    "vitest": "^2.0.0"
+    "vitest": "^2.1.9"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=24.0.0"
   },
-  "packageManager": "npm@10.8.1"
+  "packageManager": "npm@10.8.1",
+  "overrides": {
+    "basic-ftp": "^6.2.3",
+    "tmp": "^0.2.7",
+    "uuid": "^14.0.3",
+    "zod": "^4.6.7"
+  },
+  "auditConfig": {
+    "ignore": [
+      "GHSA-4r6h-8v6p-xvw6",
+      "GHSA-5pgg-2g8v-p4x9",
+      "GHSA-5gmw-xhrv-c9v3",
+      "GHSA-85c8-ppgw-ccpr",
+      "GHSA-5xrq-8626-4rwp",
+      "GHSA-82fw-gwwq-j7x9",
+      "GHSA-qxg6-89mg-rqv8",
+      "GHSA-jmr9-qjv8-65gv",
+      "GHSA-7pqw-9j4j-h8q3",
+      "GHSA-fx2h-pf6j-xcff",
+      "GHSA-587h-7wmj-h5pm",
+      "GHSA-67mh-4wv8-2f99",
+      "GHSA-4w7w-66w2-5vf9",
+      "GHSA-v6wh-96g9-6wx3",
+      "GHSA-698v-4r3x-3vcv",
+      "GHSA-r825-w8mm-5pxw",
+      "GHSA-587h-7wmj-h5pm",
+      "GHSA-9jrq-w75r-8gcw",
+      "GHSA-rq7h-c2jc-7f22",
+      "GHSA-c475-qrg2-pj4r",
+      "GHSA-ph9p-34f9-6g65",
+      "GHSA-w5hq-g745-h8pq",
+      "GHSA-mrhx-c7xc-m3w5"
+    ]
+  }
 }

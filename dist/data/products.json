@@ -1,0 +1,414 @@
+{
+  "products": [
+    {
+      "id": "wanas-amber",
+      "slug": "wanas-amber",
+      "category": "candles",
+      "name": {
+        "ar": "ونس العنبر",
+        "en": "Wanas Amber"
+      },
+      "description": {
+        "ar": "شمعة جرة زجاجية بشمع صويا طبيعي مع برتقال مجفف — عطر العنبر الدافئ والفاخر",
+        "en": "Glass jar soy candle with dried orange — warm premium amber fragrance"
+      },
+      "price_egp": 216,
+      "images": [
+        "products/wanas-amber/main.jpg",
+        "products/wanas-amber/angle-1.jpg",
+        "products/wanas-amber/angle-2.jpg",
+        "products/wanas-amber/detail.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-amber-default",
+          "price_egp": 216,
+          "sku": "WNS-AMB-001",
+          "weight_g": 250
+        }
+      ],
+      "tags": [
+        "soy",
+        "amber",
+        "orange",
+        "jar",
+        "premium"
+      ],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "wanas-rose",
+      "slug": "wanas-rose",
+      "category": "candles",
+      "name": {
+        "ar": "وردة ونس",
+        "en": "Wanas Rose"
+      },
+      "description": {
+        "ar": "شمعة منحوتة يدوياً على شكل وردة حمراء — قطعة ديكور عطرية فاخرة",
+        "en": "Hand-carved red rose candle — decorative luxury fragrance piece"
+      },
+      "price_egp": 220,
+      "images": [
+        "products/wanas-rose/main.jpg",
+        "products/wanas-rose/side.jpg",
+        "products/wanas-rose/top.jpg",
+        "products/wanas-rose/packaging.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-rose-default",
+          "price_egp": 220,
+          "sku": "WNS-ROS-001",
+          "weight_g": 180
+        }
+      ],
+      "tags": [
+        "sculpted",
+        "rose",
+        "hand-carved",
+        "decor",
+        "luxury"
+      ],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "wanas-cloud",
+      "slug": "wanas-cloud",
+      "category": "candles",
+      "name": {
+        "ar": "سحابة ونس",
+        "en": "Wanas Cloud"
+      },
+      "description": {
+        "ar": "شمعة على شكل سحابة بتصميم لطيف — تناسب محبي الجماليات والديكور الهادئ",
+        "en": "Cloud-shaped candle with cute design — perfect for aesthetic decor lovers"
+      },
+      "price_egp": 200,
+      "images": [
+        "products/wanas-cloud/main.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-cloud-default",
+          "price_egp": 200,
+          "sku": "WNS-CLD-001",
+          "weight_g": 150
+        }
+      ],
+      "tags": [
+        "cloud",
+        "aesthetic",
+        "cute",
+        "decor",
+        "soy"
+      ],
+      "featured": false,
+      "active": true
+    },
+    {
+      "id": "wanas-perfume-4wick",
+      "slug": "wanas-perfume-4wick",
+      "category": "candles",
+      "name": {
+        "ar": "ونس عطور (٤ فتائل)",
+        "en": "Wanas Perfume (4-Wick)"
+      },
+      "description": {
+        "ar": "شمعة جرة زجاجية كبيرة بـ ٤ فتائل — إضاءة وعطر قوي للغرف الواسعة، لايبل \"ونس عطور\"",
+        "en": "Large 4-wick glass jar candle — strong scent throw for spacious rooms, Wanas Perfume label"
+      },
+      "price_egp": 400,
+      "images": [
+        "products/wanas-perfume-4wick/main.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-perfume-4wick-default",
+          "price_egp": 400,
+          "sku": "WNS-PRF-004",
+          "weight_g": 600
+        }
+      ],
+      "tags": [
+        "4-wick",
+        "large",
+        "perfume",
+        "strong-throw",
+        "premium"
+      ],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "wanas-bouquet",
+      "slug": "wanas-bouquet",
+      "category": "gifts",
+      "name": {
+        "ar": "باقة الونس الوردية",
+        "en": "Wanas Pink Bouquet"
+      },
+      "description": {
+        "ar": "بوكيه من ٧ وردات (صابون/شمع) مغلف بورق وردي وريبان — هدية زهرية فاخرة للمناسبات",
+        "en": "Bouquet of 7 roses (soap/wax) wrapped in pink paper with ribbon — luxury floral gift for occasions"
+      },
+      "price_egp": 338,
+      "images": [
+        "products/wanas-bouquet/main.jpg",
+        "products/wanas-bouquet/closeup.jpg",
+        "products/wanas-bouquet/wrapped.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-bouquet-default",
+          "price_egp": 338,
+          "sku": "WNS-BOU-007",
+          "weight_g": 400
+        }
+      ],
+      "tags": [
+        "bouquet",
+        "roses",
+        "gift",
+        "wedding",
+        "pink",
+        "ribbon"
+      ],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "wanas-gift-box",
+      "slug": "wanas-gift-box",
+      "category": "gifts",
+      "name": {
+        "ar": "صندوق الونس",
+        "en": "Wanas Gift Box"
+      },
+      "description": {
+        "ar": "صندوق هدايا متكامل مغلف بريبان شامبين — تشكيلة مختارة للمناسبات الخاصة",
+        "en": "Complete gift box wrapped in champagne ribbon — curated selection for special occasions"
+      },
+      "price_egp": 475,
+      "images": [
+        "products/wanas-gift-box/main.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-gift-box-default",
+          "price_egp": 475,
+          "sku": "WNS-BOX-001",
+          "weight_g": 800
+        }
+      ],
+      "tags": [
+        "gift-box",
+        "champagne",
+        "ribbon",
+        "curated",
+        "premium",
+        "occasions"
+      ],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "wanas-soap-rose",
+      "slug": "wanas-soap-rose",
+      "category": "gifts",
+      "name": {
+        "ar": "وردة الصابون",
+        "en": "Soap Rose"
+      },
+      "description": {
+        "ar": "صابون على شكل ورود حمراء مع أعشاب — هدية عملية تجمع بين الجمال والاستخدام اليومي",
+        "en": "Red rose-shaped soaps with herbs — practical gift combining beauty and daily use"
+      },
+      "price_egp": 113,
+      "images": [
+        "products/wanas-soap-rose/main.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-soap-rose-default",
+          "price_egp": 113,
+          "sku": "WNS-SAP-001",
+          "weight_g": 200
+        }
+      ],
+      "tags": [
+        "soap",
+        "rose",
+        "practical",
+        "herbs",
+        "gift"
+      ],
+      "featured": false,
+      "active": true
+    },
+    {
+      "id": "wanas-fragrance-oil",
+      "slug": "wanas-fragrance-oil",
+      "category": "fragrance",
+      "name": {
+        "ar": "عطر الونس",
+        "en": "Wanas Fragrance Oil"
+      },
+      "description": {
+        "ar": "زيت عطري منزلي فاخر ٣٠ مل — روائح مركزة تدوم طويلاً للمنزل والمكتب",
+        "en": "Premium 30ml home fragrance oil — concentrated long-lasting scents for home and office"
+      },
+      "price_egp": 207,
+      "images": [
+        "products/wanas-fragrance-oil/main.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-fragrance-oil-30ml",
+          "price_egp": 207,
+          "sku": "WNS-OIL-030",
+          "volume_ml": 30
+        }
+      ],
+      "tags": [
+        "oil",
+        "30ml",
+        "diffuser",
+        "concentrated",
+        "home-fragrance"
+      ],
+      "featured": true,
+      "active": true
+    },
+    {
+      "id": "wanas-bakhoor",
+      "slug": "wanas-bakhoor",
+      "category": "fragrance",
+      "name": {
+        "ar": "بخور الونس",
+        "en": "Wanas Bakhoor"
+      },
+      "description": {
+        "ar": "خليط بخور تقليدي للمنزل — روائح شرقية أصيلة للضيافة والاسترخاء",
+        "en": "Traditional home bakhoor blend — authentic oriental scents for hospitality and relaxation"
+      },
+      "price_egp": 162,
+      "images": [
+        "products/wanas-bakhoor/main.jpg"
+      ],
+      "variants": [
+        {
+          "id": "wanas-bakhoor-default",
+          "price_egp": 162,
+          "sku": "WNS-BAK-001",
+          "weight_g": 50
+        }
+      ],
+      "tags": [
+        "bakhoor",
+        "incense",
+        "traditional",
+        "oriental",
+        "hospitality"
+      ],
+      "featured": false,
+      "active": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "candles",
+      "name": {
+        "ar": "شموع",
+        "en": "Candles"
+      },
+      "order": 1
+    },
+    {
+      "id": "gifts",
+      "name": {
+        "ar": "هدايا وورود",
+        "en": "Gifts & Flowers"
+      },
+      "order": 2
+    },
+    {
+      "id": "fragrance",
+      "name": {
+        "ar": "عطور منزلية",
+        "en": "Home Fragrance"
+      },
+      "order": 3
+    }
+  ],
+  "brand": {
+    "name": {
+      "ar": "وَنَس",
+      "en": "Wanas"
+    },
+    "tagline": {
+      "ar": "شُمُوعٌ تَمنَحُكَ دِفءَ الشَمس 🕯️🧡",
+      "en": "Candles that give you the warmth of the sun 🕯️🧡"
+    },
+    "location": {
+      "ar": "سوهاج، صعيد مصر",
+      "en": "Sohag, Upper Egypt"
+    },
+    "service": {
+      "ar": "خدمة \"أنسٌ منك\" لكتابة بطاقات الهدايا مجاناً",
+      "en": "Free handwritten gift-note service \"Anas Mink\""
+    }
+  },
+  "payments": {
+    "methods": [
+      {
+        "id": "vodafone_cash",
+        "name": {
+          "ar": "فودافون كاش",
+          "en": "Vodafone Cash"
+        },
+        "number": "01020306395",
+        "type": "mobile_wallet"
+      },
+      {
+        "id": "insta_pay",
+        "name": {
+          "ar": "إنستاباي",
+          "en": "InstaPay"
+        },
+        "number": "01020306395",
+        "type": "instant_transfer"
+      },
+      {
+        "id": "bank_transfer",
+        "name": {
+          "ar": "تحويل بنكي",
+          "en": "Bank Transfer"
+        },
+        "details": {
+          "bank": "NBE",
+          "iban": "EG900003041450006160803000150",
+          "name": "Ahmed Alghoraib"
+        },
+        "type": "bank_transfer"
+      },
+      {
+        "id": "whatsapp",
+        "name": {
+          "ar": "طلب واتساب",
+          "en": "WhatsApp Order"
+        },
+        "number": "01020306395",
+        "email": "ahmed.alghoraib@gmail.com",
+        "type": "whatsapp"
+      }
+    ],
+    "currency": "EGP",
+    "note": {
+      "ar": "لا يوجد دفع أونلاين بالبطاقات — الدفع عند الاستلام أو بالتحويل",
+      "en": "No online card payment — cash on delivery or bank transfer only"
+    }
+  }
+}

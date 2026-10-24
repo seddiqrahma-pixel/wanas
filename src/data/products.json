@@ -14,10 +14,7 @@
       },
       "price_egp": 216,
       "images": [
-        "products/wanas-amber/main.jpg",
-        "products/wanas-amber/angle-1.jpg",
-        "products/wanas-amber/angle-2.jpg",
-        "products/wanas-amber/detail.jpg"
+        "products/wanas-amber/main.jpg"
       ],
       "variants": [
         {
@@ -51,10 +48,7 @@
       },
       "price_egp": 220,
       "images": [
-        "products/wanas-rose/main.jpg",
-        "products/wanas-rose/side.jpg",
-        "products/wanas-rose/top.jpg",
-        "products/wanas-rose/packaging.jpg"
+        "products/wanas-rose/main.jpg"
       ],
       "variants": [
         {
@@ -156,9 +150,7 @@
       },
       "price_egp": 338,
       "images": [
-        "products/wanas-bouquet/main.jpg",
-        "products/wanas-bouquet/closeup.jpg",
-        "products/wanas-bouquet/wrapped.jpg"
+        "products/wanas-bouquet/main.jpg"
       ],
       "variants": [
         {

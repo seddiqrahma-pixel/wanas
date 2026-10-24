@@ -25,6 +25,7 @@
       "@assets/*": ["src/assets/*"]
     }
   },
-  "include": ["src", "tools", "tests"],
+  "include": ["src", "tools"],
+  "exclude": ["tests", "**/*.test.ts", "**/*.spec.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

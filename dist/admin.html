@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم ونس | Wanas Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script type="module" crossorigin src="/assets/modulepreload-polyfill-BTn-X1SE.js"></script>
+  <script type="module" crossorigin src="/assets/vendor-Bd-MdFDq.js"></script>
+  <script type="module" crossorigin src="/assets/admin-CMe8pgm0.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/admin-BSHJtDIw.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="container">
+      <h1>لوحة تحكم ونس</h1>
+      <a href="/" class="btn btn-secondary" id="exit-admin">مغادرة لوحة التحكم</a>
+    </div>
+  </header>
+  <main class="admin-main container">
+    <section class="admin-section">
+      <h2>إدارة المنتجات</h2>
+      <div class="admin-toolbar">
+        <button class="btn btn-primary" id="add-product-btn">إضافة منتج</button>
+        <button class="btn btn-secondary" id="sync-products-btn">مزامنة من الجدول</button>
+        <button class="btn btn-secondary" id="export-json-btn">تصدير JSON</button>
+      </div>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="products-table">
+          <thead>
+            <tr>
+              <th>المعرف</th>
+              <th>الاسم (عربي)</th>
+              <th>الاسم (إنجليزي)</th>
+              <th>الصنف</th>
+              <th>السعر (ج.م)</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="products-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>إعدادات الموقع</h2>
+      <form class="admin-form" id="settings-form">
+        <div class="form-group">
+          <label for="brand-name-ar">اسم العلامة التجارية (عربي)</label>
+          <input type="text" id="brand-name-ar" name="brand_name_ar" value="وَنَس">
+        </div>
+        <div class="form-group">
+          <label for="brand-name-en">اسم العلامة التجارية (إنجليزي)</label>
+          <input type="text" id="brand-name-en" name="brand_name_en" value="Wanas">
+        </div>
+        <div class="form-group">
+          <label for="tagline-ar">الشعار (عربي)</label>
+          <textarea id="tagline-ar" name="tagline_ar">شُمُوعٌ تَمنَحُكَ دِفءَ الشَمس 🕯️🧡</textarea>
+        </div>
+        <div class="form-group">
+          <label for="tagline-en">الشعار (إنجليزي)</label>
+          <textarea id="tagline-en" name="tagline_en">Candles that give you the warmth of the sun 🕯️🧡</textarea>
+        </div>
+        <div class="form-group">
+          <label for="whatsapp-number">رقم واتساب</label>
+          <input type="tel" id="whatsapp-number" name="whatsapp_number" value="01020306395">
+        </div>
+        <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+      </form>
+    </section>
+
+    <section class="admin-section">
+      <h2>الطلبات (من LocalStorage)</h2>
+      <div class="admin-table-wrapper">
+        <table class="admin-table" id="orders-table">
+          <thead>
+            <tr>
+              <th>الرقم</th>
+              <th>التاريخ</th>
+              <th>العميل</th>
+              <th>المجموع</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

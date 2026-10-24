@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="65" failures="0" errors="0" time="2.359">
+    <testsuite name="tests/unit/ImageGallery.test.ts" timestamp="2026-10-24T08:31:19.742Z" hostname="Ahmed-Alghoraib.local" tests="14" failures="0" errors="0" skipped="0" time="0.446272167">
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; creates single image wrapper for single image" time="0.203165167">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; creates full gallery for multiple images" time="0.009471667">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; switches main image when thumbnail clicked" time="0.006202292">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; updates active thumbnail state on switch" time="0.00425">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; updates counter on image switch" time="0.007083416">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; handles keyboard navigation on main image" time="0.010491">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; handles keyboard navigation on thumbnails" time="0.018078583">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; opens lightbox on main image click" time="0.010240833">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; opens lightbox on Enter key" time="0.0111865">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; closes lightbox on Escape key" time="0.096133291">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; navigates lightbox with arrow keys" time="0.02304225">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; has proper ARIA attributes" time="0.038866417">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; supports RTL direction" time="0.00371575">
+        </testcase>
+        <testcase classname="tests/unit/ImageGallery.test.ts" name="ImageGallery &gt; lazy loads thumbnail images" time="0.003133833">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/cart.test.ts" timestamp="2026-10-24T08:31:19.749Z" hostname="Ahmed-Alghoraib.local" tests="19" failures="0" errors="0" skipped="0" time="0.142861167">
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getCart &gt; returns empty array when cart is empty" time="0.110556166">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getCart &gt; returns cart items when they exist" time="0.001186834">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getCartCount &gt; returns 0 for empty cart" time="0.000779292">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getCartCount &gt; returns sum of quantities" time="0.000626916">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getCartTotal &gt; returns 0 for empty cart" time="0.000620042">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getCartTotal &gt; calculates total correctly" time="0.000580709">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; addToCart &gt; adds new item to empty cart" time="0.002183334">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; addToCart &gt; merges quantities when adding existing product+variant" time="0.001203333">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; addToCart &gt; dispatches cart change event" time="0.001218958">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; updateCartQuantity &gt; deletes item when quantity &lt;= 0" time="0.000944958">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; updateCartQuantity &gt; updates quantity when item exists" time="0.000849875">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; updateCartQuantity &gt; does nothing when item does not exist" time="0.000694291">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; removeFromCart &gt; deletes item from cart" time="0.000700333">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; clearCart &gt; clears all cart items" time="0.000602959">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; saveOrder &gt; saves order with generated ID" time="0.000864541">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; saveOrder &gt; uses provided ID when given" time="0.000456667">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; getOrders &gt; returns orders sorted by timestamp" time="0.000811125">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; onCartChange &gt; registers and unregisters listener" time="0.013383542">
+        </testcase>
+        <testcase classname="tests/unit/cart.test.ts" name="cart &gt; generateWhatsAppOrderLink &gt; generates correct WhatsApp link with order details" time="0.002731917">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/data.test.ts" timestamp="2026-10-24T08:31:19.755Z" hostname="Ahmed-Alghoraib.local" tests="26" failures="0" errors="0" skipped="0" time="0.14801725">
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; loadSiteData &gt; fetches and caches site data" time="0.111487584">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; loadSiteData &gt; returns cached data on subsequent calls" time="0.000844416">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; loadSiteData &gt; throws on fetch error" time="0.002954042">
+            <system-err>
+Failed to load site data: Error: Failed to load products: 404
+    at /Users/ahmed.alghoraib/Desktop/Wanas/src/scripts/data.ts:17:31
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+            </system-err>
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; loadSiteData &gt; throws on network error" time="0.002941125">
+            <system-err>
+Failed to load site data: Error: Network error
+    at /Users/ahmed.alghoraib/Desktop/Wanas/tests/unit/data.test.ts:63:48
+    at file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:146:14
+    at file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:533:11
+    at runWithTimeout (file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:39:7)
+    at runTest (file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:1056:17)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at runSuite (file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runSuite (file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:1205:15)
+    at runFiles (file:///Users/ahmed.alghoraib/Desktop/Wanas/node_modules/@vitest/runner/dist/index.js:1262:5)
+
+            </system-err>
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getSiteData &gt; returns null before data is loaded" time="0.000913">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getSiteData &gt; returns cached data after load" time="0.001241917">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProducts &gt; returns empty array when no data loaded" time="0.0007525">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProducts &gt; returns only active products" time="0.001010125">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductById &gt; returns undefined when no data loaded" time="0.000587875">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductById &gt; finds product by id" time="0.000503334">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductBySlug &gt; returns undefined when no data loaded" time="0.00050975">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductBySlug &gt; finds product by slug" time="0.000541542">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getCategories &gt; returns empty array when no data loaded" time="0.000887417">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getCategories &gt; returns categories sorted by order" time="0.011257625">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getCategoryById &gt; returns undefined when no data loaded" time="0.002516625">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getCategoryById &gt; finds category by id" time="0.001570208">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductsByCategory &gt; returns empty array when no data loaded" time="0.001021667">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductsByCategory &gt; filters products by category" time="0.000674334">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getProductsByCategory &gt; only returns active products" time="0.000704542">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getFeaturedProducts &gt; returns empty array when no data loaded" time="0.00037875">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getFeaturedProducts &gt; returns only featured products" time="0.0004315">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getBrand &gt; returns undefined when no data loaded" time="0.000363125">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getBrand &gt; returns brand data" time="0.000777917">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getPayments &gt; returns undefined when no data loaded" time="0.000301042">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; getPayments &gt; returns payments config" time="0.000322584">
+        </testcase>
+        <testcase classname="tests/unit/data.test.ts" name="data &gt; invalidateCache &gt; clears cache and allows reload" time="0.000358875">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/i18n.test.ts" timestamp="2026-10-24T08:31:19.781Z" hostname="Ahmed-Alghoraib.local" tests="6" failures="0" errors="0" skipped="0" time="0.286001625">
+        <testcase classname="tests/unit/i18n.test.ts" name="i18n &gt; formats price correctly for Arabic locale" time="0.267463917">
+        </testcase>
+        <testcase classname="tests/unit/i18n.test.ts" name="i18n &gt; formats price correctly for English locale" time="0.005190458">
+        </testcase>
+        <testcase classname="tests/unit/i18n.test.ts" name="i18n &gt; switches locale and updates document" time="0.003074667">
+        </testcase>
+        <testcase classname="tests/unit/i18n.test.ts" name="i18n &gt; translates keys correctly" time="0.003262959">
+        </testcase>
+        <testcase classname="tests/unit/i18n.test.ts" name="i18n &gt; persists locale in localStorage" time="0.003721125">
+        </testcase>
+        <testcase classname="tests/unit/i18n.test.ts" name="i18n &gt; notifies listeners on locale change" time="0.002318875">
+        </testcase>
+    </testsuite>
+</testsuites>
