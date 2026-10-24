@@ -331,8 +331,6 @@ jobs:
       - validate-and-audit
       - build
       - lighthouse
-      - preview-deploy
-      - deploy
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -348,13 +346,6 @@ jobs:
           echo "| Validate & Audit | ${{ needs.validate-and-audit.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Lighthouse CI | ${{ needs.lighthouse.result }} |" >> $GITHUB_STEP_SUMMARY
-          # Conditionally add preview/deploy status
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "| Preview Deploy | ${{ needs.preview-deploy.result }} |" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "| Production Deploy | ${{ needs.deploy.result }} |" >> $GITHUB_STEP_SUMMARY
-          fi
 
       - name: Fail if any required job failed
         run: |
