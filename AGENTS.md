@@ -68,7 +68,6 @@ tests/                       # Vitest + Playwright
 ## 🗂 Files & Assets
 
 - Source images: `src/assets/products/<product-id>/main.jpg` (optimized at build → `public/products/`)
-- Legacy raw images in `products/` — keep for reference, don't edit directly.
 - Spreadsheet intact — never delete rows.
 - Project working files (reports, scripts, JSON) in Wanas folder.
 

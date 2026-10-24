@@ -2,7 +2,7 @@
 // Wanas — Sync Products from Spreadsheet (CSV/JSON/XLSX)
 // ==========================================================================
 // Usage: npm run sync:products
-// Reads from sheet_data/wanas_calculator.xlsx or sheet_data/new_products.json
+// Reads from sheet_data/wanas_calculator.xlsx
 // Outputs to src/data/products.json
 
 import fs from 'fs';
@@ -69,9 +69,6 @@ function parseJSON(jsonPath: string): SpreadsheetRow[] {
 function findSourceFile(): { path: string; type: 'csv' | 'xlsx' | 'json' } | null {
   const candidates = [
     { path: path.join(SHEET_DATA_DIR, 'wanas_calculator.xlsx'), type: 'xlsx' as const },
-    { path: path.join(SHEET_DATA_DIR, 'new_products.json'), type: 'json' as const },
-    { path: path.join(SHEET_DATA_DIR, 'clean_list.json'), type: 'json' as const },
-    { path: path.join(SHEET_DATA_DIR, 'cost_tab_g949426385.csv'), type: 'csv' as const }
   ];
 
   for (const candidate of candidates) {
@@ -180,7 +177,7 @@ async function main(): Promise<void> {
   const source = findSourceFile();
   if (!source) {
     console.error('❌ No source file found in sheet_data/');
-    console.log('Expected: wanas_calculator.xlsx, new_products.json, clean_list.json, or cost_tab_g949426385.csv');
+    console.log('Expected: wanas_calculator.xlsx');
     process.exit(1);
   }
 
