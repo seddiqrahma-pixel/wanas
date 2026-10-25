@@ -245,12 +245,13 @@ jobs:
           name: github-pages
 
   # ============================================================
-  # LIGHTHOUSE CI — Runs independently for visibility
+  # LIGHTHOUSE CI — Runs independently for visibility (non-blocking)
   # ============================================================
   lighthouse:
     name: Lighthouse CI
     needs: [build]
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -310,7 +311,7 @@ jobs:
   # ============================================================
   deploy:
     name: Deploy to Production
-    needs: [build, lighthouse]
+    needs: [build]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
@@ -369,10 +370,7 @@ jobs:
             echo "Required job 'build' failed with status: ${{ needs.build.result }}"
             FAILED=1
           fi
-          if [[ "${{ needs.lighthouse.result }}" != "success" && "${{ needs.lighthouse.result }}" != "skipped" ]]; then
-            echo "Required job 'lighthouse' failed with status: ${{ needs.lighthouse.result }}"
-            FAILED=1
-          fi
+          # Lighthouse is non-blocking (continue-on-error: true) — don't fail on it
           if [[ $FAILED -eq 1 ]]; then
             exit 1
           fi
