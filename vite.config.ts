@@ -4,6 +4,7 @@ import viteCompression from 'vite-plugin-compression';
 import { resolve } from 'path';
 
 export default defineConfig({
+  base: '/wanas/',
   root: 'src',
   publicDir: '../public',
   build: {
