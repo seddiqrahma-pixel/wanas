@@ -36,6 +36,29 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Node version info
         run: |
           echo "Node: $(node --version)"
@@ -45,6 +68,7 @@ jobs:
           fi
 
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Lint
@@ -71,7 +95,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run unit tests (with JUnit output for annotations)
@@ -121,7 +169,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Install Playwright browsers
@@ -160,7 +232,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Validate data
@@ -191,7 +287,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Cache Vite
@@ -262,7 +382,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build for Lighthouse
