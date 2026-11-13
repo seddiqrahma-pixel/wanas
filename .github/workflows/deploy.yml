@@ -36,6 +36,33 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
       - name: Node version info
         run: |
           echo "Node: $(node --version)"
@@ -43,9 +70,6 @@ jobs:
           if [[ "$(node --version | cut -d'v' -f2 | cut -d'.' -f1)" -lt 20 ]]; then
             echo "::warning::Node.js version < 20 detected — some features may not work correctly"
           fi
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Lint
         run: npm run lint
@@ -71,7 +95,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Run unit tests (with JUnit output for annotations)
@@ -121,7 +169,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Install Playwright browsers
@@ -160,7 +232,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Validate data
@@ -181,6 +277,8 @@ jobs:
     outputs:
       main-size: ${{ steps.size-check.outputs.main-size }}
       admin-size: ${{ steps.size-check.outputs.admin-size }}
+      optimize-seconds: ${{ steps.optimize-images.outputs.optimize-seconds }}
+      optimized-image-count: ${{ steps.verify-images.outputs.optimized-image-count }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -191,7 +289,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Cache Vite
@@ -208,9 +330,89 @@ jobs:
         run: npm run sync:products
         continue-on-error: true
 
+      - name: Check image sources
+        id: image-sources
+        run: |
+          if [ ! -d src/assets/products ]; then
+            echo "::error::src/assets/products/ is missing — product source images are not present in the repository."
+            echo "::error::The optimization step cannot run until source images are committed (owned by the frontend image task)."
+            exit 1
+          fi
+          SOURCE_COUNT=$(find src/assets/products -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.avif' \) | wc -l | tr -d ' ')
+          echo "Found $SOURCE_COUNT source image(s) in src/assets/products/"
+          if [ "$SOURCE_COUNT" -eq 0 ]; then
+            echo "::error::src/assets/products/ contains no images — nothing to optimize."
+            exit 1
+          fi
+          echo "source-count=$SOURCE_COUNT" >> "$GITHUB_OUTPUT"
+
       - name: Optimize images
-        run: npm run optimize:images
-        continue-on-error: true
+        id: optimize-images
+        run: |
+          OPTIMIZE_START=$(date +%s)
+          npm run optimize:images
+          OPTIMIZE_END=$(date +%s)
+          echo "optimize-seconds=$((OPTIMIZE_END - OPTIMIZE_START))" >> "$GITHUB_OUTPUT"
+          echo "⏱️ Optimize images: $((OPTIMIZE_END - OPTIMIZE_START))s"
+
+      - name: Verify optimized images
+        id: verify-images
+        run: |
+          PRODUCTS_DIR="public/products"
+          if [ ! -d "$PRODUCTS_DIR" ]; then
+            echo "::error::$PRODUCTS_DIR/ was not created by the optimization step."
+            exit 1
+          fi
+
+          WEBP_COUNT=$(find "$PRODUCTS_DIR" -type f -name '*.webp' | wc -l | tr -d ' ')
+          AVIF_COUNT=$(find "$PRODUCTS_DIR" -type f -name '*.avif' | wc -l | tr -d ' ')
+          FALLBACK_COUNT=$(find "$PRODUCTS_DIR" -type f \( -name '*.jpeg' -o -name '*.jpg' -o -name '*.png' \) | wc -l | tr -d ' ')
+
+          WIDTHS=""
+          for w in 400 800 1200; do
+            if [ -n "$(find "$PRODUCTS_DIR" -type f -name "*-${w}w.*" -print -quit)" ]; then
+              WIDTHS="$WIDTHS $w"
+            fi
+          done
+          WIDTH_COUNT=$(echo "$WIDTHS" | wc -w | tr -d ' ')
+
+          echo "WebP: $WEBP_COUNT | AVIF: $AVIF_COUNT | JPEG/PNG fallback: $FALLBACK_COUNT | responsive widths:$WIDTHS"
+
+          if [ "$WEBP_COUNT" -eq 0 ]; then
+            echo "::error::No WebP outputs found in $PRODUCTS_DIR/ — optimization did not produce modern formats."
+            exit 1
+          fi
+          if [ "$AVIF_COUNT" -eq 0 ]; then
+            echo "::error::No AVIF outputs found in $PRODUCTS_DIR/ — optimization did not produce modern formats."
+            exit 1
+          fi
+          if [ "$WIDTH_COUNT" -lt 2 ]; then
+            echo "::error::Expected multiple responsive widths in $PRODUCTS_DIR/, found $WIDTH_COUNT (need >= 2)."
+            exit 1
+          fi
+          if [ ! -f "$PRODUCTS_DIR/manifest.json" ]; then
+            echo "::error::Missing $PRODUCTS_DIR/manifest.json."
+            exit 1
+          fi
+
+          echo "optimized-image-count=$WEBP_COUNT" >> "$GITHUB_OUTPUT"
+          echo "✅ Verified optimized images in $PRODUCTS_DIR/ (WebP: $WEBP_COUNT, AVIF: $AVIF_COUNT, widths:$WIDTHS)"
+
+      - name: Dependency cache report
+        if: always()
+        run: |
+          {
+            echo "### Dependency cache"
+            echo ""
+            echo "| Cache | Result |"
+            echo "|---|---|"
+            echo "| node_modules | ${{ steps.cache-node-modules.outputs.cache-hit == 'true' && 'HIT' || 'MISS' }} |"
+            echo "| Sharp binaries (~/.cache/sharp) | ${{ steps.cache-sharp.outputs.cache-hit == 'true' && 'HIT' || 'MISS' }} |"
+            echo ""
+            echo "**Sharp version:** ${{ steps.sharp-version.outputs.version }}"
+            echo "**Optimize images duration:** ${{ steps.optimize-images.outputs.optimize-seconds }}s"
+            echo "**Sharp cache dir entries:** $(ls -A ~/.cache/sharp 2>/dev/null | wc -l | tr -d ' ')"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build
         run: npm run build
@@ -262,7 +464,31 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Resolve Sharp version
+        id: sharp-version
+        run: echo "version=$(node -p "require('./package-lock.json').packages['node_modules/sharp'].version" 2>/dev/null || echo unknown)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: cache-node-modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Prepare Sharp cache directory
+        run: mkdir -p ~/.cache/sharp
+
+      - name: Cache Sharp binaries
+        id: cache-sharp
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/sharp
+          key: sharp-${{ runner.os }}-${{ steps.sharp-version.outputs.version }}
+          restore-keys: |
+            sharp-${{ runner.os }}-
+
       - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build for Lighthouse
